@@ -111,12 +111,12 @@ control 'cis-dil-benchmark-6.2.6' do
   tag cis: 'distribution-independent-linux:6.2.6'
   tag level: 1
 
-  root_path = os_env('PATH').content.split(':')
+  root_path = os_env('PATH').to_s.split(':')
 
   describe root_path do
-    it { should_not be_empty }
-    it { should_not include '' }
-    it { should_not include '.' }
+    its('split') { should_not be_empty }
+    its('split') { should_not include '' }
+    its('split') { should_not include '.' }
   end
 
   root_path.each do |entry|
