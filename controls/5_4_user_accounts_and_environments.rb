@@ -36,7 +36,7 @@ control 'cis-dil-benchmark-5.4.1.1' do
   end
 
   shadow_files.each do |f|
-    shadow(f).users(/.+/).entries.each do |user|
+    shadow(f).user(/.+/).entries.each do |user|
       next if (user.password && %w(* !)).any?
 
       describe user do
@@ -59,7 +59,7 @@ control 'cis-dil-benchmark-5.4.1.2' do
   end
 
   shadow_files.each do |f|
-    shadow(f).users(/.+/).entries.each do |user|
+    shadow(f).user(/.+/).entries.each do |user|
       next if (user.password && %w(* !)).any?
 
       describe user do
