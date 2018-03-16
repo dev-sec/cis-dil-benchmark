@@ -31,7 +31,7 @@ class LinuxModule < Inspec.resource(1)
 
   def loaded?
     lsmod_cmd = if inspec.os.redhat? || inspec.os.name == 'fedora'
-                  '/sbin/lsmod'
+                  'lsmod'
                 else
                   'lsmod'
                 end
@@ -48,7 +48,7 @@ class LinuxModule < Inspec.resource(1)
 
   def version
     modinfo_cmd = if inspec.os.redhat? || inspec.os.name == 'fedora'
-                    "/sbin/modinfo -F version #{@module}"
+                    "modinfo -F version #{@module}"
                   else
                     "modinfo -F version #{@module}"
                   end
@@ -59,7 +59,7 @@ class LinuxModule < Inspec.resource(1)
 
   def command
     modinfo_cmd = if inspec.os.redhat? || inspec.os.name == 'fedora'
-                    "/sbin/modinfo -n -v #{@module}"
+                    "modprobe -n -v #{@module}"
                   else
                     "modinfo -n -v #{@module}"
                   end
