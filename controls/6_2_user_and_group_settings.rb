@@ -53,7 +53,7 @@ control 'cis-dil-benchmark-6.2.2' do
 
   passwd_files.each do |f|
     describe passwd(f) do
-      its(:users) { should_not include '+' }
+      its(:user) { should_not include '+' }
     end
   end
 end
@@ -68,7 +68,7 @@ control 'cis-dil-benchmark-6.2.3' do
 
   shadow_files.each do |f|
     describe shadow(f) do
-      its(:users) { should_not include '+' }
+      its(:user) { should_not include '+' }
     end
   end
 end
@@ -98,7 +98,7 @@ control 'cis-dil-benchmark-6.2.5' do
 
   passwd_files.each do |f|
     describe passwd(f).uids(0) do
-      its(:users) { should eq ['root'] }
+      its(:user) { should eq ['root'] }
     end
   end
 end
@@ -368,7 +368,7 @@ control 'cis-dil-benchmark-6.2.20' do
 
   group_files.each do |f|
     describe etc_group(f).where(name: 'shadow') do
-      its(:users) { should be_empty }
+      its(:user) { should be_empty }
     end
   end
 end
