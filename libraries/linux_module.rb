@@ -48,7 +48,7 @@ class LinuxModule < Inspec.resource(1)
 
   def version
     modinfo_cmd = if inspec.os.redhat? || inspec.os.name == 'fedora'
-                    "/sbin/modinfo -F version #{@module} | awk '{$1=$1;print}'"
+                    "/sbin/modinfo -F version #{@module}"
                   else
                     "modinfo -F version #{@module}"
                   end
