@@ -59,7 +59,7 @@ class LinuxModule < Inspec.resource(1)
 
   def command
     modinfo_cmd = if inspec.os.redhat? || inspec.os.name == 'fedora'
-                    "/sbin/modinfo -n -v #{@module}"
+                    "/sbin/modprobe -n -v #{@module}"
                   else
                     "modinfo -n -v #{@module}"
                   end
