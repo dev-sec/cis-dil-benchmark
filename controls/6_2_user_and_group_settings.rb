@@ -111,7 +111,7 @@ control 'cis-dil-benchmark-6.2.6' do
   tag cis: 'distribution-independent-linux:6.2.6'
   tag level: 1
 
-  root_path = os_env('PATH').content.split(':')
+  root_path = os_env('PATH').split
 
   describe root_path do
     it { should_not be_empty }
