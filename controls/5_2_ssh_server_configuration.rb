@@ -156,8 +156,8 @@ control 'cis-dil-benchmark-5.2.10' do
 end
 
 control 'cis-dil-benchmark-5.2.11' do
-  title 'Ensure only approved ciphers are used'
-  desc "This variable limits the types of ciphers that SSH can use during communication.\n\nRationale: Based on research conducted at various institutions, it was determined that the symmetric portion of the SSH Transport Protocol (as described in RFC 4253) has security weaknesses that allowed recovery of up to 32 bits of plaintext from a block of ciphertext that was encrypted with the Cipher Block Chaining (CBD) method. From that research, new Counter mode algorithms (as described in RFC4344) were designed that are not vulnerable to these types of attacks and these algorithms are now recommended for standard use."
+  title 'Ensure only approved MAC algorithms are used'
+  desc "This variable limits the types of MAC algorithms that SSH can use during communication.\n\nRationale: MD5 and 96-bit MAC algorithms are considered weak and have been shown to increase exploitability in SSH downgrade attacks. Weak algorithms continue to have a great deal of attention as a weak spot that can be exploited with expanded computing power. An attacker that breaks the algorithm could take advantage of a MiTM position to decrypt the SSH tunnel and capture credentials and information"
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.2.11'
