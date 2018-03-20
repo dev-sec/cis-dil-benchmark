@@ -70,8 +70,8 @@ control 'cis-dil-benchmark-1.4.3' do
 
   describe.one do
     describe shadow.users('root') do
-      its(:passwords) { should_not include('*') }
-      its(:passwords) { should_not include('!') }
+      its(:password) { should_not include('*') }
+      its(:password) { should_not include('!') }
     end
 
     describe file('/etc/inittab') do
