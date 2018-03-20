@@ -172,15 +172,6 @@ control 'cis-dil-benchmark-5.2.11' do
       it { should_not match(/-cbc$/) }
     end
   end
-end
-
-control 'cis-dil-benchmark-5.2.12' do
-  title 'Ensure only approved MAC algorithms are used'
-  desc  "This variable limits the types of MAC algorithms that SSH can use during communication.\n\nRationale: MD5 and 96-bit MAC algorithms are considered weak and have been shown to increase exploitability in SSH downgrade attacks. Weak algorithms continue to have a great deal of attention as a weak spot that can be exploited with expanded computing power. An attacker that breaks the algorithm could take advantage of a MiTM position to decrypt the SSH tunnel and capture credentials and information"
-  impact 1.0
-
-  tag cis: 'distribution-independent-linux:5.2.12'
-  tag level: 1
 
   describe sshd_config do
     its(:MACs) { should_not be_nil }
@@ -193,12 +184,12 @@ control 'cis-dil-benchmark-5.2.12' do
   end
 end
 
-control 'cis-dil-benchmark-5.2.13' do
+control 'cis-dil-benchmark-5.2.12' do
   title 'Ensure SSH Idle Timeout Interval is configured'
   desc  "The two options ClientAliveInterval and ClientAliveCountMax control the timeout of ssh sessions. When the ClientAliveInterval variable is set, ssh sessions that have no activity for the specified length of time are terminated. When the ClientAliveCountMax variable is set, sshd will send client alive messages at every ClientAliveInterval interval. When the number of consecutive client alive messages are sent with no response from the client, the ssh session is terminated. For example, if the ClientAliveInterval is set to 15 seconds and the ClientAliveCountMax is set to 3, the client ssh session will be terminated after 45 seconds of idle time.\n\nRationale: Having no timeout value associated with a connection could allow an unauthorized user access to another user's ssh session (e.g. user walks away from their computer and doesn't lock the screen). Setting a timeout value at least reduces the risk of this happening.. While the recommended setting is 300 seconds (5 minutes), set this timeout value based on site policy. The recommended setting for ClientAliveCountMax is 0. In this case, the client session will be terminated after 5 minutes of idle time and no keepalive messages will be sent."
   impact 1.0
 
-  tag cis: 'distribution-independent-linux:5.2.13'
+  tag cis: 'distribution-independent-linux:5.2.12'
   tag level: 1
 
   describe sshd_config do
@@ -207,12 +198,12 @@ control 'cis-dil-benchmark-5.2.13' do
   end
 end
 
-control 'cis-dil-benchmark-5.2.14' do
+control 'cis-dil-benchmark-5.2.13' do
   title 'Ensure SSH LoginGraceTime is set to one minute or less'
   desc  "The LoginGraceTime parameter specifies the time allowed for successful authentication to the SSH server. The longer the Grace period is the more open unauthenticated connections can exist. Like other session controls in this session the Grace Period should be limited to appropriate organizational limits to ensure the service is available for needed access.\n\nRationale: Setting the LoginGraceTime parameter to a low number will minimize the risk of successful brute force attacks to the SSH server. It will also limit the number of concurrent unauthenticated connections While the recommended setting is 60 seconds (1 Minute), set the number based on site policy."
   impact 1.0
 
-  tag cis: 'distribution-independent-linux:5.2.14'
+  tag cis: 'distribution-independent-linux:5.2.13'
   tag level: 1
 
   describe sshd_config do
@@ -220,13 +211,13 @@ control 'cis-dil-benchmark-5.2.14' do
   end
 end
 
-control 'cis-dil-benchmark-5.2.15' do
+control 'cis-dil-benchmark-5.2.14' do
   title 'Ensure SSH access is limited'
   desc "There are several options available to limit which users and group can access the system via SSH. It is recommended that at least one of the following options be leveraged:
   AllowUsers\nThe AllowUsers variable gives the system administrator the option of allowing specific users to ssh into the system. The list consists of comma separated user names. Numeric user IDs are not recognized with this variable. If a system administrator wants to restrict user access further by only allowing the allowed users to log in from a particular host, the entry can be specified in the form of user@host. AllowGroups\nThe AllowGroups variable gives the system administrator the option of allowing specific groups of users to ssh into the system. The list consists of comma separated group names. Numeric group IDs are not recognized with this variable. DenyUsers\nThe DenyUsers variable gives the system administrator the option of denying specific users to ssh into the system. The list consists of comma separated user names. Numeric user IDs are not recognized with this variable. If a system administrator wants to restrict user access further by specifically denying a user's access from a particular host, the entry can be specified in the form of user@host. DenyGroups\nThe DenyGroups variable gives the system administrator the option of denying specific groups of users to ssh into the system. The list consists of comma separated group names. Numeric group IDs are not recognized with this variable.\n\nRationale: Restricting which users can remotely access the system via SSH will help ensure that only authorized users access the system."
   impact 1.0
 
-  tag cis: 'distribution-independent-linux:5.2.15'
+  tag cis: 'distribution-independent-linux:5.2.14'
   tag level: 1
 
   describe.one do
@@ -238,12 +229,12 @@ control 'cis-dil-benchmark-5.2.15' do
   end
 end
 
-control 'cis-dil-benchmark-5.2.16' do
+control 'cis-dil-benchmark-5.2.15' do
   title 'Ensure SSH warning banner is configured'
   desc  "The Banner parameter specifies a file whose contents must be sent to the remote user before authentication is permitted. By default, no banner is displayed.\n\nRationale: Banners are used to warn connecting users of the particular site's policy regarding connection. Presenting a warning message prior to the normal user login may assist the prosecution of trespassers on the computer system."
   impact 1.0
 
-  tag cis: 'distribution-independent-linux:5.2.16'
+  tag cis: 'distribution-independent-linux:5.2.15'
   tag level: 1
 
   describe sshd_config do
