@@ -53,7 +53,7 @@ control 'cis-dil-benchmark-6.2.2' do
 
   passwd_files.each do |f|
     describe passwd(f) do
-      its(:user) { should_not include '+' }
+      its(:users) { should_not include '+' }
     end
   end
 end
