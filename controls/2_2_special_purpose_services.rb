@@ -96,7 +96,7 @@ control 'cis-dil-benchmark-2.2.1.3' do
   end
 
   describe.one do
-    #w(/etc/chrony/chrony.conf /etc/chrony.conf).each do |f|
+    %w(/etc/chrony/chrony.conf /etc/chrony.conf).each do |f|
       describe file(f) do
         its(:content) { should match(/^server\s+\S+/) }
       end
