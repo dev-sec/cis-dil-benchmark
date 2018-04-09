@@ -73,6 +73,10 @@ control 'cis-dil-benchmark-2.2.1.2' do
       its(:content) { should match(/^RUNASUSER=ntp\s*(?:#.*)?$/) }
     end
 
+    describe file('/etc/init.d/ntpd') do
+      its(:content) { should match(/^daemon "(?:.)?-u ntp:ntp\s*(?:.)?"\s*(?:#.*)?$/) }
+    end
+
     describe file('/etc/sysconfig/ntpd') do
       its(:content) { should match(/^OPTIONS="(?:.)?-u ntp:ntp\s*(?:.)?"\s*(?:#.*)?$/) }
     end
