@@ -74,7 +74,7 @@ control 'cis-dil-benchmark-2.2.1.2' do
     end
 
     describe file('/etc/init.d/ntpd') do
-      its(:content) { should match(/^daemon "(?:.)?-u ntp:ntp\s*(?:.)?"\s*(?:#.*)?$/) }
+      its(:content) { should match(/daemon\s+(\S+\s+)-u ntp:ntp(?:\s+|\s?")/) }
     end
 
     describe file('/etc/sysconfig/ntpd') do
