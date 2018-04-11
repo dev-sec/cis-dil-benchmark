@@ -26,20 +26,21 @@ control 'cis-dil-benchmark-5.3.1' do
   tag level: 1
 
   describe.one do
-    %w(common-password system-auth).each do |f|
-      describe file("/etc/pam.d/#{f}") do
-        its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*try_first_pass/) }
-        its(:content) { should match(/^password requisite pam_pwquality\.so (\S+\s+)*try_first_pass/) }
-
+    describe.one do
+      %w(common-password system-auth).each do |f|
+        describe file("/etc/pam.d/#{f}") do
+          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*try_first_pass/) }
+          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*retry=[3210]/) }
+        end
       end
     end
-  end
 
-  describe.one do
-    %w(common-password system-auth).each do |f|
-      describe file("/etc/pam.d/#{f}") do
-        its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*retry=[3210]/) }
-        its(:content) { should match(/^password requisite pam_pwquality\.so (\S+\s+)*retry=[3210]/) }
+    describe.one do
+      %w(common-password system-auth).each do |f|
+        describe file("/etc/pam.d/#{f}") do
+          its(:content) { should match(/^password requisite pam_pwquality\.so (\S+\s+)*retry=[3210]/) }
+          its(:content) { should match(/^password requisite pam_pwquality\.so (\S+\s+)*try_first_pass/) }
+        end
       end
     end
   end
