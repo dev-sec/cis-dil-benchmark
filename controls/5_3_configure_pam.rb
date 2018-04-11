@@ -43,6 +43,7 @@ control 'cis-dil-benchmark-5.3.1' do
           its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*lcredit=-[1-9][0-9]*\s*(?:#.*)?$/) }
           its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*ucredit=-[1-9][0-9]*\s*(?:#.*)?$/) }
           its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*ocredit=-[1-9][0-9]*\s*(?:#.*)?$/) }
+        end
       end
     end
 #  end
