@@ -25,7 +25,7 @@ control 'cis-dil-benchmark-5.3.1' do
   tag cis: 'distribution-independent-linux:5.3.1'
   tag level: 1
 
-#  if package('pam_cracklib').installed?
+  if package('pam_cracklib').installed?
     describe.one do
       %w(common-password system-auth).each do |f|
         describe file("/etc/pam.d/#{f}") do
@@ -46,7 +46,7 @@ control 'cis-dil-benchmark-5.3.1' do
         end
       end
     end
-#  end
+  end
 
   if package('pam_passwdqc').installed? || package('libpwquality').installed?
     describe.one do
