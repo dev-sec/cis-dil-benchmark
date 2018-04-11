@@ -26,7 +26,7 @@ control 'cis-dil-benchmark-1.4.1' do
   tag level: 1
 
   describe.one do
-    %w(/boot/grub/grub.conf /boot/grub/grub.cfg /boot/grub/menu.lst /boot/boot/grub/grub.conf /boot/boot/grub/grub.cfg /boot/boot/grub/menu.lst).each do |f|
+    %w(/boot/grub/grub.conf /boot/grub/grub.cfg /boot/grub/menu.lst /boot/boot/grub/grub.conf /boot/boot/grub/grub.cfg /boot/boot/grub/menu.lst /boot/grub2/grub.cfg).each do |f|
       describe file(f) do
         it { should exist }
         it { should_not be_readable.by 'group' }
@@ -51,7 +51,7 @@ control 'cis-dil-benchmark-1.4.2' do
   tag level: 1
 
   describe.one do
-    %w(/boot/grub/grub.conf /boot/grub/grub.cfg /boot/grub/menu.lst /boot/boot/grub/grub.conf /boot/boot/grub/grub.cfg /boot/boot/grub/menu.lst).each do |f|
+    %w(/boot/grub/grub.conf /boot/grub/grub.cfg /boot/grub/menu.lst /boot/boot/grub/grub.conf /boot/boot/grub/grub.cfg /boot/boot/grub/menu.lst /boot/grub/grub.cfg).each do |f|
       describe file(f) do
         its(:content) { should match(/^set superusers/) }
         its(:content) { should match(/^password/) }
