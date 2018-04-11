@@ -25,16 +25,18 @@ control 'cis-dil-benchmark-5.3.1' do
   tag cis: 'distribution-independent-linux:5.3.1'
   tag level: 1
 
-  describe.one do
+  if package('pam_cracklib').installed?
     describe.one do
       %w(common-password system-auth).each do |f|
         describe file("/etc/pam.d/#{f}") do
           its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*try_first_pass/) }
           its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*retry=[3210]/) }
-        end
+       end
       end
     end
+  end
 
+  if package('pam_passwdqc').installed?
     describe.one do
       %w(common-password system-auth).each do |f|
         describe file("/etc/pam.d/#{f}") do
@@ -43,14 +45,14 @@ control 'cis-dil-benchmark-5.3.1' do
         end
       end
     end
-  end
 
-  describe file('/etc/security/pwquality.conf') do
-    its(:content) { should match(/^minlen = (1[4-9]|[2-9][0-9]|[1-9][0-9][0-9]+)\s*(?:#.*)?$/) }
-    its(:content) { should match(/^dcredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
-    its(:content) { should match(/^lcredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
-    its(:content) { should match(/^ucredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
-    its(:content) { should match(/^ocredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
+    describe file('/etc/security/pwquality.conf') do
+      its(:content) { should match(/^minlen = (1[4-9]|[2-9][0-9]|[1-9][0-9][0-9]+)\s*(?:#.*)?$/) }
+      its(:content) { should match(/^dcredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
+      its(:content) { should match(/^lcredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
+      its(:content) { should match(/^ucredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
+      its(:content) { should match(/^ocredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
+    end
   end
 end
 
