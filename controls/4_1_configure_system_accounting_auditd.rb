@@ -87,7 +87,7 @@ if cis_level == '2'
     tag level: 2
 
     describe.one do
-      %w(/boot/grub/grub.conf /boot/grub/grub.cfg /boot/grub/menu.lst /boot/boot/grub/grub.conf /boot/boot/grub/grub.cfg /boot/boot/grub/menu.lst).each do |f|
+      %w(/boot/grub/grub.conf /boot/grub/grub.cfg /boot/grub/menu.lst /boot/boot/grub/grub.conf /boot/boot/grub/grub.cfg /boot/boot/grub/menu.lst /boot/grub2/grub.cfg).each do |f|
         describe file(f) do
           its(:content) { should match(/audit=1/) }
         end
@@ -353,11 +353,11 @@ if cis_level == '2'
 
     if command('uname -m').stdout.strip == 'x86_64'
       describe file('/etc/audit/audit.rules') do
-        its(:content) { should match(/^-a (always,exit|exit,always) arch=b64 -S init_module -S delete_module -k modules$/) }
+        its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b64 -S init_module -S delete_module -k modules$/) }
       end
     else
       describe file('/etc/audit/audit.rules') do
-        its(:content) { should match(/^-a (always,exit|exit,always) arch=b32 -S init_module -S delete_module -k modules$/) }
+        its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b32 -S init_module -S delete_module -k modules$/) }
       end
     end
   end
