@@ -36,7 +36,7 @@ control 'cis-dil-benchmark-5.3.1' do
     end
   end
 
-  if package('pam_passwdqc').installed?
+  if package('pam_passwdqc').installed? || package('libpwquality').installed?
     describe.one do
       %w(common-password system-auth).each do |f|
         describe file("/etc/pam.d/#{f}") do
