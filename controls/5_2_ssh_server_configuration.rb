@@ -186,9 +186,20 @@ control 'cis-dil-benchmark-5.2.12' do
     its(:MACs) { should_not be_nil }
   end
 
+  ALLOWED_MACS = [
+    'mac-sha2-512-etm@openssh.com',
+    'hmac-sha2-256-etm@openssh.com',
+    'umac-128-etm@openssh.com',
+    'hmac-sha2-512',
+    'hmac-sha2-256',
+    'umac-128@openssh.com',
+    'curve25519-sha256@libssh.org',
+    'diffie-hellman-group-exchange-sha256'
+  ]
+
   if sshd_config.MACs
     describe sshd_config.MACs.split(',').each do
-      it { should be_in(/^((hmac-sha2-512-etm@openssh\.com|hmac-sha2-256-etm@openssh\.com|umac-128-etm@openssh\.com|hmac-sha2-512|hmac-sha2-256|umac-128@openssh\.com|curve25519-sha256@libssh\.org|diffie-hellman-group-exchange-sha256),)*(hmac-sha2-512-etm@openssh\.com|hmac-sha2-256-etm@openssh\.com|umac-128-etm@openssh\.com|hmac-sha2-512|hmac-sha2-256|umac-128@openssh\.com)$/) }
+      it { should be_in ALLOWED_MACS }
     end
   end
 end
