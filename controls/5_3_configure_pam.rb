@@ -39,10 +39,10 @@ control 'cis-dil-benchmark-5.3.1' do
       %w(common-password system-auth).each do |f|
         describe file("/etc/pam.d/#{f}") do
           its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*minlen=(1[4-9]|[2-9][0-9]|[1-9][0-9][0-9]+)/) }
-          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*dcredit=-[1-9][0-9]/) }
-          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*lcredit=-[1-9][0-9]/) }
-          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*ucredit=-[1-9][0-9]/) }
-          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*ocredit=-[1-9][0-9]/) }
+          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*dcredit=-[1-9][0-9]*\s*(?:#.*)?/) }
+          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*lcredit=-[1-9][0-9]*\s*(?:#.*)?/) }
+          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*ucredit=-[1-9][0-9]*\s*(?:#.*)?/) }
+          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*ocredit=-[1-9][0-9]*\s*(?:#.*)?/) }
         end
       end
     end
