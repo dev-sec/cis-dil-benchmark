@@ -198,8 +198,10 @@ control 'cis-dil-benchmark-5.2.12' do
   ]
 
   if sshd_config.MACs
-    describe sshd_config.MACs.split(',').each do
-      it { should be_in ALLOWED_MACS }
+    sshd_config.MACs.split(',').each do |m|
+      describe m do
+        it { should be_in ALLOWED_MACS }
+      end
     end
   end
 end
