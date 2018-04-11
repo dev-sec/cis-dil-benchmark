@@ -195,7 +195,7 @@ control 'cis-dil-benchmark-5.2.12' do
     'umac-128@openssh.com',
     'curve25519-sha256@libssh.org',
     'diffie-hellman-group-exchange-sha256'
-  ]
+  ].freeze
 
   if sshd_config.MACs
     sshd_config.MACs.split(',').each do |m|
