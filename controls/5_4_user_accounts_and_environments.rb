@@ -169,7 +169,7 @@ control 'cis-dil-benchmark-5.4.4' do
 
   describe.one do
     %w(bash.bashrc profile bashrc).each do |f|
-      describe file("/etc/#{f}").exists do
+      describe file("/etc/#{f}").file? do
         its(:content) { should match(/^umask [01234567][2367]7\s*(?:#.*)?$/) }
       end
     end
