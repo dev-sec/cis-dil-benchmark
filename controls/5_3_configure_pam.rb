@@ -17,7 +17,7 @@
 
 title '5.3 Configure PAM'
 
-control 'cis-dil-benchmark-5.3.1' do
+control 'cis-dil-benchmark-5.3.1' do # rubocop:disable Metrics/BlockLength
   title 'Ensure password creation requirements are configured'
   desc "The pam_cracklib.so module checks the strength of passwords. It performs checks such as making sure a password is not a dictionary word, it is a certain length, contains a mix of characters (e.g. alphabet, numeric, other) and more. The following are definitions of the pam_cracklib.so options.\n\n* try_first_pass - retrieve the password from a previous stacked PAM module. If not available, then prompt the user for a password.\n* retry=3 - Allow 3 tries before sending back a failure.\n* minlen=14 - password must be 14 characters or more\n* dcredit=-1 - provide at least one digit\n* ucredit=-1 - provide at least one uppercase character\n* ocredit=-1 - provide at least one special character\n* lcredit=-1 - provide at least one lowercase character\n\nThe pam_pwquality.so module functions similarly but the minlen , dcredit , ucredit , ocredit , and lcredit parameters are stored in the /etc/security/pwquality.conf file. The settings shown above are one possible policy. Alter these values to conform to your own organization's password policies.\n\nRationale: Strong passwords protect systems from being hacked through brute force methods."
   impact 1.0
@@ -25,30 +25,46 @@ control 'cis-dil-benchmark-5.3.1' do
   tag cis: 'distribution-independent-linux:5.3.1'
   tag level: 1
 
-  describe.one do
-    %w(common-password system-auth).each do |f|
-      describe file("/etc/pam.d/#{f}") do
-        its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*try_first_pass/) }
-        its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*retry=[3210]/) }
+  if package('pam_cracklib').installed?
+    describe.one do
+      %w(common-password system-auth).each do |f|
+        describe file("/etc/pam.d/#{f}") do
+          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*try_first_pass/) }
+          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*retry=[3210]/) }
+        end
+      end
+    end
+
+    describe.one do
+      %w(common-password system-auth).each do |f|
+        describe file("/etc/pam.d/#{f}") do
+          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*minlen=(1[4-9]|[2-9][0-9]|[1-9][0-9][0-9]+)/) }
+          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*dcredit=-[1-9][0-9]*\s*(?:#.*)?/) }
+          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*lcredit=-[1-9][0-9]*\s*(?:#.*)?/) }
+          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*ucredit=-[1-9][0-9]*\s*(?:#.*)?/) }
+          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*ocredit=-[1-9][0-9]*\s*(?:#.*)?/) }
+        end
       end
     end
   end
 
-  describe.one do
-    %w(common-password system-auth).each do |f|
-      describe file("/etc/pam.d/#{f}") do
-        its(:content) { should match(/^password requisite pam_pwquality\.so (\S+\s+)*try_first_pass/) }
-        its(:content) { should match(/^password requisite pam_pwquality\.so (\S+\s+)*retry=[3210]/) }
+  if package('pam_passwdqc').installed? || package('libpwquality').installed?
+    describe.one do
+      %w(common-password system-auth).each do |f|
+        describe file("/etc/pam.d/#{f}") do
+          its(:content) { should match(/^password requisite pam_pwquality\.so (\S+\s+)*retry=[3210]/) }
+          its(:content) { should match(/^password requisite pam_pwquality\.so (\S+\s+)*try_first_pass/) }
+        end
       end
     end
-  end
 
-  describe file('/etc/security/pwquality.conf') do
-    its(:content) { should match(/^minlen = (1[4-9]|[2-9][0-9]|[1-9][0-9][0-9]+)\s*(?:#.*)?$/) }
-    its(:content) { should match(/^dcredit= -[1-9][0-9]*\s*(?:#.*)?$/) }
-    its(:content) { should match(/^lcredit= -[1-9][0-9]*\s*(?:#.*)?$/) }
-    its(:content) { should match(/^ucredit= -[1-9][0-9]*\s*(?:#.*)?$/) }
-    its(:content) { should match(/^ocredit= -[1-9][0-9]*\s*(?:#.*)?$/) }
+    describe file('/etc/security/pwquality.conf') do
+      its(:content) { should match(/^minlen = (1[4-9]|[2-9][0-9]|[1-9][0-9][0-9]+)\s*(?:#.*)?$/) }
+      its(:content) { should match(/^dcredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
+      its(:content) { should match(/^lcredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
+      its(:content) { should match(/^ucredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
+      its(:content) { should match(/^ocredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
+    end
   end
 end
 
