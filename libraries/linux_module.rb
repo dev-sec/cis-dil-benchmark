@@ -58,7 +58,9 @@ class LinuxModule < Inspec.resource(1)
   end
 
   def command
-    modinfo_cmd = "/sbin/modprobe -n -v #{@module} | awk '{$1=$1;print}'"
+    # Lets just ensure the last line in the kernel module's configuration is 'install /bin/true'
+    # this is enough to be sure the module will not be loaded on next reboot or run of modprobe
+    modinfo_cmd = "/sbin/modprobe -n -v #{@module} | tail -n 1 | awk '{$1=$1;print}'"
 
     cmd = inspec.command(modinfo_cmd)
     cmd.exit_status.zero? ? cmd.stdout.delete("\n") : nil
