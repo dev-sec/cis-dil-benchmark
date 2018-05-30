@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 # author: Kristian Vlaardingerbroek
+#
 
 title '1.3 Filesystem Integrity Checking'
 
@@ -45,7 +46,7 @@ control 'cis-dil-benchmark-1.3.2' do
   tag level: 1
 
   describe.one do
-    %w(/var/spool/cron/crontabs/root /etc/crontab).each do |f|
+    %w(/var/spool/cron/crontabs/root /var/spool/cron/root /etc/crontab).each do |f|
       describe file(f) do
         its(:content) { should match(/aide --check/) }
       end

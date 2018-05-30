@@ -25,10 +25,12 @@ control 'cis-dil-benchmark-5.1.1' do
   tag cis: 'distribution-independent-linux:5.1.1'
   tag level: 1
 
-  %w(cron crond).each do |s|
-    describe service(s) do
-      it { should be_enabled }
-      it { should be_running }
+  describe.one do
+    %w(cron crond).each do |s|
+      describe service(s) do
+        it { should be_enabled }
+        it { should be_running }
+      end
     end
   end
 end

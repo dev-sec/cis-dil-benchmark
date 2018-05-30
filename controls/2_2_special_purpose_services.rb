@@ -73,6 +73,10 @@ control 'cis-dil-benchmark-2.2.1.2' do
       its(:content) { should match(/^RUNASUSER=ntp\s*(?:#.*)?$/) }
     end
 
+    describe file('/etc/init.d/ntpd') do
+      its(:content) { should match(/daemon\s+(\S+\s+)-u ntp:ntp(?:\s+|\s?")/) }
+    end
+
     describe file('/etc/sysconfig/ntpd') do
       its(:content) { should match(/^OPTIONS="(?:.)?-u ntp:ntp\s*(?:.)?"\s*(?:#.*)?$/) }
     end
@@ -95,12 +99,16 @@ control 'cis-dil-benchmark-2.2.1.3' do
     package('chrony').installed? || command('chronyd').exist?
   end
 
-  describe file('/etc/chrony/chrony.conf') do
-    its(:content) { should match(/^server\s+\S+/) }
+  describe.one do
+    %w(/etc/chrony/chrony.conf /etc/chrony.conf).each do |f|
+      describe file(f) do
+        its(:content) { should match(/^server\s+\S+/) }
+      end
+    end
   end
 
   describe processes('chronyd') do
-    its(:user) { should cmp 'chrony' }
+    its(:users) { should cmp 'chrony' }
   end
 end
 
