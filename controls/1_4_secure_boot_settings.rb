@@ -69,7 +69,7 @@ control 'cis-dil-benchmark-1.4.3' do
   tag level: 1
 
   describe.one do
-    describe shadow.users('root') do
+    describe shadow.user('root') do
       its(:password) { should_not include('*') }
       its(:password) { should_not include('!') }
     end
