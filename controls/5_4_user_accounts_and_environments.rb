@@ -199,6 +199,6 @@ control 'cis-dil-benchmark-5.6' do
   tag level: 1
 
   describe file('/etc/pam.d/su') do
-    its(:content) { should match(/^auth required pam_wheel.so use_uid$/) }
+    its(:content) { should match(/^auth\s+required\s+pam_wheel.so use_uid$/) }
   end
 end
