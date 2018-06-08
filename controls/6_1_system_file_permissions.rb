@@ -77,6 +77,9 @@ control 'cis-dil-benchmark-6.1.3' do
   shadow_files = ['/etc/shadow']
   shadow_files << '/usr/share/baselayout/shadow' if file('/etc/nsswitch.conf').content =~ /^shadow:\s+(\S+\s+)*usrfiles/
 
+  expected_gid = 0
+  expected_gid = 42 if os.debian?
+
   shadow_files.each do |f|
     describe file(f) do
       it { should exist }
@@ -90,7 +93,7 @@ control 'cis-dil-benchmark-6.1.3' do
       it { should_not be_writable.by 'other' }
       it { should_not be_executable.by 'other' }
       its(:uid) { should cmp 0 }
-      its(:gid) { should cmp 0 }
+      its(:gid) { should cmp expected_gid }
       its(:sticky) { should equal false }
       its(:suid) { should equal false }
       its(:sgid) { should equal false }
@@ -141,6 +144,9 @@ control 'cis-dil-benchmark-6.1.5' do
   gshadow_files = ['/etc/gshadow']
   gshadow_files << '/usr/share/baselayout/gshadow' if file('/etc/nsswitch.conf').content =~ /^gshadow:\s+(\S+\s+)*usrfiles/
 
+  expected_gid = 0
+  expected_gid = 42 if os.debian?
+
   gshadow_files.each do |f|
     describe file(f) do
       it { should exist }
@@ -154,7 +160,7 @@ control 'cis-dil-benchmark-6.1.5' do
       it { should_not be_writable.by 'other' }
       it { should_not be_executable.by 'other' }
       its(:uid) { should cmp 0 }
-      its(:gid) { should cmp 0 }
+      its(:gid) { should cmp expected_gid }
       its(:sticky) { should equal false }
       its(:suid) { should equal false }
       its(:sgid) { should equal false }
