@@ -208,8 +208,8 @@ if cis_level == '2'
 
     describe file('/etc/audit/audit.rules') do
       its(:content) { should match(%r{^-w /var/run/utmp -p wa -k session$}) }
-      its(:content) { should match(%r{^-w /var/log/wtmp -p wa -k session$}) }
-      its(:content) { should match(%r{^-w /var/log/btmp -p wa -k session$}) }
+      its(:content) { should match(%r{^-w /var/log/wtmp -p wa -k logins$}) }
+      its(:content) { should match(%r{^-w /var/log/btmp -p wa -k logins$}) }
     end
   end
 
