@@ -320,7 +320,7 @@ if cis_level == '2'
 
     describe file('/etc/audit/audit.rules') do
       its(:content) { should match(%r{^-w /etc/sudoers -p wa -k scope$}) }
-      its(:content) { should match(%r{^-w /etc/sudoers\.d -p wa -k scope$}) }
+      its(:content) { should match(%r{^-w /etc/sudoers\.d/? -p wa -k scope$}) }
     end
   end
 
