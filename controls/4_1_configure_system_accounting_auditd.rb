@@ -152,7 +152,13 @@ if cis_level == '2'
     describe.one do
       describe file('/etc/audit/audit.rules') do
         its(:content) { should match(%r{^-w /etc/network -p wa -k system-locale$}) }
+      end
+
+      describe file('/etc/audit/audit.rules') do
         its(:content) { should match(%r{^-w /etc/networks -p wa -k system-locale$}) }
+      end
+
+      describe file('/etc/audit/audit.rules') do
         its(:content) { should match(%r{^-w /etc/sysconfig/network -p wa -k system-locale$}) }
       end
     end
