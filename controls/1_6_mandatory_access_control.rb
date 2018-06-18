@@ -185,7 +185,7 @@ if cis_level == '2'
     end
 
     describe command('apparmor_status --complaining') do
-      its(:stdout) { should cmp.zero? }
+      its(:stdout) { should cmp 0 }
     end
 
     describe command('apparmor_status') do
