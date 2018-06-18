@@ -36,7 +36,7 @@ control 'cis-dil-benchmark-5.4.1.1' do
   end
 
   shadow_files.each do |f|
-    shadow(f).user(/.+/).entries.each do |user|
+    shadow(f).users(/.+/).entries.each do |user|
       next if (user.password && %w(* !)).any?
 
       describe user do
@@ -59,7 +59,7 @@ control 'cis-dil-benchmark-5.4.1.2' do
   end
 
   shadow_files.each do |f|
-    shadow(f).user(/.+/).entries.each do |user|
+    shadow(f).users(/.+/).entries.each do |user|
       next if (user.password && %w(* !)).any?
 
       describe user do
@@ -82,7 +82,7 @@ control 'cis-dil-benchmark-5.4.1.3' do
   end
 
   shadow_files.each do |f|
-    shadow(f).user(/.+/).entries.each do |user|
+    shadow(f).users(/.+/).entries.each do |user|
       next if (user.password && %w(* !)).any?
 
       describe user do
@@ -105,7 +105,7 @@ control 'cis-dil-benchmark-5.4.1.4' do
   end
 
   shadow_files.each do |f|
-    shadow(f).user(/.+/).entries.each do |user|
+    shadow(f).users(/.+/).entries.each do |user|
       next if (user.password && %w(* !)).any?
 
       describe user do
@@ -133,7 +133,7 @@ control 'cis-dil-benchmark-5.4.2' do
         its(:shell) { should match(%r{(/usr/sbin/nologin|/sbin/nologin|/bin/false)}) }
       end
 
-      describe shadow(user.user) do
+      describe shadow(users.user) do
         its(:password) { should be_all { |m| m == '*' } }
       end
     end
