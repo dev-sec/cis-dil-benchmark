@@ -38,7 +38,7 @@ control 'cis-dil-benchmark-6.2.1' do
 
   shadow_files.each do |f|
     describe shadow(f) do
-      its(:password) { should_not include '' }
+      its(:passwords) { should_not include '' }
     end
   end
 end
