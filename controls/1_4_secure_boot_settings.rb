@@ -69,9 +69,9 @@ control 'cis-dil-benchmark-1.4.3' do
   tag level: 1
 
   describe.one do
-    describe shadow.user('root') do
-      its(:password) { should_not include('*') }
-      its(:password) { should_not include('!') }
+    describe shadow.users('root') do
+      its(:passwords) { should_not include('*') }
+      its(:passwords) { should_not include('!') }
     end
 
     describe file('/etc/inittab') do
