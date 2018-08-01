@@ -17,7 +17,7 @@
 
 title '3.5 Uncommon Network Protocols'
 
-control 'cis-dil-benchmark-3.5.1' do
+control ' ' do
   title 'Ensure DCCP is disabled'
   desc  "The Datagram Congestion Control Protocol (DCCP) is a transport layer protocol that supports streaming media and telephony. DCCP provides a way to gain access to congestion control, without having to do it at the application layer, but does not provide in-sequence delivery.\n\nRationale: If the protocol is not required, it is recommended that the drivers not be installed to reduce the potential attack surface."
   impact 0.0
@@ -25,9 +25,9 @@ control 'cis-dil-benchmark-3.5.1' do
   tag cis: 'distribution-independent-linux:3.5.1'
   tag level: 1
 
-  describe linux_module('dccp') do
+  describe kernel_module('dccp') do
     it { should_not be_loaded }
-    its(:command) { should match(%r{^install /bin/true$}) }
+    it { should be_disabled }
   end
 end
 
@@ -39,9 +39,9 @@ control 'cis-dil-benchmark-3.5.2' do
   tag cis: 'distribution-independent-linux:3.5.2'
   tag level: 1
 
-  describe linux_module('sctp') do
+  describe kernel_module('sctp') do
     it { should_not be_loaded }
-    its(:command) { should match(%r{^install /bin/true$}) }
+    it { should be_disabled }
   end
 end
 
@@ -53,9 +53,9 @@ control 'cis-dil-benchmark-3.5.3' do
   tag cis: 'distribution-independent-linux:3.5.3'
   tag level: 1
 
-  describe linux_module('rds') do
+  describe kernel_module('rds') do
     it { should_not be_loaded }
-    its(:command) { should match(%r{^install /bin/true$}) }
+    it { should be_disabled }
   end
 end
 
@@ -67,8 +67,8 @@ control 'cis-dil-benchmark-3.5.4' do
   tag cis: 'distribution-independent-linux:3.5.4'
   tag level: 1
 
-  describe linux_module('tipc') do
+  describe kernel_module('tipc') do
     it { should_not be_loaded }
-    its(:command) { should match(%r{^install /bin/true$}) }
+    it { should be_disabled }
   end
 end
