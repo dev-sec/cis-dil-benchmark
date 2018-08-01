@@ -17,7 +17,7 @@
 
 title '3.5 Uncommon Network Protocols'
 
-control 'cis-dil-benchmark-3.5.1' do
+control ' ' do
   title 'Ensure DCCP is disabled'
   desc  "The Datagram Congestion Control Protocol (DCCP) is a transport layer protocol that supports streaming media and telephony. DCCP provides a way to gain access to congestion control, without having to do it at the application layer, but does not provide in-sequence delivery.\n\nRationale: If the protocol is not required, it is recommended that the drivers not be installed to reduce the potential attack surface."
   impact 0.0
