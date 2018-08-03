@@ -27,9 +27,9 @@ control 'cis-dil-benchmark-1.1.1.1' do
   tag cis: 'distribution-independent-linux:1.1.1.1'
   tag level: 1
 
-  describe linux_module('cramfs') do
+  describe kernel_module('cramfs') do
     it { should_not be_loaded }
-    its(:command) { should match(%r{^install /bin/true$}) }
+    it { should be_disabled }
   end
 end
 
@@ -41,9 +41,9 @@ control 'cis-dil-benchmark-1.1.1.2' do
   tag cis: 'distribution-independent-linux:1.1.1.2'
   tag level: 1
 
-  describe linux_module('freevxfs') do
+  describe kernel_module('freevxfs') do
     it { should_not be_loaded }
-    its(:command) { should match(%r{^install /bin/true$}) }
+    it { should be_disabled }
   end
 end
 
@@ -55,9 +55,9 @@ control 'cis-dil-benchmark-1.1.1.3' do
   tag cis: 'distribution-independent-linux:1.1.1.3'
   tag level: 1
 
-  describe linux_module('jffs2') do
+  describe kernel_module('jffs2') do
     it { should_not be_loaded }
-    its(:command) { should match(%r{^install /bin/true$}) }
+    it { should be_disabled }
   end
 end
 
@@ -69,9 +69,9 @@ control 'cis-dil-benchmark-1.1.1.4' do
   tag cis: 'distribution-independent-linux:1.1.1.4'
   tag level: 1
 
-  describe linux_module('hfs') do
+  describe kernel_module('hfs') do
     it { should_not be_loaded }
-    its(:command) { should match(%r{^install /bin/true$}) }
+    it { should be_disabled }
   end
 end
 
@@ -83,9 +83,9 @@ control 'cis-dil-benchmark-1.1.1.5' do
   tag cis: 'distribution-independent-linux:1.1.1.5'
   tag level: 1
 
-  describe linux_module('hfsplus') do
+  describe kernel_module('hfsplus') do
     it { should_not be_loaded }
-    its(:command) { should match(%r{^install /bin/true$}) }
+    it { should be_disabled }
   end
 end
 
@@ -97,9 +97,9 @@ control 'cis-dil-benchmark-1.1.1.6' do
   tag cis: 'distribution-independent-linux:1.1.1.6'
   tag level: 1
 
-  describe linux_module('squashfs') do
+  describe kernel_module('squashfs') do
     it { should_not be_loaded }
-    its(:command) { should match(%r{^install /bin/true$}) }
+    it { should be_disabled }
   end
 end
 
@@ -111,9 +111,9 @@ control 'cis-dil-benchmark-1.1.1.7' do
   tag cis: 'distribution-independent-linux:1.1.1.7'
   tag level: 1
 
-  describe linux_module('udf') do
+  describe kernel_module('udf') do
     it { should_not be_loaded }
-    its(:command) { should match(%r{^install /bin/true$}) }
+    it { should be_disabled }
   end
 end
 
@@ -125,9 +125,9 @@ control 'cis-dil-benchmark-1.1.1.8' do
   tag cis: 'distribution-independent-linux:1.1.1.8'
   tag level: 1
 
-  describe linux_module('vfat') do
+  describe kernel_module('vfat') do
     it { should_not be_loaded }
-    its(:command) { should match(%r{^install /bin/true$}) }
+    it { should be_disabled }
   end
 end
 
