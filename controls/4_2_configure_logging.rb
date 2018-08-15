@@ -227,7 +227,7 @@ control 'cis-dil-benchmark-4.2.4' do
 
   command('find /var/log -type f').stdout.split.each do |f|
     describe file(f) do
-      it { should_not be_writable.by 'group' }
+      it { should_not be_writable.by 'group' } unless f.eql? '/var/log/wtmp'
       it { should_not be_executable.by 'group' }
       it { should_not be_readable.by 'other' }
       it { should_not be_writable.by 'other' }
