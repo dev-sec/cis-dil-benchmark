@@ -251,12 +251,65 @@ control 'cis-dil-benchmark-1.1.10' do
 end
 
 control 'cis-dil-benchmark-1.1.11' do
-  title 'Ensure separate partition exists for /var/log'
-  desc  "The /var/log directory is used by system services to store log data .\n\nRationale: There are two important reasons to ensure that system logs are stored on a separate partition: protection against resource exhaustion (since logs can grow quite large) and protection of audit data."
+  title 'Ensure noexec option set on /var/tmp partition'
+  desc  "The noexec mount option specifies that the filesystem cannot contain executable binaries.\n\nRationale: Since the /var/tmp filesystem is only intended for temporary file storage, set this option to ensure that users cannot run executable binaries from /var/tmp."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:1.1.11'
-  tag level: 2
+  tag level: 1
+
+  describe mount('/var/tmp') do
+    its(:options) { should include 'noexec' }
+  end
+end
+
+control 'cis-dil-benchmark-1.1.12' do
+  title 'Ensure noexec option set on /var/tmp partition'
+  desc  "The noexec mount option specifies that the filesystem cannot contain executable binaries.\n\nRationale: Since the /var/tmp filesystem is only intended for temporary file storage, set this option to ensure that users cannot run executable binaries from /var/tmp."
+  impact 1.0
+
+  tag cis: 'distribution-independent-linux:1.1.12'
+  tag level: 1
+
+  describe mount('/var/tmp') do
+    its(:options) { should include 'noexec' }
+  end
+end
+
+control 'cis-dil-benchmark-1.1.13' do
+  title 'Ensure noexec option set on /var/tmp partition'
+  desc  "The noexec mount option specifies that the filesystem cannot contain executable binaries.\n\nRationale: Since the /var/tmp filesystem is only intended for temporary file storage, set this option to ensure that users cannot run executable binaries from /var/tmp."
+  impact 1.0
+
+  tag cis: 'distribution-independent-linux:1.1.13'
+  tag level: 1
+
+  describe mount('/var/tmp') do
+    its(:options) { should include 'noexec' }
+  end
+end
+
+control 'cis-dil-benchmark-1.1.14' do
+  title 'Ensure noexec option set on /var/tmp partition'
+  desc  "The noexec mount option specifies that the filesystem cannot contain executable binaries.\n\nRationale: Since the /var/tmp filesystem is only intended for temporary file storage, set this option to ensure that users cannot run executable binaries from /var/tmp."
+  impact 1.0
+
+  tag cis: 'distribution-independent-linux:1.1.14'
+  tag level: 1
+
+  describe mount('/var/tmp') do
+    its(:options) { should include 'noexec' }
+  end
+end
+
+if cis_level == '2'
+  control 'cis-dil-benchmark-1.1.15' do
+    title 'Ensure separate partition exists for /var/log'
+    desc  "The /var/log directory is used by system services to store log data .\n\nRationale: There are two important reasons to ensure that system logs are stored on a separate partition: protection against resource exhaustion (since logs can grow quite large) and protection of audit data."
+    impact 1.0
+
+    tag cis: 'distribution-independent-linux:1.1.15'
+    tag level: 2
 
   describe mount('/var/log') do
     it { should be_mounted }
@@ -264,13 +317,13 @@ control 'cis-dil-benchmark-1.1.11' do
   only_if { cis_level == 2 }
 end
 
-control 'cis-dil-benchmark-1.1.12' do
-  title 'Ensure separate partition exists for /var/log/audit'
-  desc  "The auditing daemon, auditd, stores log data in the /var/log/audit directory.\n\nRationale: There are two important reasons to ensure that data gathered by auditd is stored on a separate partition: protection against resource exhaustion (since the audit.log file can grow quite large) and protection of audit data. The audit daemon calculates how much free space is left and performs actions based on the results. If other processes (such as syslog) consume space in the same partition as auditd, it may not perform as desired."
-  impact 1.0
+  control 'cis-dil-benchmark-1.1.16' do
+    title 'Ensure separate partition exists for /var/log/audit'
+    desc  "The auditing daemon, auditd, stores log data in the /var/log/audit directory.\n\nRationale: There are two important reasons to ensure that data gathered by auditd is stored on a separate partition: protection against resource exhaustion (since the audit.log file can grow quite large) and protection of audit data. The audit daemon calculates how much free space is left and performs actions based on the results. If other processes (such as syslog) consume space in the same partition as auditd, it may not perform as desired."
+    impact 1.0
 
-  tag cis: 'distribution-independent-linux:1.1.12'
-  tag level: 2
+    tag cis: 'distribution-independent-linux:1.1.16'
+    tag level: 2
 
   only_if { cis_level == 2 }
 
@@ -279,13 +332,13 @@ control 'cis-dil-benchmark-1.1.12' do
   end
 end
 
-control 'cis-dil-benchmark-1.1.13' do
-  title 'Ensure separate partition exists for /home'
-  desc  "The /home directory is used to support disk storage needs of local users.\n\nRationale: If the system is intended to support local users, create a separate partition for the /home directory to protect against resource exhaustion and restrict the type of files that can be stored under /home."
-  impact 1.0
+  control 'cis-dil-benchmark-1.1.17' do
+    title 'Ensure separate partition exists for /home'
+    desc  "The /home directory is used to support disk storage needs of local users.\n\nRationale: If the system is intended to support local users, create a separate partition for the /home directory to protect against resource exhaustion and restrict the type of files that can be stored under /home."
+    impact 1.0
 
-  tag cis: 'distribution-independent-linux:1.1.13'
-  tag level: 2
+    tag cis: 'distribution-independent-linux:1.1.17'
+    tag level: 2
 
   only_if { cis_level == 2 }
 
@@ -294,12 +347,12 @@ control 'cis-dil-benchmark-1.1.13' do
   end
 end
 
-control 'cis-dil-benchmark-1.1.14' do
+control 'cis-dil-benchmark-1.1.18' do
   title 'Ensure nodev option set on /home partition'
   desc  "The nodev mount option specifies that the filesystem cannot contain special devices.\n\nRationale: Since the user partitions are not intended to support devices, set this option to ensure that users cannot attempt to create block or character special devices."
   impact 1.0
 
-  tag cis: 'distribution-independent-linux:1.1.14'
+  tag cis: 'distribution-independent-linux:1.1.18'
   tag level: 1
 
   describe mount('/home') do
@@ -307,12 +360,12 @@ control 'cis-dil-benchmark-1.1.14' do
   end
 end
 
-control 'cis-dil-benchmark-1.1.15' do
+control 'cis-dil-benchmark-1.1.19' do
   title 'Ensure nodev option set on /dev/shm partition'
   desc  "The nodev mount option specifies that the filesystem cannot contain special devices.\n\nRationale: Since the /run/shm filesystem is not intended to support devices, set this option to ensure that users cannot attempt to create special devices in /dev/shm partitions."
   impact 1.0
 
-  tag cis: 'distribution-independent-linux:1.1.15'
+  tag cis: 'distribution-independent-linux:1.1.19'
   tag level: 1
 
   describe mount('/dev/shm') do
@@ -320,12 +373,12 @@ control 'cis-dil-benchmark-1.1.15' do
   end
 end
 
-control 'cis-dil-benchmark-1.1.16' do
+control 'cis-dil-benchmark-1.1.20' do
   title 'Ensure nosuid option set on /dev/shm partitionrun'
   desc  "The nosuid mount option specifies that the filesystem cannot contain setuid files.\n\nRationale: Setting this option on a file system prevents users from introducing privileged programs onto the system and allowing non-root users to execute them."
   impact 1.0
 
-  tag cis: 'distribution-independent-linux:1.1.16'
+  tag cis: 'distribution-independent-linux:1.1.20'
   tag level: 1
 
   describe mount('/dev/shm') do
@@ -333,12 +386,12 @@ control 'cis-dil-benchmark-1.1.16' do
   end
 end
 
-control 'cis-dil-benchmark-1.1.17' do
+control 'cis-dil-benchmark-1.1.21' do
   title 'Ensure noexec option set on /dev/shm partition'
   desc  "The noexec mount option specifies that the filesystem cannot contain executable binaries.\n\nRationale: Setting this option on a file system prevents users from executing programs from shared memory. This deters users from introducing potentially malicious software on the system."
   impact 1.0
 
-  tag cis: 'distribution-independent-linux:1.1.17'
+  tag cis: 'distribution-independent-linux:1.1.21'
   tag level: 1
 
   describe mount('/dev/shm') do
@@ -346,51 +399,51 @@ control 'cis-dil-benchmark-1.1.17' do
   end
 end
 
-control 'cis-dil-benchmark-1.1.18' do
+control 'cis-dil-benchmark-1.1.22' do
   title 'Ensure nodev option set on removable media partitions'
   desc  "The nodev mount option specifies that the filesystem cannot contain special devices.\n\nRationale: Removable media containing character and block special devices could be used to circumvent security controls by allowing non-root users to access sensitive device files such as /dev/kmem or the raw disk partitions."
   impact 0.0
 
-  tag cis: 'distribution-independent-linux:1.1.18'
+  tag cis: 'distribution-independent-linux:1.1.22'
   tag level: 1
 
-  describe 'cis-dil-benchmark-1.1.18' do
+  describe 'cis-dil-benchmark-1.1.22' do
     skip 'Not implemented'
   end
 end
 
-control 'cis-dil-benchmark-1.1.19' do
+control 'cis-dil-benchmark-1.1.23' do
   title 'Ensure nosuid option set on removable media partitions'
   desc  "The nosuid mount option specifies that the filesystem cannot contain setuid files.\n\nRationale: Setting this option on a file system prevents users from introducing privileged programs onto the system and allowing non-root users to execute them."
   impact 0.0
 
-  tag cis: 'distribution-independent-linux:1.1.19'
+  tag cis: 'distribution-independent-linux:1.1.23'
   tag level: 1
 
-  describe 'cis-dil-benchmark-1.1.19' do
+  describe 'cis-dil-benchmark-1.1.23' do
     skip 'Not implemented'
   end
 end
 
-control 'cis-dil-benchmark-1.1.20' do
+control 'cis-dil-benchmark-1.1.24' do
   title 'Ensure noexec option set on removable media partitions'
   desc  "The noexec mount option specifies that the filesystem cannot contain executable binaries.\n\nRationale: Setting this option on a file system prevents users from executing programs from the removable media. This deters users from being able to introduce potentially malicious software on the system."
   impact 0.0
 
-  tag cis: 'distribution-independent-linux:1.1.20'
+  tag cis: 'distribution-independent-linux:1.1.24'
   tag level: 1
 
-  describe 'cis-dil-benchmark-1.1.20' do
+  describe 'cis-dil-benchmark-1.1.24' do
     skip 'Not implemented'
   end
 end
 
-control 'cis-dil-benchmark-1.1.21' do
+control 'cis-dil-benchmark-1.1.25' do
   title 'Ensure sticky bit is set on all world-writable directories'
   desc  "Setting the sticky bit on world writable directories prevents users from deleting or renaming files in that directory that are not owned by them.\n\nRationale: This feature prevents the ability to delete or rename files in world writable directories (such as /tmp) that are owned by another user."
   impact 1.0
 
-  tag cis: 'distribution-independent-linux:1.1.21'
+  tag cis: 'distribution-independent-linux:1.1.25'
   tag level: 1
 
   describe command("df --local -P | awk '{ if (NR!=1) print $6 }' | xargs -I '{}' find '{}' -xdev -type d \( -perm -0002 -a ! -perm -1000 \)") do
@@ -398,12 +451,12 @@ control 'cis-dil-benchmark-1.1.21' do
   end
 end
 
-control 'cis-dil-benchmark-1.1.22' do
+control 'cis-dil-benchmark-1.1.26' do
   title 'Disable Automounting'
   desc  "autofs allows automatic mounting of devices, typically including CD/DVDs and USB drives.\n\nRationale: With automounting enabled anyone with physical access could attach a USB drive or disc and have its contents available in system even if they lacked permissions to mount it themselves."
   impact 1.0
 
-  tag cis: 'distribution-independent-linux:1.1.22'
+  tag cis: 'distribution-independent-linux:1.1.26'
   tag level: 1
 
   describe.one do
