@@ -237,6 +237,8 @@ control 'cis-dil-benchmark-1.1.9' do
   end
 end
 
+# There is a mistake in the official CIS DIL documentaion 1.1.10-1.1.14 are
+# duplicates of 1.1.9. So I used "skipped" to keep the order of the numbering.
 control 'cis-dil-benchmark-1.1.10' do
   title 'Ensure noexec option set on /var/tmp partition'
   desc  "The noexec mount option specifies that the filesystem cannot contain executable binaries.\n\nRationale: Since the /var/tmp filesystem is only intended for temporary file storage, set this option to ensure that users cannot run executable binaries from /var/tmp."
@@ -245,8 +247,8 @@ control 'cis-dil-benchmark-1.1.10' do
   tag cis: 'distribution-independent-linux:1.1.10'
   tag level: 1
 
-  describe mount('/var/tmp') do
-    its(:options) { should include 'noexec' }
+  describe 'cis-dil-benchmark-1.1.10' do
+    skip 'Duplicate of cis-dil-benchmark-1.1.9'
   end
 end
 
@@ -258,8 +260,9 @@ control 'cis-dil-benchmark-1.1.11' do
   tag cis: 'distribution-independent-linux:1.1.11'
   tag level: 1
 
-  describe mount('/var/tmp') do
-    its(:options) { should include 'noexec' }
+  
+  describe 'cis-dil-benchmark-1.1.11' do
+    skip 'Duplicate of cis-dil-benchmark-1.1.9'
   end
 end
 
@@ -271,8 +274,8 @@ control 'cis-dil-benchmark-1.1.12' do
   tag cis: 'distribution-independent-linux:1.1.12'
   tag level: 1
 
-  describe mount('/var/tmp') do
-    its(:options) { should include 'noexec' }
+  describe 'cis-dil-benchmark-1.1.12' do
+    skip 'Duplicate of cis-dil-benchmark-1.1.9'
   end
 end
 
@@ -284,8 +287,8 @@ control 'cis-dil-benchmark-1.1.13' do
   tag cis: 'distribution-independent-linux:1.1.13'
   tag level: 1
 
-  describe mount('/var/tmp') do
-    its(:options) { should include 'noexec' }
+  describe 'cis-dil-benchmark-1.1.13' do
+    skip 'Duplicate of cis-dil-benchmark-1.1.9'
   end
 end
 
@@ -296,9 +299,9 @@ control 'cis-dil-benchmark-1.1.14' do
 
   tag cis: 'distribution-independent-linux:1.1.14'
   tag level: 1
-
-  describe mount('/var/tmp') do
-    its(:options) { should include 'noexec' }
+  
+  describe 'cis-dil-benchmark-1.1.14' do
+    skip 'Duplicate of cis-dil-benchmark-1.1.9'
   end
 end
 
