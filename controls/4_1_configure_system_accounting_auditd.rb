@@ -178,9 +178,18 @@ control 'cis-dil-benchmark-4.1.6' do
     end
   end
 
-  if command('uname -m').stdout.strip == 'x86_64'
+  control 'cis-dil-benchmark-4.1.8' do
+    title 'Ensure login and logout events are collected'
+    desc  "Monitor login and logout events. The parameters below track changes to files associated with login/logout events. The file /var/log/lastlog maintain records of the last time a user successfully logged in. The /var/run/failock directory maintains records of login failures via the pam_faillock module\n\nRationale: Monitoring login/logout events could provide a system administrator with information associated with brute force attacks against user logins."
+    impact 1.0
+
+    tag cis: 'distribution-independent-linux:4.1.8'
+    tag level: 2
+
     describe file('/etc/audit/audit.rules') do
-      its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b64 -S sethostname -S setdomainname -k system-locale$/) }
+      its(:content) { should match(%r{^-w /var/log/faillog -p wa -k logins$}) }
+      its(:content) { should match(%r{^-w /var/log/lastlog -p wa -k logins$}) }
+      its(:content) { should match(%r{^-w /var/log/tallylog -p wa -k logins$}) }
     end
   end
 end
@@ -231,12 +240,17 @@ control 'cis-dil-benchmark-4.1.9' do
   tag cis: 'distribution-independent-linux:4.1.9'
   tag level: 2
 
-  only_if { cis_level == 2 }
+    describe file('/etc/audit/audit.rules') do
+      its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b32 (-S creat -S open -S openat -S truncate -S ftruncate|-S creat,open,openat,open_by_handle_at,truncate,ftruncate) -F exit=-EACCES -F auid>=#{uid_min} -F auid!=4294967295 (-F key=access$|-k access$)/) }
+      its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b32 (-S creat -S open -S openat -S truncate -S ftruncate|-S creat,open,openat,open_by_handle_at,truncate,ftruncate) -F exit=-EPERM -F auid>=#{uid_min} -F auid!=4294967295 (-F key=access$|-k access$)/) }
+    end
 
-  describe file('/etc/audit/audit.rules') do
-    its(:content) { should match(%r{^-w /var/run/utmp -p wa -k session$}) }
-    its(:content) { should match(%r{^-w /var/log/wtmp -p wa -k logins$}) }
-    its(:content) { should match(%r{^-w /var/log/btmp -p wa -k logins$}) }
+    if command('uname -m').stdout.strip == 'x86_64'
+      describe file('/etc/audit/audit.rules') do
+        its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b64 (-S creat -S open -S openat -S truncate -S ftruncate|-S creat,open,openat,open_by_handle_at,truncate,ftruncate) -F exit=-EACCES -F auid>=#{uid_min} -F auid!=4294967295 (-F key=access$|-k access$)/) }
+        its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b64 (-S creat -S open -S openat -S truncate -S ftruncate|-S creat,open,openat,open_by_handle_at,truncate,ftruncate) -F exit=-EPERM -F auid>=#{uid_min} -F auid!=4294967295 (-F key=access$|-k access$)/) }
+      end
+    end
   end
 end
 
@@ -296,11 +310,14 @@ control 'cis-dil-benchmark-4.1.12' do
   tag cis: 'distribution-independent-linux:4.1.12'
   tag level: 2
 
-  only_if { cis_level == 2 }
-
-  command('find / -xdev \( -perm -4000 -o -perm -2000 \) -type f').stdout.split.map { |x| "^-a (always,exit|exit,always) -F path=#{x} -F perm=x -F auid>=#{uid_min} -F auid!=4294967295 -k privileged$" }.each do |entry|
     describe file('/etc/audit/audit.rules') do
-      its(:content) { should match Regexp.new(entry) }
+      its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=#{uid_min} -F auid!=4294967295 (-k delete|-F key=delete)$/) }
+    end
+
+    if command('uname -m').stdout.strip == 'x86_64'
+      describe file('/etc/audit/audit.rules') do
+        its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=#{uid_min} -F auid!=4294967295 (-k delete|-F key=delete)$/) }
+      end
     end
   end
 end
@@ -355,7 +372,11 @@ control 'cis-dil-benchmark-4.1.15' do
   tag cis: 'distribution-independent-linux:4.1.15'
   tag level: 2
 
-  only_if { cis_level == 2 }
+    describe file('/etc/audit/audit.rules') do
+      its(:content) { should match(%r{^-w (/sbin/insmod|/usr/sbin/insmod) -p x -k modules$}) }
+      its(:content) { should match(%r{^-w (/sbin/rmmod|/usr/sbin/rmmod) -p x -k modules$}) }
+      its(:content) { should match(%r{^-w (/sbin/modprobe|/usr/sbin/modprobe) -p x -k modules$}) }
+    end
 
   describe file('/etc/audit/audit.rules') do
     its(:content) { should match(%r{^-w /etc/sudoers -p wa -k scope$}) }
