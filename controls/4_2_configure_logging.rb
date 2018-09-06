@@ -37,7 +37,7 @@ end
 
 control 'cis-dil-benchmark-4.2.1.2' do
   title 'Ensure logging is configured'
-  desc  "The /etc/rsyslog.conf file specifies rules for logging and which files are to be used to log certain classes of messages.\n\nRationale: A great deal of important security-related information is sent via rsyslog (e.g., successful and failed su attempts, failed login attempts, root login attempts, etc.)."
+  desc  "The /etc/rsyslog.conf and /etc/rsyslog.d/*.conf files specifies rules for logging and which files are to be used to log certain classes of messages.\n\nRationale: A great deal of important security-related information is sent via rsyslog (e.g., successful and failed su attempts, failed login attempts, root login attempts, etc.)."
   impact 0.0
 
   tag cis: 'distribution-independent-linux:4.2.1.2'
@@ -50,6 +50,49 @@ control 'cis-dil-benchmark-4.2.1.2' do
   describe file('/etc/rsyslog.conf') do
     it { should exist }
   end
+
+  describe.one do
+    command('find /etc/rsyslog.d -name "*.conf"').stdout.split.each do |conf_file|      
+      describe file(conf_file) do
+          its(:content) { should match(%r{^\*.emerg(\s)+:omusrmsg:\*}) }
+          its(:content) { should match(%r{^mail.\*(\s)+-/var/log/mail}) }
+          its(:content) { should match(%r{^mail.info(\s)+-/var/log/mail.info}) }
+          its(:content) { should match(%r{^mail.warning(\s)+-/var/log/mail.warn}) }
+          its(:content) { should match(%r{^mail.err(\s)+/var/log/mail.err}) }
+          its(:content) { should match(%r{^news.crit(\s)+-/var/log/news/news.crit}) }
+          its(:content) { should match(%r{^news.crit(\s)+-/var/log/news/news.crit}) }
+          its(:content) { should match(%r{^news.notice(\s)+-/var/log/news/news.notice}) }
+          its(:content) { should match(%r{^\*.=warning;\*.=err(\s)+-/var/log/warn}) }
+          its(:content) { should match(%r{^\*.crit(\s)+/var/log/warn}) }
+          its(:content) { should match(%r{^\*.\*;mail.none;news.none(\s)+-/var/log/messages}) }
+          its(:content) { should match(%r{^local0,local1.\*(\s)+-/var/log/localmessages}) }
+          its(:content) { should match(%r{^local2,local3.\*(\s)+-/var/log/localmessages}) }
+          its(:content) { should match(%r{^local2,local3.\*(\s)+-/var/log/localmessages}) }
+          its(:content) { should match(%r{^local4,local5.\*(\s)+-/var/log/localmessages}) }
+          its(:content) { should match(%r{^local6,local7.\*(\s)+-/var/log/localmessages}) }        
+      end      
+    end
+
+    describe file('/etc/rsyslog.conf') do      
+      its(:content) { should match(%r{^\*.emerg(\s)+:omusrmsg:\*}) }
+      its(:content) { should match(%r{^mail.\*(\s)+-/var/log/mail}) }
+      its(:content) { should match(%r{^mail.info(\s)+-/var/log/mail.info}) }
+      its(:content) { should match(%r{^mail.warning(\s)+-/var/log/mail.warn}) }
+      its(:content) { should match(%r{^mail.err(\s)+/var/log/mail.err}) }
+      its(:content) { should match(%r{^news.crit(\s)+-/var/log/news/news.crit}) }
+      its(:content) { should match(%r{^news.crit(\s)+-/var/log/news/news.crit}) }
+      its(:content) { should match(%r{^news.notice(\s)+-/var/log/news/news.notice}) }
+      its(:content) { should match(%r{^\*.=warning;\*.=err(\s)+-/var/log/warn}) }
+      its(:content) { should match(%r{^\*.crit(\s)+/var/log/warn}) }
+      its(:content) { should match(%r{^\*.\*;mail.none;news.none(\s)+-/var/log/messages}) }
+      its(:content) { should match(%r{^local0,local1.\*(\s)+-/var/log/localmessages}) }
+      its(:content) { should match(%r{^local2,local3.\*(\s)+-/var/log/localmessages}) }
+      its(:content) { should match(%r{^local2,local3.\*(\s)+-/var/log/localmessages}) }
+      its(:content) { should match(%r{^local4,local5.\*(\s)+-/var/log/localmessages}) }
+      its(:content) { should match(%r{^local6,local7.\*(\s)+-/var/log/localmessages}) }
+    end
+  end
+
 end
 
 control 'cis-dil-benchmark-4.2.1.3' do
