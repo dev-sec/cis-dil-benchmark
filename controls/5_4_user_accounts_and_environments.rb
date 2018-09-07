@@ -15,6 +15,8 @@
 #
 # author: Kristian Vlaardingerbroek
 
+cis_level = attribute('cis_level', default: '2', description: 'CIS profile level to audit', required: true)
+
 title '5.4 User Accounts and Environments'
 
 shadow_files = ['/etc/shadow']
@@ -23,6 +25,12 @@ shadow_files << '/usr/share/baselayout/shadow' if file('/etc/nsswitch.conf').con
 passwd_files = ['/etc/passwd']
 passwd_files << '/usr/share/baselayout/passwd' if file('/etc/nsswitch.conf').content =~ /^passwd:\s+(\S+\s+)*usrfiles/
 
+time_now = Time.now.to_i
+
+
+
+# The official documentation specifying 365 days in the description but, using
+# 90 as an example settings
 control 'cis-dil-benchmark-5.4.1.1' do
   title 'Ensure password expiration is 90 days or less'
   desc  "The PASS_MAX_DAYS parameter in /etc/login.defs allows an administrator to force passwords to expire once they reach a defined age. It is recommended that the PASS_MAX_DAYS parameter be set to less than or equal to 90 days.\n\nRationale: The window of opportunity for an attacker to leverage compromised credentials or successfully compromise credentials via an online brute force attack is limited by the age of the password. Therefore, reducing the maximum age of a password also reduces an attacker's window of opportunity."
@@ -115,6 +123,21 @@ control 'cis-dil-benchmark-5.4.1.4' do
   end
 end
 
+control 'cis-dil-benchmark-5.4.1.5' do
+  title 'Ensure all users last password change date is in the past'
+  desc  "All users should have a password change date in the past.\n\nRationale: If a users recorded password change date is in the future then they could bypass any set password expiration."
+  impact 1.0
+
+  tag cis: 'distribution-independent-linux:5.4.1.5'
+  tag level: 1
+
+  command("cat /etc/shadow | cut -d: -f1").stdout.split.each do |username|
+    describe command('date -d "`export LANG="en_US.UTF-8" ; chage --list root | grep "Last password" | cut -d: -f2`" +%s') do      
+      its(:stdout) { should cmp <= time_now }
+    end        
+  end
+end
+
 control 'cis-dil-benchmark-5.4.2' do
   title 'Ensure system accounts are non-login'
   desc  "There are a number of accounts provided with Ubuntu that are used to manage applications and are not intended to provide an interactive shell.\n\nRationale: It is important to make sure that accounts that are not being used by regular users are prevented from being used to provide an interactive shell. By default, Ubuntu sets the password field for these accounts to an invalid string, but it is also recommended that the shell field in the password file be set to /sbin/nologin. This prevents the account from potentially being used to run any commands."
@@ -173,6 +196,29 @@ control 'cis-dil-benchmark-5.4.4' do
 
       describe file("/etc/#{f}") do
         its(:content) { should match(/^\s*umask [01234567][2367]7\s*(?:#.*)?$/) }
+      end
+    end
+  end
+end
+
+if cis_level == '2'
+  control 'cis-dil-benchmark-5.4.5' do
+    title 'Ensure default user shell timeout is 900 seconds or less'
+    desc  "The default TMOUT determines the shell timeout for users. The TMOUT value is measured in seconds.\n\nRationale: Having no timeout value associated with a shell could allow an unauthorized user access to another user's shell session (e.g. user walks away from their computer and doesn't lock the screen). Setting a timeout value at least reduces the risk of this happening."
+    impact 1.0
+
+    tag cis: 'distribution-independent-linux:5.4.5'
+    tag level: 2
+
+    command("sudo find /etc/  -maxdepth 1 -name *bashrc*").stdout.split.each do |bashrc_file|
+      describe command("grep '^TMOUT' #{bashrc_file} | cut -d= -f2") do
+        its(:stdout) { should cmp <= 900 }
+      end
+    end
+
+    %w(profile).each do |f|
+      describe command("grep '^TMOUT' /etc/#{f} | cut -d= -f2") do
+        its(:stdout) { should cmp <= 900 }
       end
     end
   end
