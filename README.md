@@ -1,7 +1,7 @@
 # CIS Distribution Independent Linux Benchmark - InSpec Profile
 
 ## Description
-This profile implements the [CIS Distribution Independent Linux 1.0.1 Benchmark](https://www.cisecurity.org/benchmark/distribution_independent_linux/).
+This profile implements the [CIS Distribution Independent Linux 1.1.0 Benchmark](https://www.cisecurity.org/benchmark/distribution_independent_linux/).
 
 ## Attributes
 
