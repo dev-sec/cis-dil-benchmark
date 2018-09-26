@@ -130,7 +130,7 @@ control 'cis-dil-benchmark-2.2.2' do
     its(:names) { should be_empty }
   end
 
-  describe packages(/^xorg-x11.*/) do
+  describe packages(/^xorg-x11-server.*/) do
     its(:names) { should be_empty }
   end
 end
