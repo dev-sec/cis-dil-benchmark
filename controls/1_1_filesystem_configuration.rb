@@ -15,7 +15,7 @@
 #
 # author: Kristian Vlaardingerbroek
 
-cis_level = attribute('cis_level', default: '2', description: 'CIS profile level to audit', required: true)
+cis_level = attribute('cis_level')
 
 title '1.1 Filesystem Configuration'
 
@@ -183,32 +183,32 @@ control 'cis-dil-benchmark-1.1.5' do
   end
 end
 
-if cis_level == '2'
-  control 'cis-dil-benchmark-1.1.6' do
-    title 'Ensure separate partition exists for /var'
-    desc  "The /var directory is used by daemons and other system services to temporarily store dynamic data. Some directories created by these processes may be world-writable.\n\nRationale: Since the /var directory may contain world-writable files and directories, there is a risk of resource exhaustion if it is not bound to a separate partition."
-    impact 1.0
+control 'cis-dil-benchmark-1.1.6' do
+  title 'Ensure separate partition exists for /var'
+  desc  "The /var directory is used by daemons and other system services to temporarily store dynamic data. Some directories created by these processes may be world-writable.\n\nRationale: Since the /var directory may contain world-writable files and directories, there is a risk of resource exhaustion if it is not bound to a separate partition."
+  impact 1.0
 
-    tag cis: 'distribution-independent-linux:1.1.6'
-    tag level: 2
+  tag cis: 'distribution-independent-linux:1.1.6'
+  tag level: 2
 
-    describe mount('/var') do
-      it { should be_mounted }
-    end
+  describe mount('/var') do
+    it { should be_mounted }
   end
+  only_if { cis_level == 2 }
+end
 
-  control 'cis-dil-benchmark-1.1.7' do
-    title 'Ensure separate partition exists for /var/tmp'
-    desc  "The /var/tmp directory is a world-writable directory used for temporary storage by all users and some applications.\n\nRationale: Since the /var/tmp directory is intended to be world-writable, there is a risk of resource exhaustion if it is not bound to a separate partition. In addition, making /var/tmp its own file system allows an administrator to set the noexec option on the mount, making /var/tmp useless for an attacker to install executable code. It would also prevent an attacker from establishing a hardlink to a system setuid program and wait for it to be updated. Once the program was updated, the hardlink would be broken and the attacker would have his own copy of the program. If the program happened to have a security vulnerability, the attacker could continue to exploit the known flaw."
-    impact 1.0
+control 'cis-dil-benchmark-1.1.7' do
+  title 'Ensure separate partition exists for /var/tmp'
+  desc  "The /var/tmp directory is a world-writable directory used for temporary storage by all users and some applications.\n\nRationale: Since the /var/tmp directory is intended to be world-writable, there is a risk of resource exhaustion if it is not bound to a separate partition. In addition, making /var/tmp its own file system allows an administrator to set the noexec option on the mount, making /var/tmp useless for an attacker to install executable code. It would also prevent an attacker from establishing a hardlink to a system setuid program and wait for it to be updated. Once the program was updated, the hardlink would be broken and the attacker would have his own copy of the program. If the program happened to have a security vulnerability, the attacker could continue to exploit the known flaw."
+  impact 1.0
 
-    tag cis: 'distribution-independent-linux:1.1.7'
-    tag level: 2
+  tag cis: 'distribution-independent-linux:1.1.7'
+  tag level: 2
 
-    describe mount('/var/tmp') do
-      it { should be_mounted }
-    end
+  describe mount('/var/tmp') do
+    it { should be_mounted }
   end
+  only_if { cis_level == 2 }
 end
 
 control 'cis-dil-benchmark-1.1.8' do
@@ -250,44 +250,47 @@ control 'cis-dil-benchmark-1.1.10' do
   end
 end
 
-if cis_level == '2'
-  control 'cis-dil-benchmark-1.1.11' do
-    title 'Ensure separate partition exists for /var/log'
-    desc  "The /var/log directory is used by system services to store log data .\n\nRationale: There are two important reasons to ensure that system logs are stored on a separate partition: protection against resource exhaustion (since logs can grow quite large) and protection of audit data."
-    impact 1.0
+control 'cis-dil-benchmark-1.1.11' do
+  title 'Ensure separate partition exists for /var/log'
+  desc  "The /var/log directory is used by system services to store log data .\n\nRationale: There are two important reasons to ensure that system logs are stored on a separate partition: protection against resource exhaustion (since logs can grow quite large) and protection of audit data."
+  impact 1.0
 
-    tag cis: 'distribution-independent-linux:1.1.11'
-    tag level: 2
+  tag cis: 'distribution-independent-linux:1.1.11'
+  tag level: 2
 
-    describe mount('/var/log') do
-      it { should be_mounted }
-    end
+  describe mount('/var/log') do
+    it { should be_mounted }
   end
+  only_if { cis_level == 2 }
+end
 
-  control 'cis-dil-benchmark-1.1.12' do
-    title 'Ensure separate partition exists for /var/log/audit'
-    desc  "The auditing daemon, auditd, stores log data in the /var/log/audit directory.\n\nRationale: There are two important reasons to ensure that data gathered by auditd is stored on a separate partition: protection against resource exhaustion (since the audit.log file can grow quite large) and protection of audit data. The audit daemon calculates how much free space is left and performs actions based on the results. If other processes (such as syslog) consume space in the same partition as auditd, it may not perform as desired."
-    impact 1.0
+control 'cis-dil-benchmark-1.1.12' do
+  title 'Ensure separate partition exists for /var/log/audit'
+  desc  "The auditing daemon, auditd, stores log data in the /var/log/audit directory.\n\nRationale: There are two important reasons to ensure that data gathered by auditd is stored on a separate partition: protection against resource exhaustion (since the audit.log file can grow quite large) and protection of audit data. The audit daemon calculates how much free space is left and performs actions based on the results. If other processes (such as syslog) consume space in the same partition as auditd, it may not perform as desired."
+  impact 1.0
 
-    tag cis: 'distribution-independent-linux:1.1.12'
-    tag level: 2
+  tag cis: 'distribution-independent-linux:1.1.12'
+  tag level: 2
 
-    describe mount('/var/log/audit') do
-      it { should be_mounted }
-    end
+  only_if { cis_level == 2 }
+
+  describe mount('/var/log/audit') do
+    it { should be_mounted }
   end
+end
 
-  control 'cis-dil-benchmark-1.1.13' do
-    title 'Ensure separate partition exists for /home'
-    desc  "The /home directory is used to support disk storage needs of local users.\n\nRationale: If the system is intended to support local users, create a separate partition for the /home directory to protect against resource exhaustion and restrict the type of files that can be stored under /home."
-    impact 1.0
+control 'cis-dil-benchmark-1.1.13' do
+  title 'Ensure separate partition exists for /home'
+  desc  "The /home directory is used to support disk storage needs of local users.\n\nRationale: If the system is intended to support local users, create a separate partition for the /home directory to protect against resource exhaustion and restrict the type of files that can be stored under /home."
+  impact 1.0
 
-    tag cis: 'distribution-independent-linux:1.1.13'
-    tag level: 2
+  tag cis: 'distribution-independent-linux:1.1.13'
+  tag level: 2
 
-    describe mount('/home') do
-      it { should be_mounted }
-    end
+  only_if { cis_level == 2 }
+
+  describe mount('/home') do
+    it { should be_mounted }
   end
 end
 
