@@ -181,10 +181,8 @@ control 'cis-dil-benchmark-6.1.6' do
     it { should be_readable.by 'owner' }
     it { should be_writable.by 'owner' }
     it { should_not be_executable.by 'owner' }
-    it { should_not be_readable.by 'group' }
     it { should_not be_writable.by 'group' }
     it { should_not be_executable.by 'group' }
-    it { should_not be_readable.by 'other' }
     it { should_not be_writable.by 'other' }
     it { should_not be_executable.by 'other' }
     its(:uid) { should cmp 0 }
