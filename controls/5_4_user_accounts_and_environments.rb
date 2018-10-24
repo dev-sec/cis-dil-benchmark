@@ -27,8 +27,6 @@ passwd_files << '/usr/share/baselayout/passwd' if file('/etc/nsswitch.conf').con
 
 time_now = Time.now.to_i
 
-
-
 # The official documentation specifying 365 days in the description but, using
 # 90 as an example settings
 control 'cis-dil-benchmark-5.4.1.1' do
@@ -131,16 +129,16 @@ control 'cis-dil-benchmark-5.4.1.5' do
   tag cis: 'distribution-independent-linux:5.4.1.5'
   tag level: 1
 
-  command("cat /etc/shadow | cut -d: -f1").stdout.split.each do |username|
-    describe command('date -d "`export LANG="en_US.UTF-8" ; chage --list root | grep "Last password" | cut -d: -f2`" +%s') do      
+  command('cat /etc/shadow | cut -d: -f1').stdout.split.each do |username|
+    describe command("date -d "`export LANG="en_US.UTF-8" ; chage --list #{username} | grep "Last password" | cut -d: -f2`" +%s") do
       its(:stdout) { should cmp <= time_now }
-    end        
+    end
   end
 end
 
 control 'cis-dil-benchmark-5.4.2' do
   title 'Ensure system accounts are non-login'
-  desc  "There are a number of accounts provided with Ubuntu that are used to manage applications and are not intended to provide an interactive shell.\n\nRationale: It is important to make sure that accounts that are not being used by regular users are prevented from being used to provide an interactive shell. By default, Ubuntu sets the password field for these accounts to an invalid string, but it is also recommended that the shell field in the password file be set to /sbin/nologin. This prevents the account from potentially being used to run any commands."
+  desc  'There are a number of accounts provided with Ubuntu that are used to manage applications and are not intended to provide an interactive shell.\n\nRationale: It is important to make sure that accounts that are not being used by regular users are prevented from being used to provide an interactive shell. By default, Ubuntu sets the password field for these accounts to an invalid string, but it is also recommended that the shell field in the password file be set to /sbin/nologin. This prevents the account from potentially being used to run any commands.'
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.4.2'
@@ -201,25 +199,25 @@ control 'cis-dil-benchmark-5.4.4' do
   end
 end
 
-if cis_level == '2'
-  control 'cis-dil-benchmark-5.4.5' do
-    title 'Ensure default user shell timeout is 900 seconds or less'
-    desc  "The default TMOUT determines the shell timeout for users. The TMOUT value is measured in seconds.\n\nRationale: Having no timeout value associated with a shell could allow an unauthorized user access to another user's shell session (e.g. user walks away from their computer and doesn't lock the screen). Setting a timeout value at least reduces the risk of this happening."
-    impact 1.0
+control 'cis-dil-benchmark-5.4.5' do
+  title 'Ensure default user shell timeout is 900 seconds or less'
+  desc  "The default TMOUT determines the shell timeout for users. The TMOUT value is measured in seconds.\n\nRationale: Having no timeout value associated with a shell could allow an unauthorized user access to another user's shell session (e.g. user walks away from their computer and doesn't lock the screen). Setting a timeout value at least reduces the risk of this happening."
+  impact 1.0
 
-    tag cis: 'distribution-independent-linux:5.4.5'
-    tag level: 2
+  tag cis: 'distribution-independent-linux:5.4.5'
+  tag level: 2
 
-    command("sudo find /etc/  -maxdepth 1 -name *bashrc*").stdout.split.each do |bashrc_file|
-      describe command("grep '^TMOUT' #{bashrc_file} | cut -d= -f2") do
-        its(:stdout) { should cmp <= 900 }
-      end
+  only_if { cis_level == 2 }
+
+  command('sudo find /etc/ -maxdepth 1 -name *bashrc*').stdout.split.each do |bashrc_file|
+    describe command("grep '^TMOUT' #{bashrc_file} | cut -d= -f2") do
+      its(:stdout) { should cmp <= 900 }
     end
+  end
 
-    %w(profile).each do |f|
-      describe command("grep '^TMOUT' /etc/#{f} | cut -d= -f2") do
-        its(:stdout) { should cmp <= 900 }
-      end
+  %w(profile).each do |f|
+    describe command("grep '^TMOUT' /etc/#{f} | cut -d= -f2") do
+      its(:stdout) { should cmp <= 900 }
     end
   end
 end

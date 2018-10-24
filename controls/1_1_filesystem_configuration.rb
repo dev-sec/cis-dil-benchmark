@@ -237,96 +237,28 @@ control 'cis-dil-benchmark-1.1.9' do
   end
 end
 
-# There is a mistake in the official CIS DIL documentaion 1.1.10-1.1.14 are
-# duplicates of 1.1.9. So I used "skipped" to keep the order of the numbering.
-control 'cis-dil-benchmark-1.1.10' do
-  title 'Ensure noexec option set on /var/tmp partition'
-  desc  "The noexec mount option specifies that the filesystem cannot contain executable binaries.\n\nRationale: Since the /var/tmp filesystem is only intended for temporary file storage, set this option to ensure that users cannot run executable binaries from /var/tmp."
+control 'cis-dil-benchmark-1.1.15' do
+  title 'Ensure separate partition exists for /var/log'
+  desc  "The /var/log directory is used by system services to store log data .\n\nRationale: There are two important reasons to ensure that system logs are stored on a separate partition: protection against resource exhaustion (since logs can grow quite large) and protection of audit data."
   impact 1.0
 
-  tag cis: 'distribution-independent-linux:1.1.10'
-  tag level: 1
+  tag cis: 'distribution-independent-linux:1.1.15'
+  tag level: 2
 
-  describe 'cis-dil-benchmark-1.1.10' do
-    skip 'Duplicate of cis-dil-benchmark-1.1.9'
-  end
-end
-
-control 'cis-dil-benchmark-1.1.11' do
-  title 'Ensure noexec option set on /var/tmp partition'
-  desc  "The noexec mount option specifies that the filesystem cannot contain executable binaries.\n\nRationale: Since the /var/tmp filesystem is only intended for temporary file storage, set this option to ensure that users cannot run executable binaries from /var/tmp."
-  impact 1.0
-
-  tag cis: 'distribution-independent-linux:1.1.11'
-  tag level: 1
-
-  
-  describe 'cis-dil-benchmark-1.1.11' do
-    skip 'Duplicate of cis-dil-benchmark-1.1.9'
-  end
-end
-
-control 'cis-dil-benchmark-1.1.12' do
-  title 'Ensure noexec option set on /var/tmp partition'
-  desc  "The noexec mount option specifies that the filesystem cannot contain executable binaries.\n\nRationale: Since the /var/tmp filesystem is only intended for temporary file storage, set this option to ensure that users cannot run executable binaries from /var/tmp."
-  impact 1.0
-
-  tag cis: 'distribution-independent-linux:1.1.12'
-  tag level: 1
-
-  describe 'cis-dil-benchmark-1.1.12' do
-    skip 'Duplicate of cis-dil-benchmark-1.1.9'
-  end
-end
-
-control 'cis-dil-benchmark-1.1.13' do
-  title 'Ensure noexec option set on /var/tmp partition'
-  desc  "The noexec mount option specifies that the filesystem cannot contain executable binaries.\n\nRationale: Since the /var/tmp filesystem is only intended for temporary file storage, set this option to ensure that users cannot run executable binaries from /var/tmp."
-  impact 1.0
-
-  tag cis: 'distribution-independent-linux:1.1.13'
-  tag level: 1
-
-  describe 'cis-dil-benchmark-1.1.13' do
-    skip 'Duplicate of cis-dil-benchmark-1.1.9'
-  end
-end
-
-control 'cis-dil-benchmark-1.1.14' do
-  title 'Ensure noexec option set on /var/tmp partition'
-  desc  "The noexec mount option specifies that the filesystem cannot contain executable binaries.\n\nRationale: Since the /var/tmp filesystem is only intended for temporary file storage, set this option to ensure that users cannot run executable binaries from /var/tmp."
-  impact 1.0
-
-  tag cis: 'distribution-independent-linux:1.1.14'
-  tag level: 1
-  
-  describe 'cis-dil-benchmark-1.1.14' do
-    skip 'Duplicate of cis-dil-benchmark-1.1.9'
-  end
-end
-
-if cis_level == '2'
-  control 'cis-dil-benchmark-1.1.15' do
-    title 'Ensure separate partition exists for /var/log'
-    desc  "The /var/log directory is used by system services to store log data .\n\nRationale: There are two important reasons to ensure that system logs are stored on a separate partition: protection against resource exhaustion (since logs can grow quite large) and protection of audit data."
-    impact 1.0
-
-    tag cis: 'distribution-independent-linux:1.1.15'
-    tag level: 2
+  only_if { cis_level == 2 }
 
   describe mount('/var/log') do
     it { should be_mounted }
   end
-  only_if { cis_level == 2 }
 end
 
-  control 'cis-dil-benchmark-1.1.16' do
-    title 'Ensure separate partition exists for /var/log/audit'
-    desc  "The auditing daemon, auditd, stores log data in the /var/log/audit directory.\n\nRationale: There are two important reasons to ensure that data gathered by auditd is stored on a separate partition: protection against resource exhaustion (since the audit.log file can grow quite large) and protection of audit data. The audit daemon calculates how much free space is left and performs actions based on the results. If other processes (such as syslog) consume space in the same partition as auditd, it may not perform as desired."
-    impact 1.0
+control 'cis-dil-benchmark-1.1.16' do
+  title 'Ensure separate partition exists for /var/log/audit'
+  desc  "The auditing daemon, auditd, stores log data in the /var/log/audit directory.\n\nRationale: There are two important reasons to ensure that data gathered by auditd is stored on a separate partition: protection against resource exhaustion (since the audit.log file can grow quite large) and protection of audit data. The audit daemon calculates how much free space is left and performs actions based on the results. If other processes (such as syslog) consume space in the same partition as auditd, it may not perform as desired."
+  impact 1.0
 
-    tag cis: 'distribution-independent-linux:1.1.16'
-    tag level: 2
+  tag cis: 'distribution-independent-linux:1.1.16'
+  tag level: 2
 
   only_if { cis_level == 2 }
 
@@ -335,13 +267,13 @@ end
   end
 end
 
-  control 'cis-dil-benchmark-1.1.17' do
-    title 'Ensure separate partition exists for /home'
-    desc  "The /home directory is used to support disk storage needs of local users.\n\nRationale: If the system is intended to support local users, create a separate partition for the /home directory to protect against resource exhaustion and restrict the type of files that can be stored under /home."
-    impact 1.0
+control 'cis-dil-benchmark-1.1.17' do
+  title 'Ensure separate partition exists for /home'
+  desc  "The /home directory is used to support disk storage needs of local users.\n\nRationale: If the system is intended to support local users, create a separate partition for the /home directory to protect against resource exhaustion and restrict the type of files that can be stored under /home."
+  impact 1.0
 
-    tag cis: 'distribution-independent-linux:1.1.17'
-    tag level: 2
+  tag cis: 'distribution-independent-linux:1.1.17'
+  tag level: 2
 
   only_if { cis_level == 2 }
 

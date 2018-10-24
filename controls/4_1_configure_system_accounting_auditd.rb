@@ -240,16 +240,15 @@ control 'cis-dil-benchmark-4.1.9' do
   tag cis: 'distribution-independent-linux:4.1.9'
   tag level: 2
 
-    describe file('/etc/audit/audit.rules') do
-      its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b32 (-S creat -S open -S openat -S truncate -S ftruncate|-S creat,open,openat,open_by_handle_at,truncate,ftruncate) -F exit=-EACCES -F auid>=#{uid_min} -F auid!=4294967295 (-F key=access$|-k access$)/) }
-      its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b32 (-S creat -S open -S openat -S truncate -S ftruncate|-S creat,open,openat,open_by_handle_at,truncate,ftruncate) -F exit=-EPERM -F auid>=#{uid_min} -F auid!=4294967295 (-F key=access$|-k access$)/) }
-    end
+  describe file('/etc/audit/audit.rules') do
+    its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b32 (-S creat -S open -S openat -S truncate -S ftruncate|-S creat,open,openat,open_by_handle_at,truncate,ftruncate) -F exit=-EACCES -F auid>=#{uid_min} -F auid!=4294967295 (-F key=access$|-k access$)/) }
+    its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b32 (-S creat -S open -S openat -S truncate -S ftruncate|-S creat,open,openat,open_by_handle_at,truncate,ftruncate) -F exit=-EPERM -F auid>=#{uid_min} -F auid!=4294967295 (-F key=access$|-k access$)/) }
+  end
 
-    if command('uname -m').stdout.strip == 'x86_64'
-      describe file('/etc/audit/audit.rules') do
-        its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b64 (-S creat -S open -S openat -S truncate -S ftruncate|-S creat,open,openat,open_by_handle_at,truncate,ftruncate) -F exit=-EACCES -F auid>=#{uid_min} -F auid!=4294967295 (-F key=access$|-k access$)/) }
-        its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b64 (-S creat -S open -S openat -S truncate -S ftruncate|-S creat,open,openat,open_by_handle_at,truncate,ftruncate) -F exit=-EPERM -F auid>=#{uid_min} -F auid!=4294967295 (-F key=access$|-k access$)/) }
-      end
+  if command('uname -m').stdout.strip == 'x86_64'
+    describe file('/etc/audit/audit.rules') do
+      its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b64 (-S creat -S open -S openat -S truncate -S ftruncate|-S creat,open,openat,open_by_handle_at,truncate,ftruncate) -F exit=-EACCES -F auid>=#{uid_min} -F auid!=4294967295 (-F key=access$|-k access$)/) }
+      its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b64 (-S creat -S open -S openat -S truncate -S ftruncate|-S creat,open,openat,open_by_handle_at,truncate,ftruncate) -F exit=-EPERM -F auid>=#{uid_min} -F auid!=4294967295 (-F key=access$|-k access$)/) }
     end
   end
 end
@@ -310,14 +309,13 @@ control 'cis-dil-benchmark-4.1.12' do
   tag cis: 'distribution-independent-linux:4.1.12'
   tag level: 2
 
-    describe file('/etc/audit/audit.rules') do
-      its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=#{uid_min} -F auid!=4294967295 (-k delete|-F key=delete)$/) }
-    end
+  describe file('/etc/audit/audit.rules') do
+    its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=#{uid_min} -F auid!=4294967295 (-k delete|-F key=delete)$/) }
+  end
 
-    if command('uname -m').stdout.strip == 'x86_64'
-      describe file('/etc/audit/audit.rules') do
-        its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=#{uid_min} -F auid!=4294967295 (-k delete|-F key=delete)$/) }
-      end
+  if command('uname -m').stdout.strip == 'x86_64'
+    describe file('/etc/audit/audit.rules') do
+      its(:content) { should match(/^-a (always,exit|exit,always) -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=#{uid_min} -F auid!=4294967295 (-k delete|-F key=delete)$/) }
     end
   end
 end
