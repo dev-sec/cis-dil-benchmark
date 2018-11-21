@@ -134,7 +134,7 @@ control 'cis-dil-benchmark-5.4.2' do
       end
 
       describe shadow(user.user) do
-        its(:password) { should be_all { |m| m == '*' } }
+        its(:passwords) { should be_all { |m| m == '*' } }
       end
     end
   end
