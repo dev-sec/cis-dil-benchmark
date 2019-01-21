@@ -96,7 +96,7 @@ control 'cis-dil-benchmark-4.1.3' do
   only_if { cis_level == 2 }
 
   describe.one do
-    %w(/boot/grub/grub.conf /boot/grub/grub.cfg /boot/grub/menu.lst /boot/boot/grub/grub.conf /boot/boot/grub/grub.cfg /boot/boot/grub/menu.lst /boot/grub2/grub.cfg).each do |f|
+    %w(/boot/grub/grub.conf /boot/grub/grub.cfg /boot/grub/menu.lst /boot/boot/grub/grub.conf /boot/boot/grub/grub.cfg /boot/boot/grub/menu.lst /boot/grub2/grub.cfg /usr/share/oem/grub.cfg).each do |f|
       describe file(f) do
         its(:content) { should match(/audit=1/) }
       end
