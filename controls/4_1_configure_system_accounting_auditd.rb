@@ -208,7 +208,7 @@ end
 
 control 'cis-dil-benchmark-4.1.8' do
   title 'Ensure login and logout events are collected'
-  desc  "Monitor login and logout events. The parameters below track changes to files associated with login/logout events. The file /var/log/faillog tracks failed events from login. The file /var/log/lastlog maintain records of the last time a user successfully logged in. The file /var/log/tallylog maintains records of failures via the pam_tally2 module\n\nRationale: Monitoring login/logout events could provide a system administrator with information associated with brute force attacks against user logins."
+  desc  "Monitor login and logout events. The parameters below track changes to files associated with login/logout events. The file /var/log/lastlog maintain records of the last time a user successfully logged in. \n\nRationale: Monitoring login/logout events could provide a system administrator with information associated with brute force attacks against user logins."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:4.1.8'
@@ -217,9 +217,7 @@ control 'cis-dil-benchmark-4.1.8' do
   only_if { cis_level == 2 }
 
   describe file('/etc/audit/audit.rules') do
-    its(:content) { should match(%r{^-w /var/log/faillog -p wa -k logins$}) }
     its(:content) { should match(%r{^-w /var/log/lastlog -p wa -k logins$}) }
-    its(:content) { should match(%r{^-w /var/log/tallylog -p wa -k logins$}) }
   end
 end
 
