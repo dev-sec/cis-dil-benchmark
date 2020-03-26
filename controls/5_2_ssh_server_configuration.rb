@@ -197,11 +197,9 @@ control 'cis-dil-benchmark-5.2.12' do
     'diffie-hellman-group-exchange-sha256'
   ].freeze
 
-  if sshd_config.MACs
-    sshd_config.MACs.split(',').each do |m|
-      describe m do
-        it { should be_in ALLOWED_MACS }
-      end
+  sshd_config.MACs&.split(',')&.each do |m|
+    describe m do
+      it { should be_in ALLOWED_MACS }
     end
   end
 end

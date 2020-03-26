@@ -151,7 +151,7 @@ control 'cis-dil-benchmark-1.6.1.6' do
     )
   end
 
-  processes(/.*/).where { pid > 0 }.entries.each do |p|
+  processes(/.*/).where { pid.positive? }.entries.each do |p|
     describe p.label.to_s.split(':')[2] do
       it { should_not cmp 'initrc_t' }
     end
@@ -188,7 +188,7 @@ control 'cis-dil-benchmark-1.6.2.2' do
   only_if { cis_level == 2 && package('apparmor').installed? }
 
   describe command('apparmor_status --profiled') do
-    its(:stdout) { should cmp > 0 }
+    its(:stdout) { should cmp.positive? }
   end
 
   describe command('apparmor_status --complaining') do
