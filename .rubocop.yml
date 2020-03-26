@@ -1,7 +1,7 @@
 ---
 Documentation:
   Enabled: false
-AlignParameters:
+Layout/ParameterAlignment:
   Enabled: true
 HashSyntax:
   Enabled: true
@@ -27,4 +27,10 @@ Style/PercentLiteralDelimiters:
 Lint/AmbiguousBlockAssociation:
   Enabled: false
 Style/Encoding:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/NumericPredicate:
+  Enabled: false
+Style/SafeNavigation:
   Enabled: false
