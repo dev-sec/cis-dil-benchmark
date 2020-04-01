@@ -229,7 +229,9 @@ control 'cis-dil-benchmark-5.2.14' do
   tag level: 1
 
   describe sshd_config do
-    its(:LoginGraceTime) { should cmp <= 60 }
+    its(:LoginGraceTime) do
+      should satisfy { |x| x == '1m' || ((matches = x.match(/(?<secs>[0-9]+)s?/)) && Integer(matches[:secs]) <= 60) }
+    end
   end
 end
 
