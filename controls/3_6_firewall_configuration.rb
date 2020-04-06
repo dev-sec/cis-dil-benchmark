@@ -74,15 +74,15 @@ control 'cis-dil-benchmark-3.6.4' do
   tag level: 1
 
   %w(tcp udp icmp).each do |proto|
-    describe.one do 
-        describe iptables do
-          it { should have_rule("-A OUTPUT -p #{proto} -m state --state NEW,ESTABLISHED -j ACCEPT")  }
-          it { should have_rule("-A INPUT -p #{proto} -m state --state ESTABLISHED -j ACCEPT") }
-        end
-        describe iptables do
-          it { should have_rule("-A OUTPUT -p #{proto} -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT") }
-          it { should have_rule("-A INPUT -p #{proto} -m conntrack --ctstate ESTABLISHED -j ACCEPT") }
-        end
+    describe.one do
+      describe iptables do
+        it { should have_rule("-A OUTPUT -p #{proto} -m state --state NEW,ESTABLISHED -j ACCEPT") }
+        it { should have_rule("-A INPUT -p #{proto} -m state --state ESTABLISHED -j ACCEPT") }
+      end
+      describe iptables do
+        it { should have_rule("-A OUTPUT -p #{proto} -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT") }
+        it { should have_rule("-A INPUT -p #{proto} -m conntrack --ctstate ESTABLISHED -j ACCEPT") }
+      end
     end
   end
 end
