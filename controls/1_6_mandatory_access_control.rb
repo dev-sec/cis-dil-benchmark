@@ -34,7 +34,7 @@ control 'cis-dil-benchmark-1.6.1.1' do
   end
 
   describe.one do
-    %w(/boot/grub/grub.conf /boot/grub/grub.cfg /boot/grub/menu.lst /boot/boot/grub/grub.conf /boot/boot/grub/grub.cfg /boot/boot/grub/menu.lst).each do |f|
+    grub_conf.locations.each do |f|
       describe file(f) do
         its(:content) { should_not match(/selinux=0/) }
         its(:content) { should_not match(/enforcing=0/) }
@@ -169,7 +169,7 @@ control 'cis-dil-benchmark-1.6.2.1' do
   only_if { cis_level == 2 && package('apparmor').installed? }
 
   describe.one do
-    %w(/boot/grub/grub.conf /boot/grub/grub.cfg /boot/grub/menu.lst /boot/boot/grub/grub.conf /boot/boot/grub/grub.cfg /boot/boot/grub/menu.lst).each do |f|
+    grub_conf.locations.each do |f|
       describe file(f) do
         its(:content) { should_not match(/apparmor=0/) }
       end
