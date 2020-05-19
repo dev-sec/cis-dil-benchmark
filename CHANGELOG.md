@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.1](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.1) (2020-05-19)
+
+[Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.0...0.4.1)
+
+**Merged pull requests:**
+
+- align versions [\#80](https://github.com/dev-sec/cis-dil-benchmark/pull/80) ([micheelengronne](https://github.com/micheelengronne))
+
 ## [0.4.0](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.0) (2020-05-19)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.3.0...0.4.0)
