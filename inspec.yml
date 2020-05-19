@@ -1,3 +1,4 @@
+---
 name: cis-dil-benchmark
 title: CIS Distribution Independent Linux Benchmark Profile
 maintainer: Kristian Vlaardingerbroek
@@ -5,7 +6,7 @@ copyright: Schuberg Philis B.V.
 copyright_email: kvlaardingerbroek@schubergphilis.com
 license: Apache-2.0
 summary: An InSpec Compliance profile for the CIS Distribution Independent Linux Benchmark
-version: 0.3.0
+version: 0.0.1
 inspec_version: '>= 2.3.5'
 supports:
   - platform-family: linux

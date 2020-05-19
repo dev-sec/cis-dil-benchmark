@@ -1,26 +1,50 @@
-# Change Log
+# Changelog
+
+## [0.0.1](https://github.com/dev-sec/cis-dil-benchmark/tree/0.0.1) (2020-05-19)
+
+[Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.3.0...0.0.1)
+
+**Closed issues:**
+
+- dil-benchmark-1.6.2.2: undefined method `positive?' for \#\<RSpec::Matchers::DSL::Matcher cmp\> [\#72](https://github.com/dev-sec/cis-dil-benchmark/issues/72)
+- WARN: DEPRECATION: The 'default' option for attributes is being replaced by 'value' - please use it instead. attribute name: 'Inspec::Input' [\#69](https://github.com/dev-sec/cis-dil-benchmark/issues/69)
+
+**Merged pull requests:**
+
+- automated release [\#79](https://github.com/dev-sec/cis-dil-benchmark/pull/79) ([micheelengronne](https://github.com/micheelengronne))
+- Support wild configs that are tabbed out [\#78](https://github.com/dev-sec/cis-dil-benchmark/pull/78) ([markdchurchill](https://github.com/markdchurchill))
+- SSH config: Allow seconds & minutes config for grace time [\#77](https://github.com/dev-sec/cis-dil-benchmark/pull/77) ([markdchurchill](https://github.com/markdchurchill))
+- Refactor out grub config to profile file [\#76](https://github.com/dev-sec/cis-dil-benchmark/pull/76) ([markdchurchill](https://github.com/markdchurchill))
+- iptables: support conntrack module [\#75](https://github.com/dev-sec/cis-dil-benchmark/pull/75) ([markdchurchill](https://github.com/markdchurchill))
+- Update 3.3 IPv6 to support Amazon Linux 2 [\#74](https://github.com/dev-sec/cis-dil-benchmark/pull/74) ([markdchurchill](https://github.com/markdchurchill))
+- reverse rubocop updates to support ruby versions bundled with InSpec 3 [\#73](https://github.com/dev-sec/cis-dil-benchmark/pull/73) ([chris-rock](https://github.com/chris-rock))
+- pin to inspec 3 [\#71](https://github.com/dev-sec/cis-dil-benchmark/pull/71) ([chris-rock](https://github.com/chris-rock))
+- Inspec 4 warning [\#70](https://github.com/dev-sec/cis-dil-benchmark/pull/70) ([micheelengronne](https://github.com/micheelengronne))
 
 ## [0.3.0](https://github.com/dev-sec/cis-dil-benchmark/tree/0.3.0) (2019-02-04)
+
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.2.0...0.3.0)
 
 **Closed issues:**
 
+- Make a release [\#64](https://github.com/dev-sec/cis-dil-benchmark/issues/64)
 - Tagging versions for release? [\#51](https://github.com/dev-sec/cis-dil-benchmark/issues/51)
 - Why are you using custom linux\_module instead of the Inspec built in kernel\_module? [\#48](https://github.com/dev-sec/cis-dil-benchmark/issues/48)
 - How much divergence from CIS DIL Benchmark document is accepted? [\#43](https://github.com/dev-sec/cis-dil-benchmark/issues/43)
 
 **Merged pull requests:**
 
+- 0.3.0 [\#65](https://github.com/dev-sec/cis-dil-benchmark/pull/65) ([chris-rock](https://github.com/chris-rock))
 - Ensure /etc/group- /etc/shadow- and /etc/gshadow- match their respect… [\#63](https://github.com/dev-sec/cis-dil-benchmark/pull/63) ([bdwyertech](https://github.com/bdwyertech))
 - Fixes [\#62](https://github.com/dev-sec/cis-dil-benchmark/pull/62) ([bdwyertech](https://github.com/bdwyertech))
 - Change `password` to `passwords` [\#60](https://github.com/dev-sec/cis-dil-benchmark/pull/60) ([jerryaldrichiii](https://github.com/jerryaldrichiii))
 - Update issue templates [\#56](https://github.com/dev-sec/cis-dil-benchmark/pull/56) ([rndmh3ro](https://github.com/rndmh3ro))
 - use inspec's new unified attributes feature [\#55](https://github.com/dev-sec/cis-dil-benchmark/pull/55) ([chris-rock](https://github.com/chris-rock))
 - modify package check to satisfy openjdk dependency [\#53](https://github.com/dev-sec/cis-dil-benchmark/pull/53) ([alval5280](https://github.com/alval5280))
-- 0.2.0 [\#52](https://github.com/dev-sec/cis-dil-benchmark/pull/52) ([chris-rock](https://github.com/chris-rock))
 - allow group write /var/log/wtmp [\#50](https://github.com/dev-sec/cis-dil-benchmark/pull/50) ([alval5280](https://github.com/alval5280))
 
 ## [0.2.0](https://github.com/dev-sec/cis-dil-benchmark/tree/0.2.0) (2018-08-26)
+
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.1.0...0.2.0)
 
 **Closed issues:**
@@ -33,6 +57,7 @@
 
 **Merged pull requests:**
 
+- 0.2.0 [\#52](https://github.com/dev-sec/cis-dil-benchmark/pull/52) ([chris-rock](https://github.com/chris-rock))
 - Modified controls to use the built in kernel\_module of Inspec [\#49](https://github.com/dev-sec/cis-dil-benchmark/pull/49) ([itoperatorguy](https://github.com/itoperatorguy))
 - handle potential leading space for umask regex [\#47](https://github.com/dev-sec/cis-dil-benchmark/pull/47) ([veetow](https://github.com/veetow))
 - increase rubocop block length [\#44](https://github.com/dev-sec/cis-dil-benchmark/pull/44) ([chris-rock](https://github.com/chris-rock))
@@ -67,5 +92,8 @@
 
 ## [0.1.0](https://github.com/dev-sec/cis-dil-benchmark/tree/0.1.0) (2017-08-15)
 
+[Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/7aa8ff2433d0f01591fedd2633af3883cfc81033...0.1.0)
 
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+
+
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
