@@ -1,8 +1,8 @@
 # Changelog
 
-## [0.0.1](https://github.com/dev-sec/cis-dil-benchmark/tree/0.0.1) (2020-05-19)
+## [0.4.0](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.0) (2020-05-19)
 
-[Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.3.0...0.0.1)
+[Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.3.0...0.4.0)
 
 **Closed issues:**
 
