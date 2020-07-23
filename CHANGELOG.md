@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.2](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.2) (2020-07-23)
+
+[Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.1...0.4.2)
+
+**Merged pull requests:**
+
+- The release draft references the correct SHA [\#82](https://github.com/dev-sec/cis-dil-benchmark/pull/82) ([micheelengronne](https://github.com/micheelengronne))
+
 ## [0.4.1](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.1) (2020-05-19)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.0...0.4.1)

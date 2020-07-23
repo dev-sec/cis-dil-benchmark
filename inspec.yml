@@ -6,13 +6,13 @@ copyright: Schuberg Philis B.V.
 copyright_email: kvlaardingerbroek@schubergphilis.com
 license: Apache-2.0
 summary: An InSpec Compliance profile for the CIS Distribution Independent Linux Benchmark
-version: 0.4.1
+version: 0.4.2
 inspec_version: '>= 2.3.5'
 supports:
-  - platform-family: linux
+    - platform-family: linux
 attributes:
-  - name: cis_level
-    required: false
-    description: 'CIS profile level to audit'
-    value: 2
-    type: numeric
+    - name: cis_level
+      required: false
+      description: 'CIS profile level to audit'
+      value: 2
+      type: numeric
