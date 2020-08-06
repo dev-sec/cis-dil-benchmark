@@ -123,7 +123,7 @@ control 'cis-dil-benchmark-1.1.1.8' do
   impact 1.0
 
   tag cis: 'distribution-independent-linux:1.1.1.8'
-  tag level: 1
+  tag level: 2
 
   describe kernel_module('vfat') do
     it { should_not be_loaded }
@@ -222,6 +222,10 @@ control 'cis-dil-benchmark-1.1.8' do
   describe mount('/var/tmp') do
     its(:options) { should include 'nodev' }
   end
+
+  only_if('/var/tmp is mounted') {
+    mount('/var/tmp').exists? 
+  }
 end
 
 control 'cis-dil-benchmark-1.1.9' do
@@ -235,6 +239,10 @@ control 'cis-dil-benchmark-1.1.9' do
   describe mount('/var/tmp') do
     its(:options) { should include 'nosuid' }
   end
+
+  only_if('/var/tmp is mounted') {
+    mount('/var/tmp').exists? 
+  }
 end
 
 control 'cis-dil-benchmark-1.1.10' do
@@ -248,6 +256,9 @@ control 'cis-dil-benchmark-1.1.10' do
   describe mount('/var/tmp') do
     its(:options) { should include 'noexec' }
   end
+  only_if('/var/tmp is mounted') {
+    mount('/var/tmp').exists? 
+  }
 end
 
 control 'cis-dil-benchmark-1.1.11' do
@@ -305,6 +316,9 @@ control 'cis-dil-benchmark-1.1.14' do
   describe mount('/home') do
     its(:options) { should include 'nodev' }
   end
+  only_if('/home is mounted') {
+    mount('/home').exists? 
+  }
 end
 
 control 'cis-dil-benchmark-1.1.15' do
@@ -318,6 +332,9 @@ control 'cis-dil-benchmark-1.1.15' do
   describe mount('/dev/shm') do
     its(:options) { should include 'nodev' }
   end
+  only_if('/dev/shm is mounted') {
+    mount('/dev/shm').exists? 
+  }
 end
 
 control 'cis-dil-benchmark-1.1.16' do
@@ -331,6 +348,9 @@ control 'cis-dil-benchmark-1.1.16' do
   describe mount('/dev/shm') do
     its(:options) { should include 'nosuid' }
   end
+  only_if('/dev/shm is mounted') {
+    mount('/dev/shm').exists? 
+  }
 end
 
 control 'cis-dil-benchmark-1.1.17' do
@@ -344,6 +364,9 @@ control 'cis-dil-benchmark-1.1.17' do
   describe mount('/dev/shm') do
     its(:options) { should include 'noexec' }
   end
+  only_if('/dev/shm is mounted') {
+    mount('/dev/shm').exists? 
+  }
 end
 
 control 'cis-dil-benchmark-1.1.18' do
