@@ -26,7 +26,7 @@ control 'cis-dil-benchmark-2.1.1' do
   tag level: 1
 
   only_if('inetd/xinetd config exists') {
-    file('/etc/xinetd.conf').exists? || file('/etc/inetd.conf').exists?
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
   }
 
   describe xinetd_conf.services('chargen') do
@@ -53,7 +53,7 @@ control 'cis-dil-benchmark-2.1.2' do
   tag level: 1
 
   only_if('inetd/xinetd config exists') {
-    file('/etc/xinetd.conf').exists? || file('/etc/inetd.conf').exists?
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
   }
 
   describe xinetd_conf.services('daytime') do
@@ -80,7 +80,7 @@ control 'cis-dil-benchmark-2.1.3' do
   tag level: 1
 
   only_if('inetd/xinetd config exists') {
-    file('/etc/xinetd.conf').exists? || file('/etc/inetd.conf').exists?
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
   }
 
   describe xinetd_conf.services('discard') do
@@ -107,7 +107,7 @@ control 'cis-dil-benchmark-2.1.4' do
   tag level: 1
 
   only_if('inetd/xinetd config exists') {
-    file('/etc/xinetd.conf').exists? || file('/etc/inetd.conf').exists?
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
   }
 
   describe xinetd_conf.services('echo') do
@@ -134,7 +134,7 @@ control 'cis-dil-benchmark-2.1.5' do
   tag level: 1
 
   only_if('inetd/xinetd config exists') {
-    file('/etc/xinetd.conf').exists? || file('/etc/inetd.conf').exists?
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
   }
 
   describe xinetd_conf.services('time') do
@@ -161,7 +161,7 @@ control 'cis-dil-benchmark-2.1.6' do
   tag level: 1
 
   only_if('inetd/xinetd config exists') {
-    file('/etc/xinetd.conf').exists? || file('/etc/inetd.conf').exists?
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
   }
 
   %w(shell login exec rsh rlogin rexec).each do |s|
@@ -190,7 +190,7 @@ control 'cis-dil-benchmark-2.1.7' do
   tag level: 1
 
   only_if('inetd/xinetd config exists') {
-    file('/etc/xinetd.conf').exists? || file('/etc/inetd.conf').exists?
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
   }
 
   %w(talk ntalk).each do |s|
@@ -219,7 +219,7 @@ control 'cis-dil-benchmark-2.1.8' do
   tag level: 1
 
   only_if('inetd/xinetd config exists') {
-    file('/etc/xinetd.conf').exists? || file('/etc/inetd.conf').exists?
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
   }
 
   describe xinetd_conf.services('telnet') do
@@ -246,7 +246,7 @@ control 'cis-dil-benchmark-2.1.9' do
   tag level: 1
 
   only_if('inetd/xinetd config exists') {
-    file('/etc/xinetd.conf').exists? || file('/etc/inetd.conf').exists?
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
   }
 
   describe xinetd_conf.services('tftp') do
