@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.3](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.3) (2020-08-12)
+
+[Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.2...0.4.3)
+
+**Merged pull requests:**
+
+- Feat/updates cinc inspec v4 [\#85](https://github.com/dev-sec/cis-dil-benchmark/pull/85) ([deric4](https://github.com/deric4))
+
 ## [0.4.2](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.2) (2020-07-23)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.1...0.4.2)
