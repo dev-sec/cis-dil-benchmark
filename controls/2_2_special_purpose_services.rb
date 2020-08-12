@@ -118,6 +118,25 @@ control 'cis-dil-benchmark-2.2.1.3' do
   end
 end
 
+control 'cis-dil-benchmark-2.2.1.4' do
+  title 'Ensure systemd-timesyncd is configured'
+  desc  "systemd-timesyncd is a daemon that has been added for synchronizing the system clock across the network. It implements an SNTP client. In contrast to NTP implementations such as chrony or the NTP reference server this only implements a client side, and does not bother with the full NTP complexity, focusing only on querying time from one remote server and synchronizing the local clock to it. The daemon runs with minimal privileges, and has been hooked up with networkd to only operate when network connectivity is available. The daemon saves the current clock to disk every time a new NTP sync has been acquired, and uses this to possibly correct the system clock early at bootup, in order to accommodate for systems that lack an RTC such as the Raspberry Pi and embedded devices, and make sure that time monotonically progresses on these systems, even if it is not always correct. To make use of this daemon a new system user and group 'systemd- timesync' needs to be created on installation of systemd. This recommendation only applies if timesyncd is in use on the system."
+  impact 1.0
+
+  tag cis: 'distribution-independent-linux:2.2.1.4'
+  tag level: 1
+
+  only_if do
+    service('systemd-timesyncd.service').enabled?
+  end
+
+  describe file('/etc/systemd/timesyncd.conf') do
+    its('content') { should match /^NTP=\S+/ }
+    its('content') { should match /^FallbackNTP=\S+/ }
+    its('content') { should match /^RootDistanceMax=[0-9]/ }
+  end
+end
+
 control 'cis-dil-benchmark-2.2.2' do
   title 'Ensure X Window System is not installed'
   desc  "The X Window System provides a Graphical User Interface (GUI) where users can have multiple windows in which to run programs and various add on. The X Windows system is typically used on workstations where users login, but not on servers where users typically do not login.\n\nRationale: Unless your organization specifically requires graphical login access via X Windows, remove it to reduce the potential attack surface."
