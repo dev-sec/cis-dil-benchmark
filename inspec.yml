@@ -10,7 +10,7 @@ version: 0.4.2
 inspec_version: '>= 2.3.5'
 supports:
     - platform-family: linux
-attributes:
+inputs:
     - name: cis_level
       required: false
       description: 'CIS profile level to audit'
