@@ -266,7 +266,7 @@ control 'cis-dil-benchmark-2.2.10' do
   tag cis: 'distribution-independent-linux:2.2.10'
   tag level: 1
 
-  %w(apache2 httpd).each do |s|
+  %w(apache apache2 httpd lighttpd nginx).each do |s|
     describe service(s) do
       it { should_not be_enabled }
       it { should_not be_running }
@@ -282,9 +282,11 @@ control 'cis-dil-benchmark-2.2.11' do
   tag cis: 'distribution-independent-linux:2.2.11'
   tag level: 1
 
-  describe service('dovecot') do
-    it { should_not be_enabled }
-    it { should_not be_running }
+  %w(dovecot courier-imap cyrus-imap).each do |s|
+    describe service(s) do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
   end
 end
 
