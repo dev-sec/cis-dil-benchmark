@@ -220,7 +220,7 @@ control 'cis-dil-benchmark-1.1.8' do
   tag level: 1
 
   only_if('/var/tmp is mounted') do
-    mount('/var/tmp').exists?
+    mount('/var/tmp').mounted?
   end
 
   describe mount('/var/tmp') do
@@ -238,7 +238,7 @@ control 'cis-dil-benchmark-1.1.9' do
   tag level: 1
 
   only_if('/var/tmp is mounted') do
-    mount('/var/tmp').exists?
+    mount('/var/tmp').mounted?
   end
 
   describe mount('/var/tmp') do
@@ -256,7 +256,7 @@ control 'cis-dil-benchmark-1.1.10' do
   tag level: 1
 
   only_if('/var/tmp is mounted') do
-    mount('/var/tmp').exists?
+    mount('/var/tmp').mounted?
   end
 
   describe mount('/var/tmp') do
@@ -318,7 +318,7 @@ control 'cis-dil-benchmark-1.1.14' do
   tag level: 1
 
   only_if('/home is mounted') do
-    mount('/home').exists?
+    mount('/home').mounted?
   end
 
   describe mount('/home') do
