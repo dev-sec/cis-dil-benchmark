@@ -28,7 +28,7 @@ control 'cis-dil-benchmark-3.1.1' do
   %w{
     net.ipv4.ip_forward
     net.ipv6.conf.all.forwarding
-  }.each do |$kp|
+  }.each do |kp|
     describe kernel_parameter($kp) do
       its('value') { should_not be_nil }
       its('value') { should eq 0 }
