@@ -25,9 +25,14 @@ control 'cis-dil-benchmark-3.1.1' do
   tag cis: 'distribution-independent-linux:3.1.1'
   tag level: 1
 
-  describe kernel_parameter('net.ipv4.ip_forward') do
-    its(:value) { should_not be_nil }
-    its(:value) { should eq 0 }
+  %w{
+    net.ipv4.ip_forward
+    net.ipv6.conf.all.forwarding
+  }.each do |$kp|
+    describe kernel_parameter($kp) do
+      its('value') { should_not be_nil }
+      its('value') { should eq 0 }
+    end
   end
 end
 
@@ -39,10 +44,13 @@ control 'cis-dil-benchmark-3.1.2' do
   tag cis: 'distribution-independent-linux:3.1.2'
   tag level: 1
 
-  %w(net.ipv4.conf.all.send_redirects net.ipv4.conf.default.send_redirects).each do |kp|
+  %w{
+    net.ipv4.conf.all.send_redirects
+    net.ipv4.conf.default.send_redirects
+  }.each do |kp|
     describe kernel_parameter(kp) do
-      its(:value) { should_not be_nil }
-      its(:value) { should eq 0 }
+      its('value') { should_not be_nil }
+      its('value') { should eq 0 }
     end
   end
 end
