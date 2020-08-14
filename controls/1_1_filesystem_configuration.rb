@@ -335,7 +335,7 @@ control 'cis-dil-benchmark-1.1.15' do
   tag level: 1
 
   only_if('/dev/shm is mounted') do
-    mount('/dev/shm').exists?
+    mount('/dev/shm').mounted?
   end
 
   describe mount('/dev/shm') do
@@ -352,7 +352,7 @@ control 'cis-dil-benchmark-1.1.16' do
   tag level: 1
 
   only_if('/dev/shm is mounted') do
-    mount('/dev/shm').exists?
+    mount('/dev/shm').mounted?
   end
 
   describe mount('/dev/shm') do
@@ -372,7 +372,7 @@ control 'cis-dil-benchmark-1.1.17' do
     its('options') { should include 'noexec' }
   end
   only_if('/dev/shm is mounted') {
-    mount('/dev/shm').exists?
+    mount('/dev/shm').mounted?
   }
 end
 
@@ -461,7 +461,9 @@ control 'cis-dil-benchmark-1.1.23' do
   tag cis: 'distribution-independent-linux:1.1.23'
   tag level: 1
 
-  describe kernel_module('usb-storage') do
+  # kernel modules need to use underscores
+  # ref: https://github.com/inspec/inspec/issues/5190
+  describe kernel_module('usb_storage') do
     it { should_not be_loaded }
     it { should be_disabled }
   end
