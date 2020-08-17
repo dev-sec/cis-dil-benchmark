@@ -25,7 +25,7 @@ control 'cis-dil-benchmark-3.2.1' do
   tag cis: 'distribution-independent-linux:3.2.1'
   tag level: 1
 
-  %w(net.ipv4.conf.all.accept_source_route net.ipv4.conf.default.accept_source_route).each do |kp|
+  %w(net.ipv4.conf.all.accept_source_route net.ipv4.conf.default.accept_source_route net.ipv6.conf.all.accept_source_route net.ipv6.conf.default.accept_source_route).each do |kp|
     describe kernel_parameter(kp) do
       its(:value) { should_not be_nil }
       its(:value) { should eq 0 }
@@ -41,7 +41,7 @@ control 'cis-dil-benchmark-3.2.2' do
   tag cis: 'distribution-independent-linux:3.2.2'
   tag level: 1
 
-  %w(net.ipv4.conf.all.accept_redirects net.ipv4.conf.default.accept_redirects).each do |kp|
+  %w(net.ipv4.conf.all.accept_redirects net.ipv4.conf.default.accept_redirects net.ipv6.conf.all.accept_redirects net.ipv6.conf.default.accept_redirects).each do |kp|
     describe kernel_parameter(kp) do
       its(:value) { should_not be_nil }
       its(:value) { should eq 0 }
@@ -136,5 +136,21 @@ control 'cis-dil-benchmark-3.2.8' do
   describe kernel_parameter('net.ipv4.tcp_syncookies') do
     its(:value) { should_not be_nil }
     its(:value) { should eq 1 }
+  end
+end
+
+control 'cis-dil-benchmark-3.2.9' do
+  title 'Ensure IPv6 router advertisements are not accepted'
+  desc  "This setting disables the system's ability to accept IPv6 router advertisements.\n\nRationale: It is recommended that systems do not accept router advertisements as they could be tricked into routing traffic to compromised machines. Setting hard routes within the system (usually a single default route to a trusted router) protects the system from bad routes."
+  impact 1.0
+
+  tag cis: 'distribution-independent-linux:3.2.9'
+  tag level: 1
+
+  %w(net.ipv6.conf.all.accept_ra net.ipv6.conf.default.accept_ra).each do |kp|
+    describe kernel_parameter(kp) do
+      its(:value) { should_not be_nil }
+      its(:value) { should eq 0 }
+    end
   end
 end
