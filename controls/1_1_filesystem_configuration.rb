@@ -15,7 +15,7 @@
 #
 # author: Kristian Vlaardingerbroek
 
-cis_level = attribute('cis_level')
+cis_level = input('cis_level')
 
 title '1.1 Filesystem Configuration'
 
