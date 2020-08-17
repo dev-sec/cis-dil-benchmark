@@ -25,7 +25,12 @@ control 'cis-dil-benchmark-3.2.1' do
   tag cis: 'distribution-independent-linux:3.2.1'
   tag level: 1
 
-  %w(net.ipv4.conf.all.accept_source_route net.ipv4.conf.default.accept_source_route net.ipv6.conf.all.accept_source_route net.ipv6.conf.default.accept_source_route).each do |kp|
+  %w(
+    net.ipv4.conf.all.accept_source_route
+    net.ipv4.conf.default.accept_source_route
+    net.ipv6.conf.all.accept_source_route
+    net.ipv6.conf.default.accept_source_route
+  ).each do |kp|
     describe kernel_parameter(kp) do
       its(:value) { should_not be_nil }
       its(:value) { should eq 0 }
@@ -41,7 +46,12 @@ control 'cis-dil-benchmark-3.2.2' do
   tag cis: 'distribution-independent-linux:3.2.2'
   tag level: 1
 
-  %w(net.ipv4.conf.all.accept_redirects net.ipv4.conf.default.accept_redirects net.ipv6.conf.all.accept_redirects net.ipv6.conf.default.accept_redirects).each do |kp|
+  %w(
+    net.ipv4.conf.all.accept_redirects
+    net.ipv4.conf.default.accept_redirects
+    net.ipv6.conf.all.accept_redirects
+    net.ipv6.conf.default.accept_redirects
+  ).each do |kp|
     describe kernel_parameter(kp) do
       its(:value) { should_not be_nil }
       its(:value) { should eq 0 }
