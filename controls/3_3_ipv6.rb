@@ -15,81 +15,95 @@
 #
 # author: Kristian Vlaardingerbroek
 
-title '3.3 IPv6'
+title '3.3 TCP Wrappers'
 
 control 'cis-dil-benchmark-3.3.1' do
-  title 'Ensure IPv6 router advertisements are not accepted'
-  desc  "This setting disables the system's ability to accept IPv6 router advertisements.\n\nRationale: It is recommended that systems not accept router advertisements as they could be tricked into routing traffic to compromised machines. Setting hard routes within the system (usually a single default route to a trusted router) protects the system from bad routes."
+  title 'Ensure TCP Wrappers is installed'
+  desc '
+    Many Linux distributions provide value-added firewall solutions which provide easy, advanced management of network traffic into and out
+    of the local system. When these solutions are available and appropriate for an environment they should be used.
+
+    In cases where a value-added firewall is not provided by a distribution, TCP Wrappers provides a simple access
+    list and standardized logging method for services capable of supporting it. Services that are called from `inetd` and `xinetd` support the use
+    of TCP wrappers. Any service that can support TCP wrappers will have the `libwrap.so` library attached to it.
+  '
   impact 0.0
 
   tag cis: 'distribution-independent-linux:3.3.1'
   tag level: 1
 
-  only_if do
-    ipv6_enabled = true
-
-    grub_conf.locations.each do |f|
-      grub_file = file(f)
-      if !grub_file.content.nil? && grub_file.content.match(/ipv6\.disable=1/)
-        ipv6_enabled = false
-        break
+  describe.one do
+    %w{tcpd tcp_wrappers}.each do |p|
+      describe package(p) do
+        it { should be_installed }
       end
-    end
-
-    ipv6_enabled
-  end
-
-  %w(net.ipv6.conf.all.accept_ra net.ipv6.conf.default.accept_ra).each do |kp|
-    describe kernel_parameter(kp) do
-      its(:value) { should_not be_nil }
-      its(:value) { should eq 0 }
     end
   end
 end
 
 control 'cis-dil-benchmark-3.3.2' do
-  title 'Ensure IPv6 redirects are not accepted'
-  desc  "This setting prevents the system from accepting ICMP redirects. ICMP redirects tell the system about alternate routes for sending traffic.\n\nRationale: It is recommended that systems not accept ICMP redirects as they could be tricked into routing traffic to compromised machines. Setting hard routes within the system (usually a single default route to a trusted router) protects the system from bad routes."
+  title 'Ensure /etc/hosts.allow is configured'
+  desc '
+    The `/etc/hosts.allow` file specifies which IP addresses are permitted to connect
+    to the host. It is intended to be used in conjunction with the `/etc/hosts.deny` file. 
+  ' 
   impact 0.0
 
   tag cis: 'distribution-independent-linux:3.3.2'
   tag level: 1
 
-  only_if do
-    ipv6_enabled = true
-
-    grub_conf.locations.each do |f|
-      grub_file = file(f)
-      if !grub_file.content.nil? && grub_file.content.match(/ipv6\.disable=1/)
-        ipv6_enabled = false
-        break
-      end
-    end
-
-    ipv6_enabled
-  end
-
-  %w(net.ipv6.conf.all.accept_redirects net.ipv6.conf.default.accept_redirects).each do |kp|
-    describe kernel_parameter(kp) do
-      its(:value) { should_not be_nil }
-      its(:value) { should eq 0 }
-    end
+  describe file('/etc/hosts.allow') do
+    it { should exist }
   end
 end
 
 control 'cis-dil-benchmark-3.3.3' do
-  title 'Ensure IPv6 is disabled'
-  desc  "Although IPv6 has many advantages over IPv4, few organizations have implemented IPv6.\n\nRationale: If IPv6 is not to be used, it is recommended that it be disabled to reduce the attack surface of the system."
+  title 'Ensure /etc/hosts.deny is configured'
+  desc '
+    The /etc/hosts.deny file specifies which IP addresses are not permitted to connect to the host.
+    It is intended to be used in conjunction with the /etc/hosts.allow file.
+    
+    Rationale: The /etc/hosts.deny file serves as a failsafe so that any host not specified
+    in /etc/hosts.allow is denied access to the system.
+  '
   impact 0.0
 
   tag cis: 'distribution-independent-linux:3.3.3'
   tag level: 1
 
-  describe.one do
-    grub_conf.locations.each do |f|
-      describe file(f) do
-        its(:content) { should match(/ipv6\.disable=1/) }
-      end
-    end
+  describe file('/etc/hosts.deny') do
+    its('content') { should match(/^ALL: ALL/) }
   end
 end
+
+control 'cis-dil-benchmark-3.3.4' do
+  title 'Ensure permissions on /etc/hosts.allow are configured'
+  desc '
+    The /etc/hosts.allow file contains networking information that is used by many applications and
+    therefore must be readable for these applications to operate.
+    
+    Rationale: It is critical to ensure that the /etc/hosts.allow file is protected from unauthorized write access. Although it is protected by default,
+    the file permissions could be changed either inadvertently or through malicious actions.
+  '
+  impact 1.0
+
+  tag cis: 'distribution-independent-linux:3.4.4'
+  tag level: 1
+
+  describe file('/etc/hosts.allow') do
+    it { should exist }
+    it { should be_readable.by 'owner' }
+    it { should be_writable.by 'owner' }
+    it { should_not be_executable.by 'owner' }
+    it { should be_readable.by 'group' }
+    it { should_not be_writable.by 'group' }
+    it { should_not be_executable.by 'group' }
+    it { should be_readable.by 'other' }
+    it { should_not be_writable.by 'other' }
+    it { should_not be_executable.by 'other' }
+    its(:uid) { should cmp 0 }
+    its(:gid) { should cmp 0 }
+    its(:sticky) { should equal false }
+    its(:suid) { should equal false }
+    its(:sgid) { should equal false }
+  end
