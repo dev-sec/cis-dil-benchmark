@@ -45,8 +45,8 @@ control 'cis-dil-benchmark-3.3.2' do
   title 'Ensure /etc/hosts.allow is configured'
   desc '
     The `/etc/hosts.allow` file specifies which IP addresses are permitted to connect
-    to the host. It is intended to be used in conjunction with the `/etc/hosts.deny` file. 
-  ' 
+    to the host. It is intended to be used in conjunction with the `/etc/hosts.deny` file.
+  '
   impact 0.0
 
   tag cis: 'distribution-independent-linux:3.3.2'
@@ -62,7 +62,7 @@ control 'cis-dil-benchmark-3.3.3' do
   desc '
     The /etc/hosts.deny file specifies which IP addresses are not permitted to connect to the host.
     It is intended to be used in conjunction with the /etc/hosts.allow file.
-    
+
     Rationale: The /etc/hosts.deny file serves as a failsafe so that any host not specified
     in /etc/hosts.allow is denied access to the system.
   '
@@ -81,29 +81,44 @@ control 'cis-dil-benchmark-3.3.4' do
   desc '
     The /etc/hosts.allow file contains networking information that is used by many applications and
     therefore must be readable for these applications to operate.
-    
+
     Rationale: It is critical to ensure that the /etc/hosts.allow file is protected from unauthorized write access. Although it is protected by default,
     the file permissions could be changed either inadvertently or through malicious actions.
   '
   impact 1.0
 
-  tag cis: 'distribution-independent-linux:3.4.4'
+  tag cis: 'distribution-independent-linux:3.3.4'
   tag level: 1
 
   describe file('/etc/hosts.allow') do
     it { should exist }
-    it { should be_readable.by 'owner' }
-    it { should be_writable.by 'owner' }
-    it { should_not be_executable.by 'owner' }
-    it { should be_readable.by 'group' }
-    it { should_not be_writable.by 'group' }
-    it { should_not be_executable.by 'group' }
-    it { should be_readable.by 'other' }
-    it { should_not be_writable.by 'other' }
-    it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
-    its(:sticky) { should equal false }
-    its(:suid) { should equal false }
-    its(:sgid) { should equal false }
+    it { should be_file }
+
+    its('owner') { should eq 'root' }
+    its('group') { should eq 'root' }
+
+    its('mode') { should cmp '0644' }
   end
+end
+
+control 'cis-dil-benchmark-3.3.5' do
+  title 'Ensure permissions on /etc/hosts.deny are configured'
+  desc '
+    The `/etc/hosts.deny` file contains network information that is used by many system applications and therefore
+    must be readable for these applications to operate.
+  '
+  impact 1.0
+
+  tag cis: 'distribution-independent-linux:3.3.5'
+  tag level: 1
+
+  describe file('/etc/hosts.deny') do
+    it { should exist }
+    it { should be_file }
+
+    its('owner') { should eq 'root' }
+    its('group') { should eq 'root' }
+
+    its('mode') { should cmp '0644' }
+  end
+end
