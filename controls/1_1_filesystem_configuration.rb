@@ -14,10 +14,14 @@
 # limitations under the License.
 #
 # author: Kristian Vlaardingerbroek
+#
 
 cis_level = input('cis_level')
 
 title '1.1 Filesystem Configuration'
+
+# Enumerate removable media devices
+removable_devices = command("lsblk -np --output KNAME,RM | awk '{if ($2==1) print $1}'").output.split("\n").reject(&:empty?)
 
 control 'cis-dil-benchmark-1.1.1.1' do
   title 'Ensure mounting of cramfs filesystems is disabled'
@@ -118,12 +122,16 @@ control 'cis-dil-benchmark-1.1.1.7' do
 end
 
 control 'cis-dil-benchmark-1.1.1.8' do
-  title 'Ensure mounting of FAT filesystems is disabled'
+  title 'Ensure mounting of FAT filesystems is limited'
   desc  "The FAT filesystem format is primarily used on older windows systems and portable USB drives or flash modules. It comes in three types FAT12, FAT16, and FAT32 all of which are supported by the vfat kernel module.\n\nRationale: Removing support for unneeded filesystem types reduces the local attack surface of the system. If this filesystem type is not needed, disable it."
-  impact 1.0
+  impact 0.0
 
   tag cis: 'distribution-independent-linux:1.1.1.8'
-  tag level: 1
+  tag level: 2
+
+  only_if('CIS level 2 AND non-UEFI boot') do
+    cis_level == 2 && !file('/sys/firmware/efi').directory?
+  end
 
   describe kernel_module('vfat') do
     it { should_not be_loaded }
@@ -132,8 +140,8 @@ control 'cis-dil-benchmark-1.1.1.8' do
 end
 
 control 'cis-dil-benchmark-1.1.2' do
-  title 'Ensure separate partition exists for /tmp'
-  desc  "The /tmp directory is a world-writable directory used for temporary storage by all users and some applications.\n\nRationale: Since the /tmp directory is intended to be world-writable, there is a risk of resource exhaustion if it is not bound to a separate partition. In addition, making /tmp its own file system allows an administrator to set the noexec option on the mount, making /tmp useless for an attacker to install executable code. It would also prevent an attacker from establishing a hardlink to a system setuid program and wait for it to be updated. Once the program was updated, the hardlink would be broken and the attacker would have his own copy of the program. If the program happened to have a security vulnerability, the attacker could continue to exploit the known flaw."
+  title 'Ensure /tmp is configured'
+  desc  "The /tmp directory is a world-writable directory used for temporary storage by all users and some applications.\n\nRationale: Making /tmp its own file system allows an administrator to set the noexec option on the mount, making /tmp useless for an attacker to install executable code. It would also prevent an attacker from establishing a hardlink to a system setuid program and wait for it to be updated. Once the program was updated, the hardlink would be broken and the attacker would have his own copy of the program. If the program happened to have a security vulnerability, the attacker could continue to exploit the known flaw. This can be accomplished by either mounting tmpfs to /tmp, or creating a separate partition for /tmp."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:1.1.2'
@@ -153,7 +161,7 @@ control 'cis-dil-benchmark-1.1.3' do
   tag level: 1
 
   describe mount('/tmp') do
-    its(:options) { should include 'nodev' }
+    its('options') { should include 'nodev' }
   end
 end
 
@@ -166,7 +174,7 @@ control 'cis-dil-benchmark-1.1.4' do
   tag level: 1
 
   describe mount('/tmp') do
-    its(:options) { should include 'nosuid' }
+    its('options') { should include 'nosuid' }
   end
 end
 
@@ -179,7 +187,7 @@ control 'cis-dil-benchmark-1.1.5' do
   tag level: 1
 
   describe mount('/tmp') do
-    its(:options) { should include 'noexec' }
+    its('options') { should include 'noexec' }
   end
 end
 
@@ -191,10 +199,13 @@ control 'cis-dil-benchmark-1.1.6' do
   tag cis: 'distribution-independent-linux:1.1.6'
   tag level: 2
 
+  only_if('CIS level 2') do
+    cis_level == 2
+  end
+
   describe mount('/var') do
     it { should be_mounted }
   end
-  only_if { cis_level == 2 }
 end
 
 control 'cis-dil-benchmark-1.1.7' do
@@ -205,10 +216,13 @@ control 'cis-dil-benchmark-1.1.7' do
   tag cis: 'distribution-independent-linux:1.1.7'
   tag level: 2
 
+  only_if('CIS level 2') do
+    cis_level == 2
+  end
+
   describe mount('/var/tmp') do
     it { should be_mounted }
   end
-  only_if { cis_level == 2 }
 end
 
 control 'cis-dil-benchmark-1.1.8' do
@@ -219,8 +233,12 @@ control 'cis-dil-benchmark-1.1.8' do
   tag cis: 'distribution-independent-linux:1.1.8'
   tag level: 1
 
+  only_if('/var/tmp is mounted') do
+    mount('/var/tmp').mounted?
+  end
+
   describe mount('/var/tmp') do
-    its(:options) { should include 'nodev' }
+    its('options') { should include 'nodev' }
   end
 end
 
@@ -232,8 +250,12 @@ control 'cis-dil-benchmark-1.1.9' do
   tag cis: 'distribution-independent-linux:1.1.9'
   tag level: 1
 
+  only_if('/var/tmp is mounted') do
+    mount('/var/tmp').mounted?
+  end
+
   describe mount('/var/tmp') do
-    its(:options) { should include 'nosuid' }
+    its('options') { should include 'nosuid' }
   end
 end
 
@@ -245,23 +267,30 @@ control 'cis-dil-benchmark-1.1.10' do
   tag cis: 'distribution-independent-linux:1.1.10'
   tag level: 1
 
+  only_if('/var/tmp is mounted') do
+    mount('/var/tmp').mounted?
+  end
+
   describe mount('/var/tmp') do
-    its(:options) { should include 'noexec' }
+    its('options') { should include 'noexec' }
   end
 end
 
 control 'cis-dil-benchmark-1.1.11' do
   title 'Ensure separate partition exists for /var/log'
-  desc  "The /var/log directory is used by system services to store log data .\n\nRationale: There are two important reasons to ensure that system logs are stored on a separate partition: protection against resource exhaustion (since logs can grow quite large) and protection of audit data."
+  desc  "The /var/log directory is used by system services to store log data.\n\nRationale: There are two important reasons to ensure that system logs are stored on a separate partition: protection against resource exhaustion (since logs can grow quite large) and protection of audit data."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:1.1.11'
   tag level: 2
 
+  only_if('CIS level 2') do
+    cis_level == 2
+  end
+
   describe mount('/var/log') do
     it { should be_mounted }
   end
-  only_if { cis_level == 2 }
 end
 
 control 'cis-dil-benchmark-1.1.12' do
@@ -272,7 +301,9 @@ control 'cis-dil-benchmark-1.1.12' do
   tag cis: 'distribution-independent-linux:1.1.12'
   tag level: 2
 
-  only_if { cis_level == 2 }
+  only_if('CIS level 2') do
+    cis_level == 2
+  end
 
   describe mount('/var/log/audit') do
     it { should be_mounted }
@@ -287,7 +318,9 @@ control 'cis-dil-benchmark-1.1.13' do
   tag cis: 'distribution-independent-linux:1.1.13'
   tag level: 2
 
-  only_if { cis_level == 2 }
+  only_if('CIS level 2') do
+    cis_level == 2
+  end
 
   describe mount('/home') do
     it { should be_mounted }
@@ -302,26 +335,30 @@ control 'cis-dil-benchmark-1.1.14' do
   tag cis: 'distribution-independent-linux:1.1.14'
   tag level: 1
 
+  only_if('/home is mounted') do
+    mount('/home').mounted?
+  end
+
   describe mount('/home') do
-    its(:options) { should include 'nodev' }
+    its('options') { should include 'nodev' }
   end
 end
 
 control 'cis-dil-benchmark-1.1.15' do
   title 'Ensure nodev option set on /dev/shm partition'
-  desc  "The nodev mount option specifies that the filesystem cannot contain special devices.\n\nRationale: Since the /run/shm filesystem is not intended to support devices, set this option to ensure that users cannot attempt to create special devices in /dev/shm partitions."
+  desc  "The nodev mount option specifies that the filesystem cannot contain special devices.\n\nRationale: Since the /dev/shm filesystem is not intended to support devices, set this option to ensure that users cannot attempt to create special devices in /dev/shm partitions."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:1.1.15'
   tag level: 1
 
   describe mount('/dev/shm') do
-    its(:options) { should include 'nodev' }
+    its('options') { should include 'nodev' }
   end
 end
 
 control 'cis-dil-benchmark-1.1.16' do
-  title 'Ensure nosuid option set on /dev/shm partitionrun'
+  title 'Ensure nosuid option set on /dev/shm partition'
   desc  "The nosuid mount option specifies that the filesystem cannot contain setuid files.\n\nRationale: Setting this option on a file system prevents users from introducing privileged programs onto the system and allowing non-root users to execute them."
   impact 1.0
 
@@ -329,7 +366,7 @@ control 'cis-dil-benchmark-1.1.16' do
   tag level: 1
 
   describe mount('/dev/shm') do
-    its(:options) { should include 'nosuid' }
+    its('options') { should include 'nosuid' }
   end
 end
 
@@ -342,7 +379,7 @@ control 'cis-dil-benchmark-1.1.17' do
   tag level: 1
 
   describe mount('/dev/shm') do
-    its(:options) { should include 'noexec' }
+    its('options') { should include 'noexec' }
   end
 end
 
@@ -354,8 +391,10 @@ control 'cis-dil-benchmark-1.1.18' do
   tag cis: 'distribution-independent-linux:1.1.18'
   tag level: 1
 
-  describe 'cis-dil-benchmark-1.1.18' do
-    skip 'Not implemented'
+  removable_devices.each do |device|
+    describe mount(device) do
+      its('options') { should include 'nodev' }
+    end
   end
 end
 
@@ -367,8 +406,10 @@ control 'cis-dil-benchmark-1.1.19' do
   tag cis: 'distribution-independent-linux:1.1.19'
   tag level: 1
 
-  describe 'cis-dil-benchmark-1.1.19' do
-    skip 'Not implemented'
+  removable_devices.each do |device|
+    describe mount(device) do
+      its('options') { should include 'nosuid' }
+    end
   end
 end
 
@@ -380,8 +421,10 @@ control 'cis-dil-benchmark-1.1.20' do
   tag cis: 'distribution-independent-linux:1.1.20'
   tag level: 1
 
-  describe 'cis-dil-benchmark-1.1.20' do
-    skip 'Not implemented'
+  removable_devices.each do |device|
+    describe mount(device) do
+      its('options') { should include 'noexec' }
+    end
   end
 end
 
@@ -393,8 +436,8 @@ control 'cis-dil-benchmark-1.1.21' do
   tag cis: 'distribution-independent-linux:1.1.21'
   tag level: 1
 
-  describe command("df --local -P | awk '{ if (NR!=1) print $6 }' | xargs -I '{}' find '{}' -xdev -type d \( -perm -0002 -a ! -perm -1000 \)") do
-    its(:stdout) { should eq '' }
+  describe command("df --local -P | awk '{ if (NR!=1) print $6 }' | xargs -I '{}' find '{}' -xdev -type d \( -perm -0002 -a ! -perm -1000 \) 2>/dev/null") do
+    its('stdout') { should cmp '' }
   end
 end
 
@@ -416,5 +459,19 @@ control 'cis-dil-benchmark-1.1.22' do
       it { should_not be_enabled }
       it { should_not be_running }
     end
+  end
+end
+
+control 'cis-dil-benchmark-1.1.23' do
+  title 'Disable USB Storage'
+  desc  "USB storage provides a means to transfer and store files insuring persistence and availability of the files independent of network connection status. Its popularity and utility has led to USB-based malware being a simple and common means for network infiltration and a first step to establishing a persistent threat within a networked environment.\n\nRationale: Restricting USB access on the system will decrease the physical attack surface for a device and diminish the possible vectors to introduce malware."
+  impact 1.0
+
+  tag cis: 'distribution-independent-linux:1.1.23'
+  tag level: 1
+
+  describe kernel_module('usb_storage') do
+    it { should_not be_loaded }
+    it { should be_disabled }
   end
 end
