@@ -21,7 +21,7 @@ cis_level = input('cis_level')
 title '1.1 Filesystem Configuration'
 
 # Enumerate removable media devices
-removable_devices = command("lsblk -np --output KNAME,RM | awk '{if ($2==1) print $1}'").output.split("\n").reject(&:empty?)
+removable_devices = command("lsblk -np --output KNAME,RM | awk '{if ($2==1) print $1}'").stdout.split("\n").reject(&:empty?)
 
 control 'cis-dil-benchmark-1.1.1.1' do
   title 'Ensure mounting of cramfs filesystems is disabled'
@@ -391,6 +391,10 @@ control 'cis-dil-benchmark-1.1.18' do
   tag cis: 'distribution-independent-linux:1.1.18'
   tag level: 1
 
+  only_if('Removable media is mounted') do
+    !removable_devices.empty?
+  end
+
   removable_devices.each do |device|
     describe mount(device) do
       its('options') { should include 'nodev' }
@@ -406,6 +410,10 @@ control 'cis-dil-benchmark-1.1.19' do
   tag cis: 'distribution-independent-linux:1.1.19'
   tag level: 1
 
+  only_if('Removable media is mounted') do
+    !removable_devices.empty?
+  end
+
   removable_devices.each do |device|
     describe mount(device) do
       its('options') { should include 'nosuid' }
@@ -420,6 +428,10 @@ control 'cis-dil-benchmark-1.1.20' do
 
   tag cis: 'distribution-independent-linux:1.1.20'
   tag level: 1
+
+  only_if('Removable media is mounted') do
+    !removable_devices.empty?
+  end
 
   removable_devices.each do |device|
     describe mount(device) do
