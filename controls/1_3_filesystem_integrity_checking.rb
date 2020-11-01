@@ -46,18 +46,12 @@ control 'cis-dil-benchmark-1.3.2' do
   tag level: 1
 
   describe.one do
-    %w(/var/spool/cron/crontabs/root /var/spool/cron/root /etc/crontab).each do |f|
-      describe file(f) do
-        its(:content) { should match(/aide --check/) }
-      end
+    describe command('crontab -u root -l | grep aide')
+      its ('stdout') { should_not eq '' }
     end
 
-    %w(cron.d cron.hourly cron.daily cron.weekly cron.monthly).each do |f|
-      command("find /etc/#{f} -type f").stdout.split.each do |entry|
-        describe file(entry) do
-          its(:content) { should match(/aide --check/) }
-        end
-      end
+    describe command('grep -r aide /etc/cron.* /etc/crontab')
+      its ('stdout') { should_not eq '' }
     end
   end
 end
