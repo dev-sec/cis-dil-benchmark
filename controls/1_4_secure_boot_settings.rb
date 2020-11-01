@@ -14,19 +14,20 @@
 # limitations under the License.
 #
 # author: Kristian Vlaardingerbroek
+#
 
 title '1.4 Secure Boot Settings'
 
 control 'cis-dil-benchmark-1.4.1' do
   title 'Ensure permissions on bootloader config are configured'
-  desc  "The grub configuration file contains information on boot settings and passwords for unlocking boot options. The grub configuration is usually grub.cfg stored in /boot/grub.\n\nRationale: Setting the permissions to read and write for root only prevents non-root users from seeing the boot parameters or changing them. Non-root users who read the boot parameters may be able to identify weaknesses in security upon boot and be able to exploit them."
+  desc  "The grub configuration file contains information on boot settings and passwords for unlocking boot options. The grub configuration is usually grub.cfg stored in /boot/grub2/ or /boot/grub/.\n\nRationale: Setting the permissions to read and write for root only prevents non-root users from seeing the boot parameters or changing them. Non-root users who read the boot parameters may be able to identify weaknesses in security upon boot and be able to exploit them."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:1.4.1'
   tag level: 1
 
   describe.one do
-    grub_conf.locations.each do |f|
+    %w(/boot/grub2/grub.cfg /boot/grub/grub.cfg).each do |f|
       describe file(f) do
         it { should exist }
         it { should_not be_readable.by 'group' }
@@ -51,11 +52,17 @@ control 'cis-dil-benchmark-1.4.2' do
   tag level: 1
 
   describe.one do
-    grub_conf.locations.each do |f|
-      describe file(f) do
-        its(:content) { should match(/^set superusers/) }
-        its(:content) { should match(/^password/) }
-      end
+    describe file('/boot/grub/menu.lst') do
+      its('content') { should match(/^\s*password --md5/) }
+    end
+
+    describe file('/boot/grub2/user.cfg') do
+      its('content') { should match(/^\s*GRUB2_PASSWORD=/) }
+    end
+
+    describe file('/boot/grub/grub.cfg') do
+      its('content') { should match(/^\s*set superusers=/) }
+      its('content') { should match(/^\s*password_pbkdf2/) }
     end
   end
 end
@@ -68,25 +75,15 @@ control 'cis-dil-benchmark-1.4.3' do
   tag cis: 'distribution-independent-linux:1.4.3'
   tag level: 1
 
-  describe.one do
-    describe shadow.users('root') do
-      its(:passwords) { should_not include('*') }
-      its(:passwords) { should_not include('!') }
-    end
-
-    describe file('/etc/inittab') do
-      its(:content) { should match(%r{^~~:S:respawn:/sbin/sulogin}) }
-    end
-
-    describe file('/etc/sysconfig/init') do
-      its(:content) { should match(%r{^SINGLE=/sbin/sulogin$}) }
-    end
+  describe shadow.users('root') do
+    its('passwords') { should_not include('*') }
+    its('passwords') { should_not include('!') }
   end
 end
 
 control 'cis-dil-benchmark-1.4.4' do
   title 'Ensure interactive boot is not enabled'
-  desc  "Interactive boot allows console users to interactively select which services start on boot. Not all distributions support this capability.\nThe PROMPT_FOR_CONFIRM option provides console users the ability to interactively boot the system and select which services to start on boot .\n\nRationale: Turn off the PROMPT_FOR_CONFIRM option on the console to prevent console users from potentially overriding established security settings."
+  desc  "Interactive boot allows console users to interactively select which services start on boot. Not all distributions support this capability. The PROMPT_FOR_CONFIRM option provides console users the ability to interactively boot the system and select which services to start on boot.\n\nRationale: Turn off the PROMPT_FOR_CONFIRM option on the console to prevent console users from potentially overriding established security settings."
   impact 0.0
 
   tag cis: 'distribution-independent-linux:1.4.4'
@@ -94,7 +91,7 @@ control 'cis-dil-benchmark-1.4.4' do
 
   if file('/etc/sysconfig/boot').exist?
     describe file('/etc/sysconfig/boot') do
-      its(:content) { should match(/^PROMPT_FOR_CONFIRM="no"$/) }
+      its('content') { should match(/^PROMPT_FOR_CONFIRM="no"$/) }
     end
   else
     describe 'cis-dil-benchmark-1.4.4' do
