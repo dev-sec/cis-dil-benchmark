@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 # author: Kristian Vlaardingerbroek
+#
 
 title '1.5 Additional Process Hardening'
 
@@ -27,31 +28,41 @@ control 'cis-dil-benchmark-1.5.1' do
 
   describe.one do
     describe file('/etc/security/limits.conf') do
-      its(:content) { should match(/^\s*\*\s+hard\s+core\s+0\s*(?:#.*)?$/) }
+      its('content') { should match(/^\s*\*\s+hard\s+core\s+0\s*(?:#.*)?$/) }
     end
 
     command('find /etc/security/limits.d -type f').stdout.split.each do |f|
       describe file(f) do
-        its(:content) { should match(/^\s*\*\s+hard\s+core\s+0\s*(?:#.*)?$/) }
+        its('content') { should match(/^\s*\*\s+hard\s+core\s+0\s*(?:#.*)?$/) }
       end
     end
   end
 
   describe kernel_parameter('fs.suid_dumpable') do
-    its(:value) { should eq 0 }
+    its('value') { should eq 0 }
+  end
+
+  describe service('coredump') do
+    it { should be_installed }
   end
 end
 
 control 'cis-dil-benchmark-1.5.2' do
   title 'Ensure XD/NX support is enabled'
   desc  "Recent processors in the x86 family support the ability to prevent code execution on a per memory page basis. Generically and on AMD processors, this ability is called No Execute (NX), while on Intel processors it is called Execute Disable (XD). This ability can help prevent exploitation of buffer overflow vulnerabilities and should be activated whenever possible. Extra steps must be taken to ensure that this protection is enabled, particularly on 32-bit x86 systems. Other processors, such as Itanium and POWER, have included such support since inception and the standard kernel for those platforms supports the feature.\n\nRationale: Enabling any feature that can protect against buffer overflow attacks enhances the security of the system."
-  impact 0.0
+  impact 1.0
 
   tag cis: 'distribution-independent-linux:1.5.2'
   tag level: 1
 
-  describe command('dmesg | grep NX') do
-    its(:stdout) { should match(/NX \(Execute Disable\) protection: active/) }
+  describe.one do
+    describe command('journalctl | grep "protection: active"') do
+      its('stdout') { should match(/NX \(Execute Disable\) protection: active/) }
+    end
+
+    describe command('[[ -n $(grep noexec[0-9]*=off /proc/cmdline) || -z $(grep -E -i " (pae|nx) " /proc/cpuinfo) || -n $(grep "\sNX\s.*\sprotection:\s" /var/log/dmesg | grep - v active) ]] && echo "NX Protection is not active"') do
+      its('stdout') { should eq '' }
+    end
   end
 end
 
@@ -64,25 +75,23 @@ control 'cis-dil-benchmark-1.5.3' do
   tag level: 1
 
   describe kernel_parameter('kernel.randomize_va_space') do
-    its(:value) { should eq 2 }
+    its('value') { should eq 2 }
   end
 end
 
 control 'cis-dil-benchmark-1.5.4' do
   title 'Ensure prelink is disabled'
-  desc  "prelink is a program that modifies ELF shared libraries and ELF dynamically linked binaries in such a way that the time needed for the dynamic linker to perform relocations at startup significantly decreases.\n\nRationale: The prelinking feature can interfere with the operation of AIDE, because it changes binaries. Prelinking can also increase the vulnerability of the system if a malicious user is able to compromise a common library such as libc."
+  desc  "prelinkis a program that modifies ELF shared libraries and ELF dynamically linked binaries in such a way that the time needed for the dynamic linker to perform relocations at startup significantly decreases.\n\nRationale: The prelinking feature can interfere with the operation of AIDE, because it changes binaries. Prelinking can also increase the vulnerability of the system if a malicious user is able to compromise a common library such as libc."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:1.5.4'
   tag level: 1
 
-  describe.one do
-    describe package('prelink') do
-      it { should_not be_installed }
-    end
+  describe package('prelink') do
+    it { should_not be_installed }
+  end
 
-    describe command('prelink') do
-      it { should_not exist }
-    end
+  describe command('prelink') do
+    it { should_not exist }
   end
 end
