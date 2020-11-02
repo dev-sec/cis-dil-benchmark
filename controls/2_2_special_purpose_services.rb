@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 # author: Kristian Vlaardingerbroek
+#
 
 title '2.2 Special Purpose Services'
 
@@ -46,75 +47,93 @@ end
 
 control 'cis-dil-benchmark-2.2.1.2' do
   title 'Ensure ntp is configured'
-  desc "ntp is a daemon which implements the Network Time Protocol (NTP). It is designed to synchronize system clocks across a variety of systems and use a source that is highly accurate. More information on NTP can be found at http://www.ntp.org. ntp can be configured to be a client and/or a server.\nThis recommendation only applies if ntp is in use on the system.\n\nRationale: If ntp is in use on the system proper configuration is vital to ensuring time synchronization is working properly."
+  desc "ntp is a daemon which implements the Network Time Protocol (NTP). It is designed to synchronize system clocks across a variety of systems and use a source that is highly accurate. More information on NTP can be found at http://www.ntp.org. ntp can be configured to be a client and/or a server. This recommendation only applies if ntp is in use on the system.\n\nRationale: If ntp is in use on the system proper configuration is vital to ensuring time synchronization is working properly."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:2.2.1.2'
   tag level: 1
 
-  only_if do
+  only_if('ntp(d) is installed') do
     package('ntp').installed? || command('ntpd').exist?
   end
 
   describe.one do
     describe ntp_conf do
-      its(:server) { should_not eq nil }
+      its('server') { should_not eq nil }
     end
 
     describe ntp_conf do
-      its(:pool) { should_not eq nil }
+      its('pool') { should_not eq nil }
     end
   end
 
   describe ntp_conf.restrict.to_s do
-    it { should match(/default\s+(\S+\s+)*kod(?:\s+|\s?")/) }
-    it { should match(/default\s+(\S+\s+)*nomodify(?:\s+|\s?")/) }
-    it { should match(/default\s+(\S+\s+)*notrap(?:\s+|\s?")/) }
-    it { should match(/default\s+(\S+\s+)*nopeer(?:\s+|\s?")/) }
-    it { should match(/default\s+(\S+\s+)*noquery(?:\s+|\s?")/) }
+    it { should match /default\s+(\S+\s+)*kod(?:\s+|\s?")/ }
+    it { should match /default\s+(\S+\s+)*nomodify(?:\s+|\s?")/ }
+    it { should match /default\s+(\S+\s+)*notrap(?:\s+|\s?")/ }
+    it { should match /default\s+(\S+\s+)*nopeer(?:\s+|\s?")/ }
+    it { should match /default\s+(\S+\s+)*noquery(?:\s+|\s?")/ }
   end
 
   describe.one do
     describe file('/etc/init.d/ntp') do
-      its(:content) { should match(/^RUNASUSER=ntp\s*(?:#.*)?$/) }
+      its('content') { should match /^RUNASUSER=ntp\s*(?:#.*)?$/ }
     end
 
     describe file('/etc/init.d/ntpd') do
-      its(:content) { should match(/daemon\s+(\S+\s+)-u ntp:ntp(?:\s+|\s?")/) }
+      its('content') { should match /daemon\s+(\S+\s+)-u ntp:ntp(?:\s+|\s?")/ }
     end
 
     describe file('/etc/sysconfig/ntpd') do
-      its(:content) { should match(/^OPTIONS="(?:.)?-u ntp:ntp\s*(?:.)?"\s*(?:#.*)?$/) }
+      its('content') { should match /^OPTIONS="(?:.)?-u ntp:ntp\s*(?:.)?"\s*(?:#.*)?$/ }
     end
 
     describe file('/usr/lib/systemd/system/ntpd.service') do
-      its(:content) { should match(%r{^ExecStart=/usr/s?bin/ntpd (?:.)?-u ntp:ntp\s*(?:.)?$}) }
+      its('content') { should match %r{^ExecStart=/usr/s?bin/ntpd (?:.)?-u ntp:ntp\s*(?:.)?$} }
     end
   end
 end
 
 control 'cis-dil-benchmark-2.2.1.3' do
   title 'Ensure chrony is configured'
-  desc  "chrony is a daemon which implements the Network Time Protocol (NTP) is designed to synchronize system clocks across a variety of systems and use a source that is highly accurate. More information on chrony can be found at http://chrony.tuxfamily.org/. chrony can be configured to be a client and/or a server.\n\nRationale: If chrony is in use on the system proper configuration is vital to ensuring time synchronization is working properly.\nThis recommendation only applies if chrony is in use on the system."
+  desc  "chrony is a daemon which implements the Network Time Protocol (NTP) is designed to synchronize system clocks across a variety of systems and use a source that is highly accurate. More information on chrony can be found at http://chrony.tuxfamily.org/. chrony can be configured to be a client and/or a server.\n\nRationale: If chrony is in use on the system proper configuration is vital to ensuring time synchronization is working properly. This recommendation only applies if chrony is in use on the system."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:2.2.1.3'
   tag level: 1
 
-  only_if do
+  only_if('chrony(d) is installed') do
     package('chrony').installed? || command('chronyd').exist?
   end
 
   describe.one do
     %w(/etc/chrony/chrony.conf /etc/chrony.conf).each do |f|
       describe file(f) do
-        its(:content) { should match(/^server\s+\S+/) }
+        its('content') { should match /^server\s+\S+/ }
       end
     end
   end
 
   describe processes('chronyd') do
-    its(:users) { should cmp 'chrony' }
+    its('users') { should cmp 'chrony' }
+  end
+end
+
+control 'cis-dil-benchmark-2.2.1.4' do
+  title 'Ensure systemd-timesyncd is configured'
+  desc  "systemd-timesyncd is a daemon that has been added for synchronizing the system clock across the network. It implements an SNTP client. In contrast to NTP implementations such as chrony or the NTP reference server this only implements a client side, and does not bother with the full NTP complexity, focusing only on querying time from one remote server and synchronizing the local clock to it. The daemon runs with minimal privileges, and has been hooked up with networkd to only operate when network connectivity is available. The daemon saves the current clock to disk every time a new NTP sync has been acquired, and uses this to possibly correct the system clock early at bootup, in order to accommodate for systems that lack an RTC such as the Raspberry Pi and embedded devices, and make sure that time monotonically progresses on these systems, even if it is not always correct. To make use of this daemon a new system user and group \"systemdtimesync\" needs to be created on installation of systemd. This recommendation only applies if timesyncd is in use on the system.\n\nRationale: Proper configuration is vital to ensuring time synchronization is working properly."
+  impact 1.0
+
+  tag cis: 'distribution-independent-linux:2.2.1.4'
+  tag level: 1
+
+  describe service('systemd-timesyncd') do
+    it { should_not be_enabled }
+  end
+
+  describe command('timedatectl status') do
+    its('stdout') { should match /^\s*NTP enabled: yes\s*$/ }
+    its('stdout') { should match /^\s*NTP synchronized: yes\s*$/ }
   end
 end
 
@@ -127,17 +146,17 @@ control 'cis-dil-benchmark-2.2.2' do
   tag level: 1
 
   describe packages(/^xserver-xorg.*/) do
-    its(:names) { should be_empty }
+    its('names') { should be_empty }
   end
 
-  describe packages(/^xorg-x11-server.*/) do
-    its(:names) { should be_empty }
+  describe packages(/^xorg-x11.*/) do
+    its('names') { should be_empty }
   end
 end
 
 control 'cis-dil-benchmark-2.2.3' do
   title 'Ensure Avahi Server is not enabled'
-  desc  "Avahi is a free zeroconf implementation, including a system for multicast DNS/DNS-SD service discovery. Avahi allows programs to publish and discover services and hosts running on a local network with no specific configuration. For example, a user can plug a computer into a network and Avahi automatically finds printers to print to, files to look at and people to talk to, as well as network services running on the machine.\n\nRationale: Automatic discovery of network services is not normally required for system functionality. It is recommended to disable the service to reduce the potential attach surface."
+  desc  "Avahi is a free zeroconf implementation, including a system for multicast DNS/DNS-SD service discovery. Avahi allows programs to publish and discover services and hosts running on a local network with no specific configuration. For example, a user can plug a computer into a network and Avahi automatically finds printers to print to, files to look at and people to talk to, as well as network services running on the machine.\n\nRationale: Automatic discovery of network services is not normally required for system functionality. It is recommended to disable the service to reduce the potential attack surface."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:2.2.3'
@@ -171,11 +190,9 @@ control 'cis-dil-benchmark-2.2.5' do
   tag cis: 'distribution-independent-linux:2.2.5'
   tag level: 1
 
-  %w(isc-dhcp-server isc-dhcp-server6 dhcpd).each do |s|
-    describe service(s) do
-      it { should_not be_enabled }
-      it { should_not be_running }
-    end
+  describe service('dhcpd') do
+    it { should_not be_enabled }
+    it { should_not be_running }
   end
 end
 
@@ -195,13 +212,13 @@ end
 
 control 'cis-dil-benchmark-2.2.7' do
   title 'Ensure NFS and RPC are not enabled'
-  desc  "The Network File System (NFS) is one of the first and most widely distributed file systems in the UNIX environment. It provides the ability for systems to mount file systems of other servers through the network.\n\nRationale: If the system does not export NFS shares or act as an NFS client, it is recommended that these services be disabled to reduce remote attack surface."
+  desc  "The Network File System (NFS) is one of the first and most widely distributed file systems in the UNIX environment. It provides the ability for systems to mount file systems of other servers through the network.\n\nRationale: If the system does not export NFS shares or act as an NFS client, it is recommended that these services be disabled to reduce the remote attack surface."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:2.2.7'
   tag level: 1
 
-  %w(nfs-kernel-server nfs rpcbind).each do |s|
+  %w(nfs rpcbind).each do |s|
     describe service(s) do
       it { should_not be_enabled }
       it { should_not be_running }
@@ -217,17 +234,15 @@ control 'cis-dil-benchmark-2.2.8' do
   tag cis: 'distribution-independent-linux:2.2.8'
   tag level: 1
 
-  %w(named bind bind9).each do |s|
-    describe service(s) do
-      it { should_not be_enabled }
-      it { should_not be_running }
-    end
+  describe service('named') do
+    it { should_not be_enabled }
+    it { should_not be_running }
   end
 end
 
 control 'cis-dil-benchmark-2.2.9' do
   title 'Ensure FTP Server is not enabled'
-  desc  "The File Transfer Protocol (FTP) provides networked computers with the ability to transfer files.\n\nRationale: FTP does not protect the confidentiality of data or authentication credentials. It is recommended sftp be used if file transfer is required. Unless there is a need to run the system as a FTP server (for example, to allow anonymous downloads), it is recommended that the package be deleted to reduce the potential attack surface."
+  desc  "The File Transfer Protocol (FTP) provides networked computers with the ability to transfer files.\n\nRationale: FTP does not protect the confidentiality of data or authentication credentials. It is recommended SFTP be used if file transfer is required. Unless there is a need to run the system as a FTP server (for example, to allow anonymous downloads), it is recommended that the package be deleted to reduce the potential attack surface."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:2.2.9'
@@ -247,11 +262,9 @@ control 'cis-dil-benchmark-2.2.10' do
   tag cis: 'distribution-independent-linux:2.2.10'
   tag level: 1
 
-  %w(apache2 httpd).each do |s|
-    describe service(s) do
-      it { should_not be_enabled }
-      it { should_not be_running }
-    end
+  describe service('httpd') do
+    it { should_not be_enabled }
+    it { should_not be_running }
   end
 end
 
@@ -271,17 +284,15 @@ end
 
 control 'cis-dil-benchmark-2.2.12' do
   title 'Ensure Samba is not enabled'
-  desc  "The Samba daemon allows system administrators to configure their Linux systems to share file systems and directories with Windows desktops. Samba will advertise the file systems and directories via the Small Message Block (SMB) protocol. Windows desktop users will be able to mount these directories and file systems as letter drives on their systems.\n\nRationale: If there is no need to mount directories and file systems to Windows systems, then this service can be deleted to reduce the potential attack surface."
+  desc  "The Samba daemon allows system administrators to configure their Linux systems to share file systems and directories with Windows desktops. Samba will advertise the file systems and directories via the Server Message Block (SMB) protocol. Windows desktop users will be able to mount these directories and file systems as letter drives on their systems.\n\nRationale: If there is no need to mount directories and file systems to Windows systems, then this service can be deleted to reduce the potential attack surface."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:2.2.12'
   tag level: 1
 
-  %w(samba smb smbd).each do |s|
-    describe service(s) do
-      it { should_not be_enabled }
-      it { should_not be_running }
-    end
+  describe service('smb') do
+    it { should_not be_enabled }
+    it { should_not be_running }
   end
 end
 
@@ -293,17 +304,15 @@ control 'cis-dil-benchmark-2.2.13' do
   tag cis: 'distribution-independent-linux:2.2.13'
   tag level: 1
 
-  %w(squid squid3).each do |s|
-    describe service(s) do
-      it { should_not be_enabled }
-      it { should_not be_running }
-    end
+  describe service('squid') do
+    it { should_not be_enabled }
+    it { should_not be_running }
   end
 end
 
 control 'cis-dil-benchmark-2.2.14' do
   title 'Ensure SNMP Server is not enabled'
-  desc  "The Simple Network Management Protocol (SNMP) server is used to listen for SNMP commands from an SNMP management system, execute the commands or collect the information and then send results back to the requesting system.\n\nRationale: The SNMP server communicates using SNMP v1, which transmits data in the clear and does not require authentication to execute commands. Unless absolutely necessary, it is recommended that the SNMP service not be used."
+  desc  "The Simple Network Management Protocol (SNMP) server is used to listen for SNMP commands from an SNMP management system, execute the commands or collect the information and then send results back to the requesting system.\n\nRationale: The SNMP server can communicate using SNMP v1, which transmits data in the clear and does not require authentication to execute commands. Unless absolutely necessary, it is recommended that the SNMP service not be used. If SNMP is required the server should be configured to disallow SNMP v1."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:2.2.14'
@@ -324,7 +333,7 @@ control 'cis-dil-benchmark-2.2.15' do
   tag level: 1
 
   describe port(25).where { address !~ /^(127\.0\.0\.1|::1)$/ } do
-    its(:entries) { should be_empty }
+    its('entries') { should be_empty }
   end
 end
 
@@ -336,26 +345,22 @@ control 'cis-dil-benchmark-2.2.16' do
   tag cis: 'distribution-independent-linux:2.2.16'
   tag level: 1
 
-  %w(rsync rsyncd).each do |s|
-    describe service(s) do
-      it { should_not be_enabled }
-      it { should_not be_running }
-    end
+  describe service('rsyncd') do
+    it { should_not be_enabled }
+    it { should_not be_running }
   end
 end
 
 control 'cis-dil-benchmark-2.2.17' do
   title 'Ensure NIS Server is not enabled'
-  desc  "The Network Information Service (NIS) (formally known as Yellow Pages) is a client-server directory service protocol for distributing system configuration files. The NIS server is a collection of programs that allow for the distribution of configuration files.\n\nRationale: The NIS service is inherently an insecure system that has been vulnerable to DOS attacks, buffer overflows and has poor authentication for querying NIS maps. NIS generally been replaced by such protocols as Lightweight Directory Access Protocol (LDAP). It is recommended that the service be disabled and other, more secure services be used"
+  desc  "The Network Information Service (NIS) (formally known as Yellow Pages) is a client-server directory service protocol for distributing system configuration files. The NIS server is a collection of programs that allow for the distribution of configuration files.\n\nRationale: The NIS service is inherently an insecure system that has been vulnerable to DOS attacks, buffer overflows and has poor authentication for querying NIS maps. NIS generally has been replaced by such protocols as Lightweight Directory Access Protocol (LDAP). It is recommended that the service be disabled and other, more secure services be used."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:2.2.17'
   tag level: 1
 
-  %w(nis ypserv).each do |s|
-    describe service(s) do
-      it { should_not be_enabled }
-      it { should_not be_running }
-    end
+  describe service('ypserv') do
+    it { should_not be_enabled }
+    it { should_not be_running }
   end
 end
