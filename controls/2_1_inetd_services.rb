@@ -14,12 +14,13 @@
 # limitations under the License.
 #
 # author: Kristian Vlaardingerbroek
+#
 
 title '2.1 inetd Services'
 
 control 'cis-dil-benchmark-2.1.1' do
   title 'Ensure chargen services are not enabled'
-  desc  "chargen is a network service that responds with 0 to 512 ASCII characters for each connection it receives. This service is intended for debugging and testing purposes. It is recommended that this service be disabled.\n\nRationale: Disabling this service will reduce the remote attack surface of the system."
+  desc  "chargenis a network service that responds with 0 to 512 ASCII characters for each connection it receives. This service is intended for debugging and testing purposes. It is recommended that this service be disabled.\n\nRationale: Disabling this service will reduce the remote attack surface of the system."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:2.1.1'
@@ -30,12 +31,12 @@ control 'cis-dil-benchmark-2.1.1' do
   end
 
   describe inetd_conf do
-    its(:chargen) { should eq nil }
+    its('chargen') { should eq nil }
   end
 
   command('find /etc/inetd.d -type f').stdout.split.each do |entry|
     describe inetd_conf(entry) do
-      its(:chargen) { should eq nil }
+      its('chargen') { should eq nil }
     end
   end
 end
@@ -53,19 +54,19 @@ control 'cis-dil-benchmark-2.1.2' do
   end
 
   describe inetd_conf do
-    its(:daytime) { should eq nil }
+    its('daytime') { should eq nil }
   end
 
   command('find /etc/inetd.d -type f').stdout.split.each do |entry|
     describe inetd_conf(entry) do
-      its(:daytime) { should eq nil }
+      its('daytime') { should eq nil }
     end
   end
 end
 
 control 'cis-dil-benchmark-2.1.3' do
   title 'Ensure discard services are not enabled'
-  desc  "discard is a network service that simply discards all data it receives. This service is intended for debugging and testing purposes. It is recommended that this service be disabled.\n\nRationale: Disabling this service will reduce the remote attack surface of the system."
+  desc  "discardis a network service that simply discards all data it receives. This service is intended for debugging and testing purposes. It is recommended that this service be disabled.\n\nRationale: Disabling this service will reduce the remote attack surface of the system."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:2.1.3'
@@ -76,19 +77,19 @@ control 'cis-dil-benchmark-2.1.3' do
   end
 
   describe inetd_conf do
-    its(:discard) { should eq nil }
+    its('discard') { should eq nil }
   end
 
   command('find /etc/inetd.d -type f').stdout.split.each do |entry|
     describe inetd_conf(entry) do
-      its(:discard) { should eq nil }
+      its('discard') { should eq nil }
     end
   end
 end
 
 control 'cis-dil-benchmark-2.1.4' do
   title 'Ensure echo services are not enabled'
-  desc  "echo is a network service that responds to clients with the data sent to it by the client. This service is intended for debugging and testing purposes. It is recommended that this service be disabled.\n\nRationale: Disabling this service will reduce the remote attack surface of the system."
+  desc  "echois a network service that responds to clients with the data sent to it by the client. This service is intended for debugging and testing purposes. It is recommended that this service be disabled.\n\nRationale: Disabling this service will reduce the remote attack surface of the system."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:2.1.4'
@@ -99,19 +100,19 @@ control 'cis-dil-benchmark-2.1.4' do
   end
 
   describe inetd_conf do
-    its(:echo) { should eq nil }
+    its('echo') { should eq nil }
   end
 
   command('find /etc/inetd.d -type f').stdout.split.each do |entry|
     describe inetd_conf(entry) do
-      its(:echo) { should eq nil }
+      its('echo') { should eq nil }
     end
   end
 end
 
 control 'cis-dil-benchmark-2.1.5' do
   title 'Ensure time services are not enabled'
-  desc  "time is a network service that responds with the server's current date and time as a 32 bit integer. This service is intended for debugging and testing purposes. It is recommended that this service be disabled.\n\nRationale: Disabling this service will reduce the remote attack surface of the system."
+  desc  "timeis a network service that responds with the server's current date and time as a 32 bit integer. This service is intended for debugging and testing purposes. It is recommended that this service be disabled.\n\nRationale: Disabling this service will reduce the remote attack surface of the system."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:2.1.5'
@@ -122,19 +123,20 @@ control 'cis-dil-benchmark-2.1.5' do
   end
 
   describe inetd_conf do
-    its(:time) { should eq nil }
+    its('time') { should eq nil }
   end
 
   command('find /etc/inetd.d -type f').stdout.split.each do |entry|
     describe inetd_conf(entry) do
-      its(:time) { should eq nil }
+      its('time') { should eq nil }
     end
   end
 end
 
 control 'cis-dil-benchmark-2.1.6' do
   title 'Ensure rsh server is not enabled'
-  desc  "The Berkeley rsh-server (rsh, rlogin, rexec) package contains legacy services that exchange credentials in clear-text.\n\nRationale: These legacy services contain numerous security exposures and have been replaced with the more secure SSH package."
+  desc  "The Berkeley rsh-server (rsh, rlogin, rexec) package contains legacy services that exchange credentials in clear-text.\n\nRationale: These legacy services contain numerous security exposures and have been replaced with
+  the more secure SSH package."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:2.1.6'
@@ -195,12 +197,12 @@ control 'cis-dil-benchmark-2.1.8' do
   end
 
   describe inetd_conf do
-    its(:telnet) { should eq nil }
+    its('telnet') { should eq nil }
   end
 
   command('find /etc/inetd.d -type f').stdout.split.each do |entry|
     describe inetd_conf(entry) do
-      its(:telnet) { should eq nil }
+      its('telnet') { should eq nil }
     end
   end
 end
@@ -218,12 +220,12 @@ control 'cis-dil-benchmark-2.1.9' do
   end
 
   describe inetd_conf do
-    its(:tftp) { should eq nil }
+    its('tftp') { should eq nil }
   end
 
   command('find /etc/inetd.d -type f').stdout.split.each do |entry|
     describe inetd_conf(entry) do
-      its(:tftp) { should eq nil }
+      its('tftp') { should eq nil }
     end
   end
 end
