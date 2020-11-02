@@ -14,20 +14,26 @@
 # limitations under the License.
 #
 # author: Kristian Vlaardingerbroek
+#
 
 title '3.1 Network Parameters (Host Only)'
 
 control 'cis-dil-benchmark-3.1.1' do
   title 'Ensure IP forwarding is disabled'
-  desc  "The net.ipv4.ip_forward flag is used to tell the system whether it can forward packets or not.\n\nRationale: Setting the flag to 0 ensures that a system with multiple interfaces (for example, a hard proxy), will never be able to forward packets, and therefore, never serve as a router."
+  desc  "The net.ipv4.ip_forward and net.ipv6.conf.all.forwarding flags are used to tell the system whether it can forward packets or not.\n\nRationale: Setting the flags to 0 ensures that a system with multiple interfaces (for example, a hard proxy), will never be able to forward packets, and therefore, never serve as a router."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:3.1.1'
   tag level: 1
 
   describe kernel_parameter('net.ipv4.ip_forward') do
-    its(:value) { should_not be_nil }
-    its(:value) { should eq 0 }
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
+  end
+
+  describe kernel_parameter('net.ipv6.conf.all.forwarding') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
   end
 end
 
@@ -39,10 +45,13 @@ control 'cis-dil-benchmark-3.1.2' do
   tag cis: 'distribution-independent-linux:3.1.2'
   tag level: 1
 
-  %w(net.ipv4.conf.all.send_redirects net.ipv4.conf.default.send_redirects).each do |kp|
-    describe kernel_parameter(kp) do
-      its(:value) { should_not be_nil }
-      its(:value) { should eq 0 }
-    end
+  describe kernel_parameter('net.ipv4.conf.all.send_redirects') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
+  end
+
+  describe kernel_parameter('net.ipv4.conf.default.send_redirects') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
   end
 end

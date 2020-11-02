@@ -14,38 +14,65 @@
 # limitations under the License.
 #
 # author: Kristian Vlaardingerbroek
+#
 
 title '3.2 Network Parameters (Host and Router)'
 
 control 'cis-dil-benchmark-3.2.1' do
   title 'Ensure source routed packets are not accepted'
-  desc  "In networking, source routing allows a sender to partially or fully specify the route packets take through a network. In contrast, non-source routed packets travel a path determined by routers in the network. In some cases, systems may not be routable or reachable from some locations (e.g. private addresses vs. Internet routable), and so source routed packets would need to be used.\n\nRationale: Setting net.ipv4.conf.all.accept_source_route and net.ipv4.conf.default.accept_source_route to 0 disables the system from accepting source routed packets. Assume this system was capable of routing packets to Internet routable addresses on one interface and private addresses on another interface. Assume that the private addresses were not routable to the Internet routable addresses and vice versa. Under normal routing circumstances, an attacker from the Internet routable addresses could not use the system as a way to reach the private address systems. If, however, source routed packets were allowed, they could be used to gain access to the private address systems as the route could be specified, rather than rely on routing protocols that did not allow this routing."
+  desc  "In networking, source routing allows a sender to partially or fully specify the route packets take through a network. In contrast, non-source routed packets travel a path determined by routers in the network. In some cases, systems may not be routable or reachable from some locations (e.g. private addresses vs. Internet routable), and so source routed packets would need to be used.\n\nRationale: Setting net.ipv4.conf.all.accept_source_route, net.ipv4.conf.default.accept_source_route, net.ipv6.conf.all.accept_source_route and net.ipv6.conf.default.accept_source_route to 0 disables the system from accepting source routed packets. Assume this system was capable of routing packets to Internet routable addresses on one interface and private addresses on another interface. Assume that the private addresses were not routable to the Internet routable addresses and vice versa. Under normal routing circumstances, an attacker from the Internet routable addresses could not use the system as a way to reach the private address systems. If, however, source routed packets were allowed, they could be used to gain access to the private address systems as the route could be specified, rather than rely on routing protocols that did not allow this routing."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:3.2.1'
   tag level: 1
 
-  %w(net.ipv4.conf.all.accept_source_route net.ipv4.conf.default.accept_source_route).each do |kp|
-    describe kernel_parameter(kp) do
-      its(:value) { should_not be_nil }
-      its(:value) { should eq 0 }
-    end
+  describe kernel_parameter('net.ipv4.conf.all.accept_source_route') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
+  end
+
+  describe kernel_parameter('net.ipv4.conf.default.accept_source_route') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
+  end
+
+  describe kernel_parameter('net.ipv6.conf.all.accept_source_route') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
+  end
+
+  describe kernel_parameter('net.ipv6.conf.default.accept_source_route') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
   end
 end
 
 control 'cis-dil-benchmark-3.2.2' do
   title 'Ensure ICMP redirects are not accepted'
-  desc  "ICMP redirect messages are packets that convey routing information and tell your host (acting as a router) to send packets via an alternate path. It is a way of allowing an outside routing device to update your system routing tables. By setting net.ipv4.conf.all.accept_redirects to 0, the system will not accept any ICMP redirect messages, and therefore, won't allow outsiders to update the system's routing tables.\n\nRationale: Attackers could use bogus ICMP redirect messages to maliciously alter the system routing tables and get them to send packets to incorrect networks and allow your system packets to be captured."
+  desc  "ICMP redirect messages are packets that convey routing information and tell your host (acting as a router) to send packets via an alternate path. It is a way of allowing an outside routing device to update your system routing tables. By setting net.ipv4.conf.all.accept_redirects and net.ipv6.conf.all.accept_redirects to 0, the system will not accept any ICMP redirect messages, and therefore, won't allow outsiders to update the system's routing tables.\n\nRationale: Attackers could use bogus ICMP redirect messages to maliciously alter the system routing tables and get them to send packets to incorrect networks and allow your system packets to be captured."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:3.2.2'
   tag level: 1
 
-  %w(net.ipv4.conf.all.accept_redirects net.ipv4.conf.default.accept_redirects).each do |kp|
-    describe kernel_parameter(kp) do
-      its(:value) { should_not be_nil }
-      its(:value) { should eq 0 }
-    end
+  describe kernel_parameter('net.ipv4.conf.all.accept_redirects') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
+  end
+
+  describe kernel_parameter('net.ipv4.conf.default.accept_redirects') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
+  end
+
+  describe kernel_parameter('net.ipv6.conf.all.accept_redirects') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
+  end
+
+  describe kernel_parameter('net.ipv6.conf.default.accept_redirects') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
   end
 end
 
@@ -57,11 +84,14 @@ control 'cis-dil-benchmark-3.2.3' do
   tag cis: 'distribution-independent-linux:3.2.3'
   tag level: 1
 
-  %w(net.ipv4.conf.all.secure_redirects net.ipv4.conf.default.secure_redirects).each do |kp|
-    describe kernel_parameter(kp) do
-      its(:value) { should_not be_nil }
-      its(:value) { should eq 0 }
-    end
+  describe kernel_parameter('net.ipv4.conf.all.secure_redirects') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
+  end
+
+  describe kernel_parameter('net.ipv4.conf.default.secure_redirects') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
   end
 end
 
@@ -73,11 +103,14 @@ control 'cis-dil-benchmark-3.2.4' do
   tag cis: 'distribution-independent-linux:3.2.4'
   tag level: 1
 
-  %w(net.ipv4.conf.all.log_martians net.ipv4.conf.default.log_martians).each do |kp|
-    describe kernel_parameter(kp) do
-      its(:value) { should_not be_nil }
-      its(:value) { should eq 1 }
-    end
+  describe kernel_parameter('net.ipv4.conf.all.log_martians') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 1 }
+  end
+
+  describe kernel_parameter('net.ipv4.conf.default.log_martians') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 1 }
   end
 end
 
@@ -90,8 +123,8 @@ control 'cis-dil-benchmark-3.2.5' do
   tag level: 1
 
   describe kernel_parameter('net.ipv4.icmp_echo_ignore_broadcasts') do
-    its(:value) { should_not be_nil }
-    its(:value) { should eq 1 }
+    its('value') { should_not be_nil }
+    its('value') { should eq 1 }
   end
 end
 
@@ -104,8 +137,8 @@ control 'cis-dil-benchmark-3.2.6' do
   tag level: 1
 
   describe kernel_parameter('net.ipv4.icmp_ignore_bogus_error_responses') do
-    its(:value) { should_not be_nil }
-    its(:value) { should eq 1 }
+    its('value') { should_not be_nil }
+    its('value') { should eq 1 }
   end
 end
 
@@ -117,11 +150,14 @@ control 'cis-dil-benchmark-3.2.7' do
   tag cis: 'distribution-independent-linux:3.2.7'
   tag level: 1
 
-  %w(net.ipv4.conf.all.rp_filter net.ipv4.conf.default.rp_filter).each do |kp|
-    describe kernel_parameter(kp) do
-      its(:value) { should_not be_nil }
-      its(:value) { should eq 1 }
-    end
+  describe kernel_parameter('net.ipv4.conf.all.rp_filter') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 1 }
+  end
+
+  describe kernel_parameter('net.ipv4.conf.default.rp_filter') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 1 }
   end
 end
 
@@ -134,7 +170,26 @@ control 'cis-dil-benchmark-3.2.8' do
   tag level: 1
 
   describe kernel_parameter('net.ipv4.tcp_syncookies') do
-    its(:value) { should_not be_nil }
-    its(:value) { should eq 1 }
+    its('value') { should_not be_nil }
+    its('value') { should eq 1 }
+  end
+end
+
+control 'cis-dil-benchmark-3.2.9' do
+  title 'Ensure IPv6 router advertisements are not accepted'
+  desc  "This setting disables the system's ability to accept IPv6 router advertisements.\n\nRationale: It is recommended that systems do not accept router advertisements as they could be tricked into routing traffic to compromised machines. Setting hard routes within the system (usually a single default route to a trusted router) protects the system from bad routes."
+  impact 1.0
+
+  tag cis: 'distribution-independent-linux:3.2.9'
+  tag level: 1
+
+  describe kernel_parameter('net.ipv6.conf.all.accept_ra') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
+  end
+
+  describe kernel_parameter('net.ipv6.conf.default.accept_ra') do
+    its('value') { should_not be_nil }
+    its('value') { should eq 0 }
   end
 end
