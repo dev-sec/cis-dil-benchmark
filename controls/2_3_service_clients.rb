@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 # author: Kristian Vlaardingerbroek
+#
 
 title '2.3 Service Clients'
 
@@ -25,10 +26,8 @@ control 'cis-dil-benchmark-2.3.1' do
   tag cis: 'distribution-independent-linux:2.3.1'
   tag level: 1
 
-  %w(nis ypbind).each do |p|
-    describe package(p) do
-      it { should_not be_installed }
-    end
+  describe package('ypbind') do
+    it { should_not be_installed }
   end
 end
 
@@ -40,10 +39,8 @@ control 'cis-dil-benchmark-2.3.2' do
   tag cis: 'distribution-independent-linux:2.3.2'
   tag level: 1
 
-  %w(rsh-client rsh-redone-client).each do |p|
-    describe package(p) do
-      it { should_not be_installed }
-    end
+  describe package('rsh') do
+    it { should_not be_installed }
   end
 end
 
@@ -81,9 +78,7 @@ control 'cis-dil-benchmark-2.3.5' do
   tag cis: 'distribution-independent-linux:2.3.5'
   tag level: 1
 
-  %w(ldap-utils openldap-clients).each do |p|
-    describe package(p) do
-      it { should_not be_installed }
-    end
+  describe package('openldap-clients') do
+    it { should_not be_installed }
   end
 end
