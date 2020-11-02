@@ -36,8 +36,8 @@ control 'cis-dil-benchmark-1.4.1' do
         it { should_not be_readable.by 'other' }
         it { should_not be_writable.by 'other' }
         it { should_not be_executable.by 'other' }
-        its(:gid) { should cmp 0 }
-        its(:uid) { should cmp 0 }
+        its('gid') { should cmp 0 }
+        its('uid') { should cmp 0 }
       end
     end
   end
