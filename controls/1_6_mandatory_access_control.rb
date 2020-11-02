@@ -202,7 +202,7 @@ control 'cis-dil-benchmark-1.6.3.1' do
     )
   end
 
-  describe file('/boot/grub/menu.lst')
+  describe file('/boot/grub/menu.lst') do
     its('content') { should_not match /apparmor=0/ }
   end
 end

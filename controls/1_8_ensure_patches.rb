@@ -28,11 +28,12 @@ control 'cis-dil-benchmark-1.8' do
 
   describe.one do
     describe command('/usr/lib/update-notifier/apt-check') do
-      its('stdout') { should eq '0;0' }
+      its('stderr') { should eq '0;0' }
     end
 
     describe command('yum check-updates | awk \'p;/^$/{p=1}\' | grep -c "\."') do
-      its('stdout') { should eq '0' }
+      its('stderr') { should eq '' }
+      its('stdout') { should match /^0$/ }
     end
   end
 end

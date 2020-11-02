@@ -46,11 +46,11 @@ control 'cis-dil-benchmark-1.3.2' do
   tag level: 1
 
   describe.one do
-    describe command('crontab -u root -l | grep aide')
+    describe command('crontab -u root -l | grep aide') do
       its('stdout') { should_not eq '' }
     end
 
-    describe command('grep -r aide /etc/cron.* /etc/crontab')
+    describe command('grep -r aide /etc/cron.* /etc/crontab') do
       its('stdout') { should_not eq '' }
     end
   end
