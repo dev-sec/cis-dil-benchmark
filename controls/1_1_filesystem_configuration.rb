@@ -123,12 +123,14 @@ control 'cis-dil-benchmark-1.1.1.8' do
   impact 1.0
 
   tag cis: 'distribution-independent-linux:1.1.1.8'
-  tag level: 1
+  tag level: 2
 
   describe kernel_module('vfat') do
     it { should_not be_loaded }
     it { should be_disabled }
   end
+
+  only_if { cis_level == 2 }
 end
 
 control 'cis-dil-benchmark-1.1.2' do
@@ -153,7 +155,7 @@ control 'cis-dil-benchmark-1.1.3' do
   tag level: 1
 
   describe mount('/tmp') do
-    its(:options) { should include 'nodev' }
+    its('options') { should include 'nodev' }
   end
 end
 
@@ -166,7 +168,7 @@ control 'cis-dil-benchmark-1.1.4' do
   tag level: 1
 
   describe mount('/tmp') do
-    its(:options) { should include 'nosuid' }
+    its('options') { should include 'nosuid' }
   end
 end
 
@@ -179,7 +181,7 @@ control 'cis-dil-benchmark-1.1.5' do
   tag level: 1
 
   describe mount('/tmp') do
-    its(:options) { should include 'noexec' }
+    its('options') { should include 'noexec' }
   end
 end
 
@@ -219,9 +221,14 @@ control 'cis-dil-benchmark-1.1.8' do
   tag cis: 'distribution-independent-linux:1.1.8'
   tag level: 1
 
-  describe mount('/var/tmp') do
-    its(:options) { should include 'nodev' }
+  only_if('/var/tmp is mounted') do
+    mount('/var/tmp').mounted?
   end
+
+  describe mount('/var/tmp') do
+    its('options') { should include 'nodev' }
+  end
+
 end
 
 control 'cis-dil-benchmark-1.1.9' do
@@ -232,9 +239,14 @@ control 'cis-dil-benchmark-1.1.9' do
   tag cis: 'distribution-independent-linux:1.1.9'
   tag level: 1
 
-  describe mount('/var/tmp') do
-    its(:options) { should include 'nosuid' }
+  only_if('/var/tmp is mounted') do
+    mount('/var/tmp').mounted?
   end
+
+  describe mount('/var/tmp') do
+    its('options') { should include 'nosuid' }
+  end
+
 end
 
 control 'cis-dil-benchmark-1.1.10' do
@@ -245,9 +257,14 @@ control 'cis-dil-benchmark-1.1.10' do
   tag cis: 'distribution-independent-linux:1.1.10'
   tag level: 1
 
-  describe mount('/var/tmp') do
-    its(:options) { should include 'noexec' }
+  only_if('/var/tmp is mounted') do
+    mount('/var/tmp').mounted?
   end
+
+  describe mount('/var/tmp') do
+    its('options') { should include 'noexec' }
+  end
+
 end
 
 control 'cis-dil-benchmark-1.1.11' do
@@ -302,8 +319,12 @@ control 'cis-dil-benchmark-1.1.14' do
   tag cis: 'distribution-independent-linux:1.1.14'
   tag level: 1
 
+  only_if('/home is mounted') do
+    mount('/home').mounted?
+  end
+
   describe mount('/home') do
-    its(:options) { should include 'nodev' }
+    its('options') { should include 'nodev' }
   end
 end
 
@@ -315,8 +336,12 @@ control 'cis-dil-benchmark-1.1.15' do
   tag cis: 'distribution-independent-linux:1.1.15'
   tag level: 1
 
+  only_if('/dev/shm is mounted') do
+    mount('/dev/shm').mounted?
+  end
+
   describe mount('/dev/shm') do
-    its(:options) { should include 'nodev' }
+    its('options') { should include 'nodev' }
   end
 end
 
@@ -328,8 +353,12 @@ control 'cis-dil-benchmark-1.1.16' do
   tag cis: 'distribution-independent-linux:1.1.16'
   tag level: 1
 
+  only_if('/dev/shm is mounted') do
+    mount('/dev/shm').mounted?
+  end
+
   describe mount('/dev/shm') do
-    its(:options) { should include 'nosuid' }
+    its('options') { should include 'nosuid' }
   end
 end
 
@@ -342,8 +371,11 @@ control 'cis-dil-benchmark-1.1.17' do
   tag level: 1
 
   describe mount('/dev/shm') do
-    its(:options) { should include 'noexec' }
+    its('options') { should include 'noexec' }
   end
+  only_if('/dev/shm is mounted') {
+    mount('/dev/shm').mounted?
+  }
 end
 
 control 'cis-dil-benchmark-1.1.18' do
@@ -394,7 +426,7 @@ control 'cis-dil-benchmark-1.1.21' do
   tag level: 1
 
   describe command("df --local -P | awk '{ if (NR!=1) print $6 }' | xargs -I '{}' find '{}' -xdev -type d \( -perm -0002 -a ! -perm -1000 \)") do
-    its(:stdout) { should eq '' }
+    its('stdout') { should cmp '' }
   end
 end
 
@@ -416,5 +448,25 @@ control 'cis-dil-benchmark-1.1.22' do
       it { should_not be_enabled }
       it { should_not be_running }
     end
+  end
+end
+
+control 'cis-dil-benchmark-1.1.23' do
+  title 'Disable USB Storage'
+  desc  '
+    USB storage provides a means to transfer and store files insuring persistence and availability of the files independent of network connection status.
+    Its popularity and utility has led to USB-based malware being a simple and common means for network infiltration and a first step to establishing
+    a persistent threat within a networked environment.
+  '
+  impact 1.0
+
+  tag cis: 'distribution-independent-linux:1.1.23'
+  tag level: 1
+
+  # kernel modules need to use underscores
+  # ref: https://github.com/inspec/inspec/issues/5190
+  describe kernel_module('usb_storage') do
+    it { should_not be_loaded }
+    it { should be_disabled }
   end
 end
