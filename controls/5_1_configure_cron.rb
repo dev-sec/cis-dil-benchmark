@@ -19,7 +19,14 @@ title '5.1 Configure cron'
 
 control 'cis-dil-benchmark-5.1.1' do
   title 'Ensure cron daemon is enabled'
-  desc  "The cron daemon is used to execute batch jobs on the system.\n\nRationale: While there may not be user jobs that need to be run on the system, the system does have maintenance jobs that may include security monitoring that have to run, and cron is used to execute them."
+  desc  '
+    The cron daemon is used to execute batch jobs on the system.
+  
+    Rationale:
+
+    While there may not be user jobs that need to be run on the system, the system does have maintenance jobs that may include
+    security monitoring that have to run, and cron is used to execute them.
+  '
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.1.1'
@@ -37,7 +44,17 @@ end
 
 control 'cis-dil-benchmark-5.1.2' do
   title 'Ensure permissions on /etc/crontab are configured'
-  desc  "The /etc/crontab file is used by cron to control its own jobs. The commands in this item make sure that root is the user and group owner of the file and that only the owner can access the file.\n\nRationale: This file contains information on what system jobs are run by cron. Write access to these files could provide unprivileged users with the ability to elevate their privileges. Read access to these files could provide users with the ability to gain insight on system jobs that run on the system and could provide them a way to gain unauthorized privileged access."
+  desc  '
+    The /etc/crontab file is used by cron to control its own jobs. The commands in this item make sure that root
+    is the user and group owner of the file and that only the owner can access the file.
+    
+    Rationale:
+    
+    This file contains information on what system jobs are run by cron. Write access to these files could provide
+    unprivileged users with the ability to elevate their privileges. Read access to these files could provide user
+    with the ability to gain insight on system jobs that run on the system and could provide them a way to gain
+    unauthorized privileged access.
+  '
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.1.2'
@@ -51,14 +68,25 @@ control 'cis-dil-benchmark-5.1.2' do
     it { should_not be_readable.by 'other' }
     it { should_not be_writable.by 'other' }
     it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
+    its('uid') { should cmp 0 }
+    its('gid') { should cmp 0 }
   end
 end
 
 control 'cis-dil-benchmark-5.1.3' do
   title 'Ensure permissions on /etc/cron.hourly are configured'
-  desc  "This directory contains system cron jobs that need to run on an hourly basis. The files in this directory cannot be manipulated by the crontab command, but are instead edited by system administrators using a text editor. The commands below restrict read/write and search access to user and group root, preventing regular users from accessing this directory.\n\nRationale: Granting write access to this directory for non-privileged users could provide them the means for gaining unauthorized elevated privileges. Granting read access to this directory could give an unprivileged user insight in how to gain elevated privileges or circumvent auditing controls."
+  desc  '
+    This directory contains system cron jobs that need to run on an hourly basis. The files in this
+    directory cannot be manipulated by the crontab command, but are instead edited by system administrators
+    using a text editor. The commands below restrict read/write and search access to user and group root,
+    preventing regular users from accessing this directory.
+    
+    Rationale:
+    
+    Granting write access to this directory for non-privileged users could provide them the means
+    for gaining unauthorized elevated privileges. Granting read access to this directory could give
+    an unprivileged user insight in how to gain elevated privileges or circumvent auditing controls.
+  '
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.1.3'
@@ -72,14 +100,25 @@ control 'cis-dil-benchmark-5.1.3' do
     it { should_not be_readable.by 'other' }
     it { should_not be_writable.by 'other' }
     it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
+    its('uid') { should cmp 0 }
+    its('gid') { should cmp 0 }
   end
 end
 
 control 'cis-dil-benchmark-5.1.4' do
   title 'Ensure permissions on /etc/cron.daily are configured'
-  desc  "The /etc/cron.daily directory contains system cron jobs that need to run on a daily basis. The files in this directory cannot be manipulated by the crontab command, but are instead edited by system administrators using a text editor. The commands below restrict read/write and search access to user and group root, preventing regular users from accessing this directory.\n\nRationale: Granting write access to this directory for non-privileged users could provide them the means for gaining unauthorized elevated privileges. Granting read access to this directory could give an unprivileged user insight in how to gain elevated privileges or circumvent auditing controls."
+  desc  '
+    The /etc/cron.daily directory contains system cron jobs that need to run on a daily basis.
+    The files in this directory cannot be manipulated by the crontab command, but are instead edited
+    by system administrators using a text editor. The commands below restrict read/write and search
+    access to user and group root, preventing regular users from accessing this directory.
+    
+    Rationale:
+    
+    Granting write access to this directory for non-privileged users could provide them the means for gaining
+    unauthorized elevated privileges. Granting read access to this directory could give an unprivileged user
+    insight in how to gain elevated privileges or circumvent auditing controls.
+  '
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.1.4'
@@ -93,14 +132,25 @@ control 'cis-dil-benchmark-5.1.4' do
     it { should_not be_readable.by 'other' }
     it { should_not be_writable.by 'other' }
     it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
+    its('uid') { should cmp 0 }
+    its('gid') { should cmp 0 }
   end
 end
 
 control 'cis-dil-benchmark-5.1.5' do
   title 'Ensure permissions on /etc/cron.weekly are configured'
-  desc  "The /etc/cron.weekly directory contains system cron jobs that need to run on a weekly basis. The files in this directory cannot be manipulated by the crontab command, but are instead edited by system administrators using a text editor. The commands below restrict read/write and search access to user and group root, preventing regular users from accessing this directory.\n\nRationale: Granting write access to this directory for non-privileged users could provide them the means for gaining unauthorized elevated privileges. Granting read access to this directory could give an unprivileged user insight in how to gain elevated privileges or circumvent auditing controls."
+  desc  '
+    The /etc/cron.weekly directory contains system cron jobs that need to run on a weekly basis. The files
+    in this directory cannot be manipulated by the crontab command, but are instead edited by system
+    administrators using a text editor. The commands below restrict read/write and search access to user
+    and group root, preventing regular users from accessing this directory.
+    
+    Rationale:
+    
+    Granting write access to this directory for non-privileged users could provide them the means for gaining
+    unauthorized elevated privileges. Granting read access to this directory could give an unprivileged user
+    insight in how to gain elevated privileges or circumvent auditing controls.
+  '
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.1.5'
@@ -114,14 +164,25 @@ control 'cis-dil-benchmark-5.1.5' do
     it { should_not be_readable.by 'other' }
     it { should_not be_writable.by 'other' }
     it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
+    its('uid') { should cmp 0 }
+    its('gid') { should cmp 0 }
   end
 end
 
 control 'cis-dil-benchmark-5.1.6' do
   title 'Ensure permissions on /etc/cron.monthly are configured'
-  desc  "The /etc/cron.monthly directory contains system cron jobs that need to run on a monthly basis. The files in this directory cannot be manipulated by the crontab command, but are instead edited by system administrators using a text editor. The commands below restrict read/write and search access to user and group root, preventing regular users from accessing this directory.\n\nRationale: Granting write access to this directory for non-privileged users could provide them the means for gaining unauthorized elevated privileges. Granting read access to this directory could give an unprivileged user insight in how to gain elevated privileges or circumvent auditing controls."
+  desc  '
+    The /etc/cron.monthly directory contains system cron jobs that need to run on a monthly basis. The files
+    in this directory cannot be manipulated by the crontab command, but are instead edited by system
+    administrators using a text editor. The commands below restrict read/write and search access to user and
+    group root, preventing regular users from accessing this directory.
+    
+    Rationale:
+    
+    Granting write access to this directory for non-privileged users could provide them the means for gaining
+    unauthorized elevated privileges. Granting read access to this directory could give an unprivileged user
+    insight in how to gain elevated privileges or circumvent auditing controls.
+  '
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.1.6'
@@ -135,14 +196,26 @@ control 'cis-dil-benchmark-5.1.6' do
     it { should_not be_readable.by 'other' }
     it { should_not be_writable.by 'other' }
     it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
+    its('uid') { should cmp 0 }
+    its('gid') { should cmp 0 }
   end
 end
 
 control 'cis-dil-benchmark-5.1.7' do
   title 'Ensure permissions on /etc/cron.d are configured'
-  desc  "The /etc/cron.d directory contains system cron jobs that need to run in a similar manner to the hourly, daily weekly and monthly jobs from /etc/crontab, but require more granular control as to when they run. The files in this directory cannot be manipulated by the crontab command, but are instead edited by system administrators using a text editor. The commands below restrict read/write and search access to user and group root, preventing regular users from accessing this directory.\n\nRationale: Granting write access to this directory for non-privileged users could provide them the means for gaining unauthorized elevated privileges. Granting read access to this directory could give an unprivileged user insight in how to gain elevated privileges or circumvent auditing controls."
+  desc  '
+    The /etc/cron.d directory contains system cron jobs that need to run in a similar manner to the hourly,
+    daily weekly and monthly jobs from /etc/crontab, but require more granular control as to when they run.
+    The files in this directory cannot be manipulated by the crontab command, but are instead edited by system
+    administrators using a text editor. The commands below restrict read/write and search access to user and group
+    root, preventing regular users from accessing this directory.
+    
+    Rationale:
+    
+    Granting write access to this directory for non-privileged users could provide them the means for gaining unauthorized
+    elevated privileges. Granting read access to this directory could give an unprivileged user insight in how to gain
+    elevated privileges or circumvent auditing controls.
+  '
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.1.7'
@@ -156,14 +229,29 @@ control 'cis-dil-benchmark-5.1.7' do
     it { should_not be_readable.by 'other' }
     it { should_not be_writable.by 'other' }
     it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
+    its('uid') { should cmp 0 }
+    its('gid') { should cmp 0 }
   end
 end
 
 control 'cis-dil-benchmark-5.1.8' do
   title 'Ensure at/cron is restricted to authorized users'
-  desc  "Configure /etc/cron.allow and /etc/at.allow to allow specific users to use these services. If /etc/cron.allow or /etc/at.allow do not exist, then /etc/at.deny and /etc/cron.deny are checked. Any user not specifically defined in those files is allowed to use at and cron. By removing the files, only users in /etc/cron.allow and /etc/at.allow are allowed to use at and cron. Note that even though a given user is not listed in cron.allow, cron jobs can still be run as that user. The cron.allow file only controls administrative access to the crontab command for scheduling and modifying cron jobs.\n\nRationale: On many systems, only the system administrator is authorized to schedule cron jobs. Using the cron.allow file to control who can run cron jobs enforces this policy. It is easier to manage an allow list than a deny list. In a deny list, you could potentially add a user ID to the system and forget to add it to the deny files."
+  desc  '
+    Configure /etc/cron.allow and /etc/at.allow to allow specific users to use these services.
+    If /etc/cron.allow or /etc/at.allow do not exist, then /etc/at.deny and /etc/cron.deny are checked.
+    Any user not specifically defined in those files is allowed to use at and cron. By removing the files,
+    only users in /etc/cron.allow and /etc/at.allow are allowed to use at and cron. 
+    
+    Note that even though a given user is not listed in cron.allow, cron jobs can still be run as that user.
+    The cron.allow file only controls administrative access to the crontab command for scheduling and modifying
+    cron jobs.
+    
+    Rationale:
+    
+    On many systems, only the system administrator is authorized to schedule cron jobs. Using the cron.allow file
+    to control who can run cron jobs enforces this policy. It is easier to manage an allow list than a deny list.
+    In a deny list, you could potentially add a user ID to the system and forget to add it to the deny files.
+  '
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.1.8'
@@ -182,8 +270,8 @@ control 'cis-dil-benchmark-5.1.8' do
       it { should_not be_readable.by 'other' }
       it { should_not be_writable.by 'other' }
       it { should_not be_executable.by 'other' }
-      its(:uid) { should cmp 0 }
-      its(:gid) { should cmp 0 }
+      its('uid') { should cmp 0 }
+      its('gid') { should cmp 0 }
     end
   end
 end
