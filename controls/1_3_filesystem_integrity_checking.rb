@@ -48,14 +48,14 @@ control 'cis-dil-benchmark-1.3.2' do
   describe.one do
     %w(/var/spool/cron/crontabs/root /var/spool/cron/root /etc/crontab).each do |f|
       describe file(f) do
-        its(:content) { should match(/aide --check/) }
+        its('content') { should match(/aide (--check|-C)/) }
       end
     end
 
     %w(cron.d cron.hourly cron.daily cron.weekly cron.monthly).each do |f|
       command("find /etc/#{f} -type f").stdout.split.each do |entry|
         describe file(entry) do
-          its(:content) { should match(/aide --check/) }
+          its('content') { should match(/aide (--check|-C)/) }
         end
       end
     end
