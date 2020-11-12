@@ -184,7 +184,7 @@ end
 control 'cis-dil-benchmark-5.2.8' do
   title 'Ensure SSH IgnoreRhosts is enabled (Scored)'
   desc  '
-    The IgnoreRhosts parameter specifies that .rhosts and .shosts files will not be used in RhostsRSAAuthentication or 
+    The IgnoreRhosts parameter specifies that .rhosts and .shosts files will not be used in RhostsRSAAuthentication or
     HostbasedAuthentication.
 
     Rationale: Setting this parameter forces users to enter a password when authenticating with ssh.
@@ -297,7 +297,7 @@ control 'cis-dil-benchmark-5.2.13' do
     its('Ciphers') { should_not be_nil }
   end
 
-  WEAK_CIPHERS = [
+  weak_ciphers = [
     '3des-cbc',
     'aes128-cbc',
     'aes192-cbc',
@@ -312,7 +312,7 @@ control 'cis-dil-benchmark-5.2.13' do
 
   if sshd_config.Ciphers
     describe sshd_config.Ciphers.split(',').each do
-      it { should_not be_in WEAK_CIPHERS }
+      it { should_not be_in weak_ciphers }
     end
   end
 end
@@ -336,7 +336,7 @@ control 'cis-dil-benchmark-5.2.14' do
     its('MACs') { should_not be_nil }
   end
 
-  ALLOWED_MACS = [
+  allowed_macs = [
     'hmac-sha2-512-etm@openssh.com',
     'hmac-sha2-256-etm@openssh.com',
     'hmac-sha2-512',
@@ -346,7 +346,7 @@ control 'cis-dil-benchmark-5.2.14' do
   if sshd_config.MACs
     sshd_config.MACs.split(',').each do |m|
       describe m do
-        it { should be_in ALLOWED_MACS }
+        it { should be_in allowed_macs }
       end
     end
   end
@@ -369,7 +369,7 @@ control 'cis-dil-benchmark-5.2.15' do
     its('KexAlgorithms') { should_not be_nil }
   end
 
-  ALLOWED_KEX_ALGORITHMS = [
+  allowed_kex_algorithms = [
     'curve25519-sha256',
     'curve25519-sha256@libssh.org',
     'ecdh-sha2-nistp256',
@@ -384,7 +384,7 @@ control 'cis-dil-benchmark-5.2.15' do
   if sshd_config.KexAlgorithms
     sshd_config.KexAlgorithms.split(',').each do |m|
       describe m do
-        it { should be_in ALLOWED_KEX_ALGORITHMS }
+        it { should be_in allowed_kex_algorithms }
       end
     end
   end

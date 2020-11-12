@@ -153,7 +153,7 @@ control 'cis-dil-benchmark-3.5.2.2' do
   describe.one do
     rules.each do |rule|
       describe rule do
-        it { should match(/(?=.*-A INPUT)(?=.*-i lo)(?=.*-j ACCEPT)/) }
+        it { should match /(?=.*-A INPUT)(?=.*-i lo)(?=.*-j ACCEPT)/ }
       end
     end
   end
@@ -161,7 +161,7 @@ control 'cis-dil-benchmark-3.5.2.2' do
   describe.one do
     rules.each do |rule|
       describe rule do
-        it { should match(/(?=.*-A OUTPUT)(?=.*-o lo)(?=.*-j ACCEPT)/) }
+        it { should match /(?=.*-A OUTPUT)(?=.*-o lo)(?=.*-j ACCEPT)/ }
       end
     end
   end
@@ -169,11 +169,10 @@ control 'cis-dil-benchmark-3.5.2.2' do
   describe.one do
     rules.each do |rule|
       describe rule do
-        it { should match(/(?=.*-A INPUT)(?=.*-s 127\.0\.0\.0\/8)(?=.*-j DROP)/) }
+        it { should match %r{(?=.*-A INPUT)(?=.*-s 127\.0\.0\.0/8)(?=.*-j DROP)} }
       end
     end
   end
-
 
 end
 
@@ -191,7 +190,7 @@ control 'cis-dil-benchmark-3.5.2.3' do
     describe.one do
       rules.each do |rule|
         describe rule do
-          it { should match(/(?=.*-A OUTPUT)(?=.*-p #{proto})(?=.*-m state --state NEW,ESTABLISHED)(?=.*-j ACCEPT)/) }
+          it { should match /(?=.*-A OUTPUT)(?=.*-p #{proto})(?=.*-m state --state NEW,ESTABLISHED)(?=.*-j ACCEPT)/ }
         end
       end
     end
@@ -199,7 +198,7 @@ control 'cis-dil-benchmark-3.5.2.3' do
     describe.one do
       rules.each do |rule|
         describe rule do
-          it { should match(/(?=.*-A INPUT)(?=.*-p #{proto})(?=.*-m state --state ESTABLISHED)(?=.*-j ACCEPT)/) }
+          it { should match /(?=.*-A INPUT)(?=.*-p #{proto})(?=.*-m state --state ESTABLISHED)(?=.*-j ACCEPT)/ }
         end
       end
     end

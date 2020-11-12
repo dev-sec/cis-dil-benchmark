@@ -373,9 +373,10 @@ control 'cis-dil-benchmark-1.1.17' do
   describe mount('/dev/shm') do
     its('options') { should include 'noexec' }
   end
-  only_if('/dev/shm is mounted') {
+
+  only_if('/dev/shm is mounted') do
     mount('/dev/shm').mounted?
-  }
+  end
 end
 
 control 'cis-dil-benchmark-1.1.18' do

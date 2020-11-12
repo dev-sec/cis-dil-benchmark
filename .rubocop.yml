@@ -3,6 +3,8 @@ Documentation:
   Enabled: false
 Layout/ParameterAlignment:
   Enabled: true
+Lint/AmbiguousRegexpLiteral:
+  Enabled: false
 HashSyntax:
   Enabled: true
 LineLength:

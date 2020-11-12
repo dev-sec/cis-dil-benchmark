@@ -25,7 +25,7 @@ shadow_files << '/usr/share/baselayout/shadow' if file('/etc/nsswitch.conf').con
 passwd_files = ['/etc/passwd']
 passwd_files << '/usr/share/baselayout/passwd' if file('/etc/nsswitch.conf').content =~ /^passwd:\s+(\S+\s+)*usrfiles/
 
-shell_config_files = %w(bash.bashrc profile bashrc).map {|f| "/etc/#{f}"}.select {|f| file(f).file?}
+shell_config_files = %w(bash.bashrc profile bashrc).map { |f| "/etc/#{f}" }.select { |f| file(f).file? }
 
 control 'cis-dil-benchmark-5.4.1.1' do
   title 'Ensure password expiration is 365 days or less'
@@ -189,11 +189,6 @@ control 'cis-dil-benchmark-5.4.4' do
   shell_config_files.each do |f|
     describe file(f) do
       its('content') { should_not match(/^\s*umask [0-7](0[1-7]|[1-7][1-6])\s*(?:#.*)?$/) }
-    end
-  end
-
-  shell_config_files.each do |f|
-    describe file(f) do
       its('content') { should match(/^\s*umask [0-7][2367]7\s*(?:#.*)?$/) }
     end
   end

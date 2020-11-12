@@ -33,17 +33,17 @@ control 'cis-dil-benchmark-5.3.1' do # rubocop:disable Metrics/BlockLength
     * ucredit=-1 - provide at least one uppercase character
     * ocredit=-1 - provide at least one special character
     * lcredit=-1 - provide at least one lowercase character
-    
+
     The pam_pwquality.so module functions similarly but the minlen, dcredit,
     ucredit , ocredit , and lcredit parameters are stored in the
     /etc/security/pwquality.conf file. The settings shown above are one possible
     policy. Alter these values to conform to your own organization`s password
     policies.
-    
+
     Rationale: Strong passwords protect systems from being hacked through brute
     force methods.
   '
-  
+
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.3.1'
@@ -102,11 +102,11 @@ control 'cis-dil-benchmark-5.3.2' do
     users. Check the documentation for each secondary program for instructions
     on how to configure them to work with PAM.
     Set the lockout number to the policy in effect at your site.
-    
+
     Rationale: Locking out user IDs after n unsuccessful consecutive login
     attempts mitigates brute force password attacks against your systems.
   '
-  
+
   impact 0.0
 
   tag cis: 'distribution-independent-linux:5.3.2'
@@ -122,12 +122,12 @@ control 'cis-dil-benchmark-5.3.3' do
   desc  '
     The /etc/security/opasswd file stores the users` old passwords and can be
     checked to ensure that users are not recycling recent passwords.
-    
+
     Rationale: Forcing users not to reuse their past 5 passwords make it less
     likely that an attacker will be able to guess the password. Note that these
     change only apply to accounts configured on the local system.
   '
-  
+
   impact 0.0
 
   tag cis: 'distribution-independent-linux:5.3.3'
@@ -152,13 +152,13 @@ control 'cis-dil-benchmark-5.3.4' do
     The commands below change password encryption from md5 to sha512 (a much
     stronger hashing algorithm). All existing accounts will need to perform
     a password change to upgrade the stored hashes to the new algorithm.
-    
+
     Rationale: The SHA-512 algorithm provides much stronger hashing than MD5,
     thus providing additional protection to the system by increasing the level
     of effort for an attacker to successfully determine passwords. Note that
     these change only apply to accounts configured on the local system.
   '
-  
+
   impact 0.0
 
   tag cis: 'distribution-independent-linux:5.3.4'

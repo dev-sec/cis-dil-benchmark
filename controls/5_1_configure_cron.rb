@@ -21,7 +21,7 @@ control 'cis-dil-benchmark-5.1.1' do
   title 'Ensure cron daemon is enabled'
   desc  '
     The cron daemon is used to execute batch jobs on the system.
-  
+
     Rationale:
 
     While there may not be user jobs that need to be run on the system, the system does have maintenance jobs that may include
@@ -47,9 +47,9 @@ control 'cis-dil-benchmark-5.1.2' do
   desc  '
     The /etc/crontab file is used by cron to control its own jobs. The commands in this item make sure that root
     is the user and group owner of the file and that only the owner can access the file.
-    
+
     Rationale:
-    
+
     This file contains information on what system jobs are run by cron. Write access to these files could provide
     unprivileged users with the ability to elevate their privileges. Read access to these files could provide user
     with the ability to gain insight on system jobs that run on the system and could provide them a way to gain
@@ -80,9 +80,9 @@ control 'cis-dil-benchmark-5.1.3' do
     directory cannot be manipulated by the crontab command, but are instead edited by system administrators
     using a text editor. The commands below restrict read/write and search access to user and group root,
     preventing regular users from accessing this directory.
-    
+
     Rationale:
-    
+
     Granting write access to this directory for non-privileged users could provide them the means
     for gaining unauthorized elevated privileges. Granting read access to this directory could give
     an unprivileged user insight in how to gain elevated privileges or circumvent auditing controls.
@@ -112,9 +112,9 @@ control 'cis-dil-benchmark-5.1.4' do
     The files in this directory cannot be manipulated by the crontab command, but are instead edited
     by system administrators using a text editor. The commands below restrict read/write and search
     access to user and group root, preventing regular users from accessing this directory.
-    
+
     Rationale:
-    
+
     Granting write access to this directory for non-privileged users could provide them the means for gaining
     unauthorized elevated privileges. Granting read access to this directory could give an unprivileged user
     insight in how to gain elevated privileges or circumvent auditing controls.
@@ -144,9 +144,9 @@ control 'cis-dil-benchmark-5.1.5' do
     in this directory cannot be manipulated by the crontab command, but are instead edited by system
     administrators using a text editor. The commands below restrict read/write and search access to user
     and group root, preventing regular users from accessing this directory.
-    
+
     Rationale:
-    
+
     Granting write access to this directory for non-privileged users could provide them the means for gaining
     unauthorized elevated privileges. Granting read access to this directory could give an unprivileged user
     insight in how to gain elevated privileges or circumvent auditing controls.
@@ -176,9 +176,9 @@ control 'cis-dil-benchmark-5.1.6' do
     in this directory cannot be manipulated by the crontab command, but are instead edited by system
     administrators using a text editor. The commands below restrict read/write and search access to user and
     group root, preventing regular users from accessing this directory.
-    
+
     Rationale:
-    
+
     Granting write access to this directory for non-privileged users could provide them the means for gaining
     unauthorized elevated privileges. Granting read access to this directory could give an unprivileged user
     insight in how to gain elevated privileges or circumvent auditing controls.
@@ -209,9 +209,9 @@ control 'cis-dil-benchmark-5.1.7' do
     The files in this directory cannot be manipulated by the crontab command, but are instead edited by system
     administrators using a text editor. The commands below restrict read/write and search access to user and group
     root, preventing regular users from accessing this directory.
-    
+
     Rationale:
-    
+
     Granting write access to this directory for non-privileged users could provide them the means for gaining unauthorized
     elevated privileges. Granting read access to this directory could give an unprivileged user insight in how to gain
     elevated privileges or circumvent auditing controls.
@@ -240,14 +240,14 @@ control 'cis-dil-benchmark-5.1.8' do
     Configure /etc/cron.allow and /etc/at.allow to allow specific users to use these services.
     If /etc/cron.allow or /etc/at.allow do not exist, then /etc/at.deny and /etc/cron.deny are checked.
     Any user not specifically defined in those files is allowed to use at and cron. By removing the files,
-    only users in /etc/cron.allow and /etc/at.allow are allowed to use at and cron. 
-    
+    only users in /etc/cron.allow and /etc/at.allow are allowed to use at and cron.
+
     Note that even though a given user is not listed in cron.allow, cron jobs can still be run as that user.
     The cron.allow file only controls administrative access to the crontab command for scheduling and modifying
     cron jobs.
-    
+
     Rationale:
-    
+
     On many systems, only the system administrator is authorized to schedule cron jobs. Using the cron.allow file
     to control who can run cron jobs enforces this policy. It is easier to manage an allow list than a deny list.
     In a deny list, you could potentially add a user ID to the system and forget to add it to the deny files.

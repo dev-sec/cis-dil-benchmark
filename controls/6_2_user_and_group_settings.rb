@@ -32,7 +32,7 @@ control 'cis-dil-benchmark-6.2.1' do
   title 'Ensure password fields are not empty'
   desc  '
     An account with an empty password field means that anybody may log in as that user without providing a password.
-    
+
     Rationale
     All accounts must have passwords or be locked to prevent the account from being used by an unauthorized user.
   '
@@ -53,7 +53,7 @@ control 'cis-dil-benchmark-6.2.2' do
   desc  '
     The character + in various files used to be markers for systems to insert data from NIS maps at a certain point in a system configuration file.
     These entries are no longer required on most systems, but may exist in files that have been imported from other platforms.
-    
+
     Rationale:
     These entries may provide an avenue for attackers to gain privileged access on the system.
   '
@@ -75,7 +75,7 @@ control 'cis-dil-benchmark-6.2.3' do
     The character + in various files used to be markers for systems to insert data from NIS maps at a certain point in a system
     configuration file. These entries are no longer required on most systems, but may exist in files that have been imported
     from other platforms.
-    
+
     Rationale: These entries may provide an avenue for attackers to gain privileged access on the system.
   '
   impact 1.0
@@ -96,7 +96,7 @@ control 'cis-dil-benchmark-6.2.4' do
     The character + in various files used to be markers for systems to insert data from NIS maps at a certain point in a system
     configuration file. These entries are no longer required on most systems, but may exist in files that have been imported
     from other platforms.
-    
+
     Rationale: These entries may provide an avenue for attackers to gain privileged access on the system.
   '
   impact 1.0
@@ -115,7 +115,7 @@ control 'cis-dil-benchmark-6.2.5' do
   title 'Ensure root is the only UID 0 account'
   desc  '
     Any account with UID 0 has superuser privileges on the system.
-    
+
     Rationale: This access must be limited to only the default root account and only from the system console.
     Administrative access must be through an unprivileged account using an approved mechanism as noted in
     Item 5.6 Ensure access to the su command is restricted.
@@ -137,7 +137,7 @@ control 'cis-dil-benchmark-6.2.6' do
   desc  '
     The root user can execute any command on the system and could be fooled into executing programs unintentionally if
     the PATH is not set correctly.
-    
+
     Rationale: Including the current working directory (.) or other writable directory in root\'s executable path makes it
     likely that an attacker can gain superuser access by forcing an administrator operating as root to execute
     a Trojan horse program.
@@ -169,7 +169,7 @@ control 'cis-dil-benchmark-6.2.7' do
   title 'Ensure all users\' home directories exist'
   desc  '
     Users can be defined in /etc/passwd without a home directory or with a home directory that does not actually exist.
-    
+
     Rationale: If the user\'s home directory does not exist or is unassigned, the user will be placed in "/" and will not be
     able to write any files or have local environment variables set.
   '
@@ -191,9 +191,9 @@ control 'cis-dil-benchmark-6.2.8' do
   title 'Ensure users\' home directories permissions are 750 or more restrictive'
   desc  '
     While the system administrator can establish secure permissions for users\' home directories, the users can easily override these.
-    
+
     Rationale:
-    
+
     Group or world-writable user home directories may enable malicious users to steal or modify other users\' data or to gain
     another user\'s system privileges.
   '
@@ -220,9 +220,9 @@ control 'cis-dil-benchmark-6.2.9' do
   desc  '
     The user home directory is space defined for the particular user to set local environment variables and to store
     personal files.
-    
+
     Rationale:
-    
+
     Since the user is accountable for files stored in the user home directory, the user must be the owner of the directory.
   '
   impact 1.0
@@ -243,7 +243,7 @@ control 'cis-dil-benchmark-6.2.10' do
   title 'Ensure users\' dot files are not group or world writable'
   desc  '
     While the system administrator can establish secure permissions for users\' "dot" files, the users can easily override these.
-    
+
     Rationale:
     Group or world-writable user configuration files may enable malicious users to steal or modify other users\' data or to gain another
     user\'s system privileges.
@@ -269,9 +269,9 @@ control 'cis-dil-benchmark-6.2.11' do
   title 'Ensure no users have .forward files'
   desc  '
     The .forward file specifies an email address to forward the user\'s mail to.
-    
+
     Rationale:
-    
+
     Use of the .forward file poses a security risk in that sensitive data may be inadvertently transferred outside the organization.
     The .forward file also poses a risk as it can be used to execute commands that may perform unintended actions.
   '
@@ -293,7 +293,7 @@ control 'cis-dil-benchmark-6.2.12' do
   title 'Ensure no users have .netrc files'
   desc  '
     The .netrc file contains data for logging into a remote host for file transfers via FTP.
-    
+
     Rationale:
     The .netrc file presents a significant security risk since it stores passwords in unencrypted form. Even if FTP is disabled,
     user accounts may have brought over .netrc files from other systems which could pose a risk to those systems.
@@ -316,7 +316,7 @@ control 'cis-dil-benchmark-6.2.13' do
   title 'Ensure users\' .netrc Files are not group or world accessible'
   desc  '
     While the system administrator can establish secure permissions for users\' .netrc files, the users can easily override these.
-    
+
     Rationale:
     .netrc files may contain unencrypted passwords that may be used to attack other systems.
   '
@@ -343,7 +343,7 @@ control 'cis-dil-benchmark-6.2.14' do
   title 'Ensure no users have .rhosts files'
   desc  '
     While no .rhosts files are shipped by default, users can easily create them.
-    
+
     Rationale:
     This action is only meaningful if .rhosts support is permitted in the file /etc/pam.conf. Even though the .rhosts files are
     ineffective if support is disabled in /etc/pam.conf, they may have been brought over from other systems and could contain
@@ -368,7 +368,7 @@ control 'cis-dil-benchmark-6.2.15' do
   desc  '
     Over time, system administration errors and changes can lead to groups being defined in /etc/passwd but not
     in /etc/group.
-    
+
     Rationale: Groups defined in the /etc/passwd file but not in the /etc/group file pose a threat to system security
     since group permissions are not properly managed.
   '
@@ -395,7 +395,7 @@ control 'cis-dil-benchmark-6.2.16' do
   desc  '
     Although the useradd program will not let you create a duplicate User ID (UID), it is possible for an administrator
     to manually edit the /etc/passwd file and change the UID field.
-    
+
     Rationale:
     Users must be assigned unique UIDs for accountability and to ensure appropriate access protections.
   '
@@ -416,7 +416,7 @@ control 'cis-dil-benchmark-6.2.17' do
   desc  '
     Although the groupadd program will not let you create a duplicate Group ID (GID), it is possible for an administrator to
     manually edit the /etc/group file and change the GID field.
-    
+
     Rationale:
     User groups must be assigned unique GIDs for accountability and to ensure appropriate access protections.
   '
@@ -437,7 +437,7 @@ control 'cis-dil-benchmark-6.2.18' do
   desc  '
     Although the useradd program will not let you create a duplicate user name, it is possible for an administrator to manually
     edit the /etc/passwd file and change the user name.
-    
+
     Rationale:
     If a user is assigned a duplicate user name, it will create and have access to files with the first UID for that username in /etc/passwd.
     For example, if "test4" has a UID of 1000 and a subsequent "test4" entry has a UID of 2000, logging in as "test4" will use UID 1000.
@@ -460,11 +460,11 @@ control 'cis-dil-benchmark-6.2.19' do
   desc  '
     Although the groupadd program will not let you create a duplicate group name, it is possible for an administrator to manually edit the /etc/group
     file and change the group name.
-    
+
     Rationale:
     If a group is assigned a duplicate group name, it will create and have access to files with the first GID for that group in /etc/group.
     Effectively, the GID is shared, which is a security problem.
-  ' 
+  '
   impact 1.0
 
   tag cis: 'distribution-independent-linux:6.2.19'
@@ -482,7 +482,7 @@ control 'cis-dil-benchmark-6.2.20' do
   desc  '
     The shadow group allows system programs which require access the ability to read the /etc/shadow file. No users should be assigned
     to the shadow group.
-    
+
     Rationale:
     Any users assigned to the shadow group would be granted read access to the /etc/shadow file. If attackers can gain read access
     to the /etc/shadow file, they can easily run a password cracking program against the hashed passwords to break them. Other security

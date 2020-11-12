@@ -116,7 +116,7 @@ control 'cis-dil-benchmark-3.3.5' do
     it { should exist }
     it { should be_file }
 
-    its('owner') { should cmp'root' }
+    its('owner') { should cmp 'root' }
     its('group') { should cmp 'root' }
 
     its('mode') { should cmp '0644' }
