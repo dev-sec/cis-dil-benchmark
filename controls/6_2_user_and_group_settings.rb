@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 # author: Kristian Vlaardingerbroek
+#
 
 title '6.2 User and Group Settings'
 
@@ -38,7 +39,7 @@ control 'cis-dil-benchmark-6.2.1' do
 
   shadow_files.each do |f|
     describe shadow(f) do
-      its(:passwords) { should_not include '' }
+      its('passwords') { should_not include '' }
     end
   end
 end
@@ -53,7 +54,7 @@ control 'cis-dil-benchmark-6.2.2' do
 
   passwd_files.each do |f|
     describe passwd(f) do
-      its(:users) { should_not include '+' }
+      its('users') { should_not include '+' }
     end
   end
 end
@@ -68,7 +69,7 @@ control 'cis-dil-benchmark-6.2.3' do
 
   shadow_files.each do |f|
     describe shadow(f) do
-      its(:users) { should_not include '+' }
+      its('users') { should_not include '+' }
     end
   end
 end
@@ -83,7 +84,7 @@ control 'cis-dil-benchmark-6.2.4' do
 
   group_files.each do |f|
     describe etc_group(f) do
-      its(:groups) { should_not include '+' }
+      its('groups') { should_not include '+' }
     end
   end
 end
@@ -98,7 +99,7 @@ control 'cis-dil-benchmark-6.2.5' do
 
   passwd_files.each do |f|
     describe passwd(f).uids(0) do
-      its(:users) { should eq ['root'] }
+      its('users') { should eq ['root'] }
     end
   end
 end
@@ -124,7 +125,7 @@ control 'cis-dil-benchmark-6.2.6' do
       it { should be_directory }
       it { should_not be_writable.by 'group' }
       it { should_not be_writable.by 'other' }
-      its(:uid) { should cmp 0 }
+      its('uid') { should cmp 0 }
     end
   end
 end
@@ -290,7 +291,7 @@ control 'cis-dil-benchmark-6.2.15' do
       describe.one do
         group_files.each do |gf|
           describe etc_group(gf) do
-            its(:gids) { should include gid }
+            its('gids') { should include gid }
           end
         end
       end
@@ -368,7 +369,7 @@ control 'cis-dil-benchmark-6.2.20' do
 
   group_files.each do |f|
     describe etc_group(f).where(name: 'shadow') do
-      its(:users) { should be_empty }
+      its('users') { should be_empty }
     end
   end
 end
