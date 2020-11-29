@@ -26,7 +26,12 @@ control 'cis-dil-benchmark-4.3' do
   tag cis: 'distribution-independent-linux:4.3'
   tag level: 1
 
-  describe 'cis-dil-benchmark-4.3' do
-    skip 'Check Rule Manually'
+  # Use an expected readable inventory file
+  describe file('/root/cis_expected_logrotate') do
+    it { should exist }
+  end
+
+  describe command('grep "" /etc/logrotate.conf /etc/logrotate.d/* | diff /root/cis_expected_logrotate -') do
+    its('stdout') { should eq '' }
   end
 end

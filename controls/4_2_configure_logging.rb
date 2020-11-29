@@ -92,8 +92,11 @@ control 'cis-dil-benchmark-4.2.1.6' do
   tag cis: 'distribution-independent-linux:4.2.1.6'
   tag level: 1
 
-  describe 'cis-dil-benchmark-4.2.1.5' do
-    skip 'Check Rule Manually'
+  describe command("grep '$ModLoad imtcp' /etc/rsyslog.conf /etc/rsyslog.d/*.conf") do
+    its('stdout') { should_not match /^\s*$ModLoad imtcp/ }
+  end
+  describe command("grep '$InputTCPServerRun' /etc/rsyslog.conf /etc/rsyslog.d/*.conf") do
+    its('stdout') { should_not match /^\s*$InputTCPServerRun/ }
   end
 end
 
