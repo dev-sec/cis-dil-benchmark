@@ -35,17 +35,17 @@ control 'cis-dil-benchmark-1.2.1' do
     describe command('apt-cache policy | diff /root/cis_allow_repositories -') do
       its('stdout') { should eq '' }
     end
-  emd
+  end
   if command('yum').exist?
     describe command('yum repo-list | diff /root/cis_allow_repositories -') do
       its('stdout') { should eq '' }
     end
-  emd
+  end
   if command('zypper').exist?
     describe command('zypper repos | diff /root/cis_allow_repositories -') do
       its('stdout') { should eq '' }
     end
-  emd
+  end
 end
 
 control 'cis-dil-benchmark-1.2.2' do
@@ -65,10 +65,10 @@ control 'cis-dil-benchmark-1.2.2' do
     describe command('apt-key list | diff /root/cis_allow_repository_keys -') do
       its('stdout') { should eq '' }
     end
-  emd
+  end
   if command('rpm').exist?
     describe command("rpm -q gpg-pubkey --qf '%{name}-%{version}-%{release} --> %{summary}\n' | diff /root/cis_allow_repository_keys -") do
       its('stdout') { should eq '' }
     end
-  emd
+  end
 end
