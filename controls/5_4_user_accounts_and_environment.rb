@@ -17,6 +17,8 @@
 
 title '5.4 User Accounts and Environments'
 
+cis_level = input('cis_level')
+
 shadow_files = ['/etc/shadow']
 shadow_files << '/usr/share/baselayout/shadow' if file('/etc/nsswitch.conf').content =~ /^shadow:\s+(\S+\s+)*usrfiles/
 
@@ -24,15 +26,15 @@ passwd_files = ['/etc/passwd']
 passwd_files << '/usr/share/baselayout/passwd' if file('/etc/nsswitch.conf').content =~ /^passwd:\s+(\S+\s+)*usrfiles/
 
 control 'cis-dil-benchmark-5.4.1.1' do
-  title 'Ensure password expiration is 90 days or less'
-  desc  "The PASS_MAX_DAYS parameter in /etc/login.defs allows an administrator to force passwords to expire once they reach a defined age. It is recommended that the PASS_MAX_DAYS parameter be set to less than or equal to 90 days.\n\nRationale: The window of opportunity for an attacker to leverage compromised credentials or successfully compromise credentials via an online brute force attack is limited by the age of the password. Therefore, reducing the maximum age of a password also reduces an attacker's window of opportunity."
+  title 'Ensure password expiration is 365 days or less'
+  desc  "The PASS_MAX_DAYS parameter in /etc/login.defs allows an administrator to force passwords to expire once they reach a defined age. It is recommended that the PASS_MAX_DAYS parameter be set to less than or equal to 365 days.\n\nRationale: The window of opportunity for an attacker to leverage compromised credentials or successfully compromise credentials via an online brute force attack is limited by the age of the password. Therefore, reducing the maximum age of a password also reduces an attacker's window of opportunity."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.4.1.1'
   tag level: 1
 
   describe login_defs do
-    its('PASS_MAX_DAYS') { should cmp <= 90 }
+    its('PASS_MAX_DAYS') { should cmp <= 365 }
   end
 
   shadow_files.each do |f|
@@ -40,7 +42,7 @@ control 'cis-dil-benchmark-5.4.1.1' do
       next if (user.password && %w(* !)).any?
 
       describe user do
-        its(:max_days) { should cmp <= 90 }
+        its('max_days') { should cmp <= 365 }
       end
     end
   end
@@ -63,7 +65,7 @@ control 'cis-dil-benchmark-5.4.1.2' do
       next if (user.password && %w(* !)).any?
 
       describe user do
-        its(:min_days) { should cmp >= 7 }
+        its('min_days') { should cmp >= 7 }
       end
     end
   end
@@ -86,7 +88,7 @@ control 'cis-dil-benchmark-5.4.1.3' do
       next if (user.password && %w(* !)).any?
 
       describe user do
-        its(:warn_days) { should cmp >= 7 }
+        its('warn_days') { should cmp >= 7 }
       end
     end
   end
@@ -101,7 +103,7 @@ control 'cis-dil-benchmark-5.4.1.4' do
   tag level: 1
 
   describe command('useradd -D') do
-    its(:stdout) { should match(/^INACTIVE=(30|[1-2][0-9]|[1-9])$/) }
+    its('stdout') { should match /^INACTIVE=(30|[1-2][0-9]|[1-9])$/ }
   end
 
   shadow_files.each do |f|
@@ -109,15 +111,28 @@ control 'cis-dil-benchmark-5.4.1.4' do
       next if (user.password && %w(* !)).any?
 
       describe user do
-        its(:inactive_days) { should cmp <= 30 }
+        its('inactive_days') { should cmp <= 30 }
       end
     end
   end
 end
 
+control 'cis-dil-benchmark-5.4.1.5' do
+  title 'Ensure all users last password change date is in the past'
+  desc  "All users should have a password change date in the past.\n\nRationale: If a users recorded password change date is in the future then they could bypass any set password expiration."
+  impact 1.0
+
+  tag cis: 'distribution-independent-linux:5.4.1.5'
+  tag level: 1
+
+  describe command("for usr in $(cut -d: -f1 /etc/shadow); do [[ $(chage --list $usr | grep '^Last password change' | cut -d: -f2) > $(date) ]] && echo \"$usr :$(chage --list $usr | grep '^Last password change' | cut -d: -f2)\"; done") do
+    its('stdout') { should cmp '' }
+  end
+end
+
 control 'cis-dil-benchmark-5.4.2' do
-  title 'Ensure system accounts are non-login'
-  desc  "There are a number of accounts provided with Ubuntu that are used to manage applications and are not intended to provide an interactive shell.\n\nRationale: It is important to make sure that accounts that are not being used by regular users are prevented from being used to provide an interactive shell. By default, Ubuntu sets the password field for these accounts to an invalid string, but it is also recommended that the shell field in the password file be set to /sbin/nologin. This prevents the account from potentially being used to run any commands."
+  title 'Ensure system accounts are secured'
+  desc  "There are a number of accounts provided with most distributions that are used to manage applications and are not intended to provide an interactive shell.\n\nRationale: It is important to make sure that accounts that are not being used by regular users are prevented from being used to provide an interactive shell. By default, most distributions set the password field for these accounts to an invalid string, but it is also recommended that the shell field in the password file be set to the nologin shell. This prevents the account from potentially being used to run any commands."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.4.2'
@@ -130,11 +145,11 @@ control 'cis-dil-benchmark-5.4.2' do
       next if %w(root sync shutdown halt).include? user.user
 
       describe user do
-        its(:shell) { should match(%r{(/usr/sbin/nologin|/sbin/nologin|/bin/false)}) }
+        its('shell') { should match %r{(/usr/sbin/nologin|/sbin/nologin|/bin/false)} }
       end
 
       describe shadow(user.user) do
-        its(:passwords) { should be_all { |m| m == '*' } }
+        its('passwords') { should be_all { |m| m == '*' } }
       end
     end
   end
@@ -142,38 +157,45 @@ end
 
 control 'cis-dil-benchmark-5.4.3' do
   title 'Ensure default group for the root account is GID 0'
-  desc  "The usermod command can be used to specify which group the root user belongs to. This affects permissions of files that are created by the root user.\n\nRationale: Using GID 0 for the  root account helps prevent  root -owned files from accidentally becoming accessible to non-privileged users."
+  desc  "The usermod command can be used to specify which group the root user belongs to. This affects permissions of files that are created by the root user.\n\nRationale: Using GID 0 for the root account helps prevent root -owned files from accidentally becoming accessible to non-privileged users."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.4.3'
   tag level: 1
 
   describe passwd.users('root') do
-    its(:gids) { should cmp 0 }
+    its('gids') { should cmp 0 }
   end
 end
 
 control 'cis-dil-benchmark-5.4.4' do
   title 'Ensure default user umask is 027 or more restrictive'
-  desc  "The default umask determines the permissions of files created by users. The user creating the file has the discretion of making their files and directories readable by others via the chmod command. Users who wish to allow their files and directories to be readable by others by default may choose a different default umask by inserting the umask command into the standard shell configuration files (.profile, .bashrc, etc.) in their home directories.\n\nRationale: Setting a very secure default value for umask ensures that users make a conscious choice about their file permissions. A default umask setting of 077 causes files and directories created by users to not be readable by any other user on the system. A umask of 027 would make files and directories readable by users in the same Unix group, while a umask of 022 would make files readable by every user on the system."
+  desc  "The default umask determines the permissions of files created by users. The user creating the file has the discretion of making their files and directories readable by others via the chmod command. Users who wish to allow their files and directories to be readable by others by default may choose a different default umask by inserting the umask command into the standard shell configuration files ( .profile , .bashrc , etc.) in their home directories.\n\nRationale: Setting a very secure default value for umask ensures that users make a conscious choice about their file permissions. A default umask setting of 077 causes files and directories created by users to not be readable by any other user on the system. A umask of 027 would make files and directories readable by users in the same Unix group, while a umask of 022 would make files readable by every user on the system."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.4.4'
   tag level: 1
 
-  %w(bash.bashrc profile bashrc).each do |f|
-    describe file("/etc/#{f}") do
-      its(:content) { should_not match(/^\s*umask [01234567](0[7654321]|[7654321][654321])\s*(?:#.*)?$/) }
-    end
+  describe command('grep "umask" /etc/bashrc /etc/profile /etc/profile.d/*.sh') do
+    its('stdout') { should_not match /^\s*umask ([1-7]|0[13-7]|0[02][!01234567])/ }
+  end
+end
+
+control 'cis-dil-benchmark-5.4.5' do
+  title 'Ensure default user shell timeout is 900 seconds or less'
+  desc  "The default TMOUT determines the shell timeout for users. The TMOUT value is measured in seconds.\n\nRationale: Having no timeout value associated with a shell could allow an unauthorized user access to another user's shell session (e.g. user walks away from their computer and doesn't lock the screen). Setting a timeout value at least reduces the risk of this happening."
+  impact 1.0
+
+  tag cis: 'distribution-independent-linux:5.4.5'
+  tag level: 2
+
+  only_if('CIS level 2') do
+    cis_level == 2
   end
 
-  describe.one do
-    %w(bash.bashrc profile bashrc).each do |f|
-      next unless file("/etc/#{f}").file?
-
-      describe file("/etc/#{f}") do
-        its(:content) { should match(/^\s*umask [01234567][2367]7\s*(?:#.*)?$/) }
-      end
+  %w(bashrc profile).each do |f|
+    describe file("/etc/#{f}") do
+      its('content') { should match /^TMOUT=(900|[1-8]?[0-9]?[0-9])$/ }
     end
   end
 end
@@ -186,8 +208,8 @@ control 'cis-dil-benchmark-5.5' do
   tag cis: 'distribution-independent-linux:5.5'
   tag level: 1
 
-  describe 'cis-dil-benchmark-5.5' do
-    skip 'Not implemented'
+  describe file('/etc/securetty') do
+    its('content') { should eq '' }
   end
 end
 
@@ -200,6 +222,6 @@ control 'cis-dil-benchmark-5.6' do
   tag level: 1
 
   describe file('/etc/pam.d/su') do
-    its(:content) { should match(/^auth\s+required\s+pam_wheel.so use_uid$/) }
+    its('content') { should match /^auth\s+required\s+pam_wheel.so use_uid$/ }
   end
 end

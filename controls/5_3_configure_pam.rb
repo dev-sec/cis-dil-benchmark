@@ -14,12 +14,13 @@
 # limitations under the License.
 #
 # author: Kristian Vlaardingerbroek
+#
 
 title '5.3 Configure PAM'
 
 control 'cis-dil-benchmark-5.3.1' do # rubocop:disable Metrics/BlockLength
   title 'Ensure password creation requirements are configured'
-  desc "The pam_cracklib.so module checks the strength of passwords. It performs checks such as making sure a password is not a dictionary word, it is a certain length, contains a mix of characters (e.g. alphabet, numeric, other) and more. The following are definitions of the pam_cracklib.so options.\n\n* try_first_pass - retrieve the password from a previous stacked PAM module. If not available, then prompt the user for a password.\n* retry=3 - Allow 3 tries before sending back a failure.\n* minlen=14 - password must be 14 characters or more\n* dcredit=-1 - provide at least one digit\n* ucredit=-1 - provide at least one uppercase character\n* ocredit=-1 - provide at least one special character\n* lcredit=-1 - provide at least one lowercase character\n\nThe pam_pwquality.so module functions similarly but the minlen , dcredit , ucredit , ocredit , and lcredit parameters are stored in the /etc/security/pwquality.conf file. The settings shown above are one possible policy. Alter these values to conform to your own organization's password policies.\n\nRationale: Strong passwords protect systems from being hacked through brute force methods."
+  desc "The pam_cracklib.so module checks the strength of passwords. It performs checks such as making sure a password is not a dictionary word, it is a certain length, contains a mix of characters (e.g. alphabet, numeric, other) and more. The following are definitions of the pam_cracklib.so options. try_first_pass - retrieve the password from a previous stacked PAM module. If not available, then prompt the user for a password. retry=3 - Allow 3 tries before sending back a failure.minlen=14 - password must be 14 characters or more. dcredit=-1 - provide at least one digit. ucredit=-1 - provide at least one uppercase character. ocredit=-1 - provide at least one special character. lcredit=-1 - provide at least one lowercase character. The pam_pwquality.so module functions similarly but the minlen, dcredit, ucredit, ocredit, and lcredit parameters are stored in the /etc/security/pwquality.conf file. The settings shown above are one possible policy. Alter these values to conform to your own organization's password policies.\n\nRationale: Strong passwords protect systems from being hacked through brute force methods."
   impact 1.0
 
   tag cis: 'distribution-independent-linux:5.3.1'
@@ -29,8 +30,8 @@ control 'cis-dil-benchmark-5.3.1' do # rubocop:disable Metrics/BlockLength
     describe.one do
       %w(common-password system-auth).each do |f|
         describe file("/etc/pam.d/#{f}") do
-          its(:content) { should match(/^password\s+required\s+pam_cracklib\.so (\S+\s+)*try_first_pass/) }
-          its(:content) { should match(/^password\s+required\s+pam_cracklib\.so (\S+\s+)*retry=[3210]/) }
+          its('content') { should match /^password\s+required\s+pam_cracklib\.so (\S+\s+)*try_first_pass/ }
+          its('content') { should match /^password\s+required\s+pam_cracklib\.so (\S+\s+)*retry=[3210]/ }
         end
       end
     end
@@ -38,11 +39,11 @@ control 'cis-dil-benchmark-5.3.1' do # rubocop:disable Metrics/BlockLength
     describe.one do
       %w(common-password system-auth).each do |f|
         describe file("/etc/pam.d/#{f}") do
-          its(:content) { should match(/^password\s+required\s+pam_cracklib\.so (\S+\s+)*minlen=(1[4-9]|[2-9][0-9]|[1-9][0-9][0-9]+)/) }
-          its(:content) { should match(/^password\s+required\s+pam_cracklib\.so (\S+\s+)*dcredit=-[1-9][0-9]*\s*(?:#.*)?/) }
-          its(:content) { should match(/^password\s+required\s+pam_cracklib\.so (\S+\s+)*lcredit=-[1-9][0-9]*\s*(?:#.*)?/) }
-          its(:content) { should match(/^password\s+required\s+pam_cracklib\.so (\S+\s+)*ucredit=-[1-9][0-9]*\s*(?:#.*)?/) }
-          its(:content) { should match(/^password\s+required\s+pam_cracklib\.so (\S+\s+)*ocredit=-[1-9][0-9]*\s*(?:#.*)?/) }
+          its('content') { should match /^password\s+required\s+pam_cracklib\.so (\S+\s+)*minlen=(1[4-9]|[2-9][0-9]|[1-9][0-9][0-9]+)/ }
+          its('content') { should match /^password\s+required\s+pam_cracklib\.so (\S+\s+)*dcredit=-[1-9][0-9]*\s*(?:#.*)?/ }
+          its('content') { should match /^password\s+required\s+pam_cracklib\.so (\S+\s+)*lcredit=-[1-9][0-9]*\s*(?:#.*)?/ }
+          its('content') { should match /^password\s+required\s+pam_cracklib\.so (\S+\s+)*ucredit=-[1-9][0-9]*\s*(?:#.*)?/ }
+          its('content') { should match /^password\s+required\s+pam_cracklib\.so (\S+\s+)*ocredit=-[1-9][0-9]*\s*(?:#.*)?/ }
         end
       end
     end
@@ -52,18 +53,18 @@ control 'cis-dil-benchmark-5.3.1' do # rubocop:disable Metrics/BlockLength
     describe.one do
       %w(common-password system-auth).each do |f|
         describe file("/etc/pam.d/#{f}") do
-          its(:content) { should match(/^password\s+requisite\s+pam_pwquality\.so (\S+\s+)*retry=[3210]/) }
-          its(:content) { should match(/^password\s+requisite\s+pam_pwquality\.so (\S+\s+)*try_first_pass/) }
+          its('content') { should match /^password\s+requisite\s+pam_pwquality\.so (\S+\s+)*retry=[3210]/ }
+          its('content') { should match /^password\s+requisite\s+pam_pwquality\.so (\S+\s+)*try_first_pass/ }
         end
       end
     end
 
     describe file('/etc/security/pwquality.conf') do
-      its(:content) { should match(/^minlen = (1[4-9]|[2-9][0-9]|[1-9][0-9][0-9]+)\s*(?:#.*)?$/) }
-      its(:content) { should match(/^dcredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
-      its(:content) { should match(/^lcredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
-      its(:content) { should match(/^ucredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
-      its(:content) { should match(/^ocredit = -[1-9][0-9]*\s*(?:#.*)?$/) }
+      its('content') { should match /^minlen = (1[4-9]|[2-9][0-9]|[1-9][0-9][0-9]+)\s*(?:#.*)?$/ }
+      its('content') { should match /^dcredit = -[1-9][0-9]*\s*(?:#.*)?$/ }
+      its('content') { should match /^lcredit = -[1-9][0-9]*\s*(?:#.*)?$/ }
+      its('content') { should match /^ucredit = -[1-9][0-9]*\s*(?:#.*)?$/ }
+      its('content') { should match /^ocredit = -[1-9][0-9]*\s*(?:#.*)?$/ }
     end
   end
 end
@@ -76,8 +77,13 @@ control 'cis-dil-benchmark-5.3.2' do
   tag cis: 'distribution-independent-linux:5.3.2'
   tag level: 1
 
-  describe 'cis-dil-benchmark-5.3.2' do
-    skip 'Not implemented'
+  describe.one do
+    %w(common-auth system-auth).each do |f|
+      describe file("/etc/pam.d/#{f}") do
+        its('content') { should match /^auth required pam_tally2\.so/ }
+        its('content') { should match /^auth required pam_faillock\.so/ }
+      end
+    end
   end
 end
 
@@ -92,11 +98,11 @@ control 'cis-dil-benchmark-5.3.3' do
   describe.one do
     %w(common-password system-auth).each do |f|
       describe file("/etc/pam.d/#{f}") do
-        its(:content) { should match(/^password\s+(\S+\s+)+pam_unix\.so (\S+\s+)*remember=([56789]|[1-9][0-9]+)/) }
+        its('content') { should match /^password\s+(\S+\s+)+pam_unix\.so (\S+\s+)*remember=([56789]|[1-9][0-9]+)/ }
       end
 
       describe file("/etc/pam.d/#{f}") do
-        its(:content) { should match(/^password\s+(\S+\s+)+pam_pwhistory\.so (\S+\s+)*remember=([56789]|[1-9][0-9]+)/) }
+        its('content') { should match /^password\s+(\S+\s+)+pam_pwhistory\.so (\S+\s+)*remember=([56789]|[1-9][0-9]+)/ }
       end
     end
   end
@@ -113,7 +119,7 @@ control 'cis-dil-benchmark-5.3.4' do
   describe.one do
     %w(common-password system-auth password-auth).each do |f|
       describe file("/etc/pam.d/#{f}") do
-        its(:content) { should match(/^password(\s+\S+\s+)+pam_unix\.so\s+(\S+\s+)*sha512/) }
+        its('content') { should match /^password(\s+\S+\s+)+pam_unix\.so\s+(\S+\s+)*sha512/ }
       end
     end
   end

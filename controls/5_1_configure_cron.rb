@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 # author: Kristian Vlaardingerbroek
+#
 
 title '5.1 Configure cron'
 
@@ -25,13 +26,9 @@ control 'cis-dil-benchmark-5.1.1' do
   tag cis: 'distribution-independent-linux:5.1.1'
   tag level: 1
 
-  describe.one do
-    %w(cron crond).each do |s|
-      describe service(s) do
-        it { should be_enabled }
-        it { should be_running }
-      end
-    end
+  describe service('cron') do
+    it { should be_enabled }
+    it { should be_running }
   end
 end
 
@@ -51,8 +48,8 @@ control 'cis-dil-benchmark-5.1.2' do
     it { should_not be_readable.by 'other' }
     it { should_not be_writable.by 'other' }
     it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
+    its('uid') { should cmp 0 }
+    its('gid') { should cmp 0 }
   end
 end
 
@@ -72,8 +69,8 @@ control 'cis-dil-benchmark-5.1.3' do
     it { should_not be_readable.by 'other' }
     it { should_not be_writable.by 'other' }
     it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
+    its('uid') { should cmp 0 }
+    its('gid') { should cmp 0 }
   end
 end
 
@@ -93,8 +90,8 @@ control 'cis-dil-benchmark-5.1.4' do
     it { should_not be_readable.by 'other' }
     it { should_not be_writable.by 'other' }
     it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
+    its('uid') { should cmp 0 }
+    its('gid') { should cmp 0 }
   end
 end
 
@@ -114,8 +111,8 @@ control 'cis-dil-benchmark-5.1.5' do
     it { should_not be_readable.by 'other' }
     it { should_not be_writable.by 'other' }
     it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
+    its('uid') { should cmp 0 }
+    its('gid') { should cmp 0 }
   end
 end
 
@@ -135,8 +132,8 @@ control 'cis-dil-benchmark-5.1.6' do
     it { should_not be_readable.by 'other' }
     it { should_not be_writable.by 'other' }
     it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
+    its('uid') { should cmp 0 }
+    its('gid') { should cmp 0 }
   end
 end
 
@@ -156,8 +153,8 @@ control 'cis-dil-benchmark-5.1.7' do
     it { should_not be_readable.by 'other' }
     it { should_not be_writable.by 'other' }
     it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
+    its('uid') { should cmp 0 }
+    its('gid') { should cmp 0 }
   end
 end
 
@@ -182,8 +179,8 @@ control 'cis-dil-benchmark-5.1.8' do
       it { should_not be_readable.by 'other' }
       it { should_not be_writable.by 'other' }
       it { should_not be_executable.by 'other' }
-      its(:uid) { should cmp 0 }
-      its(:gid) { should cmp 0 }
+      its('uid') { should cmp 0 }
+      its('gid') { should cmp 0 }
     end
   end
 end
