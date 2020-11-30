@@ -25,6 +25,10 @@ control 'cis-dil-benchmark-2.1.1' do
   tag cis: 'distribution-independent-linux:2.1.1'
   tag level: 1
 
+  only_if('inetd/xinetd config exists') do
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
+  end
+
   describe xinetd_conf.services('chargen') do
     it { should be_disabled }
   end
@@ -47,6 +51,10 @@ control 'cis-dil-benchmark-2.1.2' do
 
   tag cis: 'distribution-independent-linux:2.1.2'
   tag level: 1
+
+  only_if('inetd/xinetd config exists') do
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
+  end
 
   describe xinetd_conf.services('daytime') do
     it { should be_disabled }
@@ -71,6 +79,10 @@ control 'cis-dil-benchmark-2.1.3' do
   tag cis: 'distribution-independent-linux:2.1.3'
   tag level: 1
 
+  only_if('inetd/xinetd config exists') do
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
+  end
+
   describe xinetd_conf.services('discard') do
     it { should be_disabled }
   end
@@ -93,6 +105,10 @@ control 'cis-dil-benchmark-2.1.4' do
 
   tag cis: 'distribution-independent-linux:2.1.4'
   tag level: 1
+
+  only_if('inetd/xinetd config exists') do
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
+  end
 
   describe xinetd_conf.services('echo') do
     it { should be_disabled }
@@ -117,6 +133,10 @@ control 'cis-dil-benchmark-2.1.5' do
   tag cis: 'distribution-independent-linux:2.1.5'
   tag level: 1
 
+  only_if('inetd/xinetd config exists') do
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
+  end
+
   describe xinetd_conf.services('time') do
     it { should be_disabled }
   end
@@ -139,6 +159,10 @@ control 'cis-dil-benchmark-2.1.6' do
 
   tag cis: 'distribution-independent-linux:2.1.6'
   tag level: 1
+
+  only_if('inetd/xinetd config exists') do
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
+  end
 
   %w(shell login exec rsh rlogin rexec).each do |s|
     describe xinetd_conf.services(s) do
@@ -165,6 +189,10 @@ control 'cis-dil-benchmark-2.1.7' do
   tag cis: 'distribution-independent-linux:2.1.7'
   tag level: 1
 
+  only_if('inetd/xinetd config exists') do
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
+  end
+
   %w(talk ntalk).each do |s|
     describe xinetd_conf.services(s) do
       it { should be_disabled }
@@ -190,6 +218,10 @@ control 'cis-dil-benchmark-2.1.8' do
   tag cis: 'distribution-independent-linux:2.1.8'
   tag level: 1
 
+  only_if('inetd/xinetd config exists') do
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
+  end
+
   describe xinetd_conf.services('telnet') do
     it { should be_disabled }
   end
@@ -212,6 +244,10 @@ control 'cis-dil-benchmark-2.1.9' do
 
   tag cis: 'distribution-independent-linux:2.1.9'
   tag level: 1
+
+  only_if('inetd/xinetd config exists') do
+    file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
+  end
 
   describe xinetd_conf.services('tftp') do
     it { should be_disabled }

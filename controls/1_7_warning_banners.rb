@@ -25,8 +25,8 @@ control 'cis-dil-benchmark-1.7.1.1' do
   tag cis: 'distribution-independent-linux:1.7.1.1'
   tag level: 1
 
-  describe file('/etc/motd') do
-    its(:content) { should_not match(/(\\v|\\r|\\m|\\s)/) }
+  describe command('grep -E -i \'(\\v|\\r|\\m|\\s|$(grep \'^ID=\' /etc/os-release | cut -d= -f2 | sed -e \'s/"//g\'))\' /etc/motd') do
+    its('stdout') { should eq '' }
   end
 end
 
@@ -38,8 +38,8 @@ control 'cis-dil-benchmark-1.7.1.2' do
   tag cis: 'distribution-independent-linux:1.7.1.2'
   tag level: 1
 
-  describe file('/etc/issue') do
-    its(:content) { should_not match(/(\\v|\\r|\\m|\\s)/) }
+  describe command('grep -E -i \'(\\v|\\r|\\m|\\s|$(grep \'^ID=\' /etc/os-release | cut -d= -f2 | sed -e \'s/"//g\'))\' /etc/issue') do
+    its('stdout') { should eq '' }
   end
 end
 
@@ -51,8 +51,8 @@ control 'cis-dil-benchmark-1.7.1.3' do
   tag cis: 'distribution-independent-linux:1.7.1.3'
   tag level: 1
 
-  describe file('/etc/issue.net') do
-    its(:content) { should_not match(/(\\v|\\r|\\m|\\s)/) }
+  describe command('grep -E -i \'(\\v|\\r|\\m|\\s|$(grep \'^ID=\' /etc/os-release | cut -d= -f2 | sed -e \'s/"//g\'))\' /etc/issue.net') do
+    its('stdout') { should eq '' }
   end
 end
 
@@ -65,21 +65,9 @@ control 'cis-dil-benchmark-1.7.1.4' do
   tag level: 1
 
   describe file('/etc/motd') do
-    it { should exist }
-    it { should be_readable.by 'owner' }
-    it { should be_writable.by 'owner' }
-    it { should_not be_executable.by 'owner' }
-    it { should be_readable.by 'group' }
-    it { should_not be_writable.by 'group' }
-    it { should_not be_executable.by 'group' }
-    it { should be_readable.by 'other' }
-    it { should_not be_writable.by 'other' }
-    it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
-    its(:sticky) { should equal false }
-    its(:suid) { should equal false }
-    its(:sgid) { should equal false }
+    its('group') { should eq 'root' }
+    its('owner') { should eq 'root' }
+    its('mode') { should cmp '0644' }
   end
 end
 
@@ -92,21 +80,9 @@ control 'cis-dil-benchmark-1.7.1.5' do
   tag level: 1
 
   describe file('/etc/issue') do
-    it { should exist }
-    it { should be_readable.by 'owner' }
-    it { should be_writable.by 'owner' }
-    it { should_not be_executable.by 'owner' }
-    it { should be_readable.by 'group' }
-    it { should_not be_writable.by 'group' }
-    it { should_not be_executable.by 'group' }
-    it { should be_readable.by 'other' }
-    it { should_not be_writable.by 'other' }
-    it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
-    its(:sticky) { should equal false }
-    its(:suid) { should equal false }
-    its(:sgid) { should equal false }
+    its('group') { should eq 'root' }
+    its('owner') { should eq 'root' }
+    its('mode') { should cmp '0644' }
   end
 end
 
@@ -119,21 +95,9 @@ control 'cis-dil-benchmark-1.7.1.6' do
   tag level: 1
 
   describe file('/etc/issue.net') do
-    it { should exist }
-    it { should be_readable.by 'owner' }
-    it { should be_writable.by 'owner' }
-    it { should_not be_executable.by 'owner' }
-    it { should be_readable.by 'group' }
-    it { should_not be_writable.by 'group' }
-    it { should_not be_executable.by 'group' }
-    it { should be_readable.by 'other' }
-    it { should_not be_writable.by 'other' }
-    it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
-    its(:sticky) { should equal false }
-    its(:suid) { should equal false }
-    its(:sgid) { should equal false }
+    its('group') { should eq 'root' }
+    its('owner') { should eq 'root' }
+    its('mode') { should cmp '0644' }
   end
 end
 
