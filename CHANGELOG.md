@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.4.4](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.4) (2020-11-30)
+
+[Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.3...0.4.4)
+
+**Closed issues:**
+
+- Any ansible automation to satisfy all these cis checks? [\#87](https://github.com/dev-sec/cis-dil-benchmark/issues/87)
+- Any planning on supported the "latest" CiS \(1.1.0\)? [\#58](https://github.com/dev-sec/cis-dil-benchmark/issues/58)
+
+**Merged pull requests:**
+
+- CIS DIL Benchmark V2 [\#90](https://github.com/dev-sec/cis-dil-benchmark/pull/90) ([deric4](https://github.com/deric4))
+
 ## [0.4.3](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.3) (2020-08-12)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.2...0.4.3)
@@ -94,7 +107,7 @@
 - Make the check slightly less strict. [\#35](https://github.com/dev-sec/cis-dil-benchmark/pull/35) ([timstoop](https://github.com/timstoop))
 - Fix deprecation warnings. [\#34](https://github.com/dev-sec/cis-dil-benchmark/pull/34) ([timstoop](https://github.com/timstoop))
 - Debian uses group 42 shadow [\#33](https://github.com/dev-sec/cis-dil-benchmark/pull/33) ([timstoop](https://github.com/timstoop))
-- updated regex to account for sha512 not being first option [\#30](https://github.com/dev-sec/cis-dil-benchmark/pull/30) ([crashdummymch](https://github.com/crashdummymch))
+- updated regex to account for sha512 not being first option [\#30](https://github.com/dev-sec/cis-dil-benchmark/pull/30) ([michael-c-hoffman](https://github.com/michael-c-hoffman))
 - Adjust modprobe check to remove false positives. [\#28](https://github.com/dev-sec/cis-dil-benchmark/pull/28) ([millerthomasj](https://github.com/millerthomasj))
 - Update umask checks for Centos7 and Amazon Linux. [\#27](https://github.com/dev-sec/cis-dil-benchmark/pull/27) ([millerthomasj](https://github.com/millerthomasj))
 - Update password quality checks for pam. [\#25](https://github.com/dev-sec/cis-dil-benchmark/pull/25) ([millerthomasj](https://github.com/millerthomasj))
@@ -107,12 +120,12 @@
 - Ntpd run as user [\#18](https://github.com/dev-sec/cis-dil-benchmark/pull/18) ([millerthomasj](https://github.com/millerthomasj))
 - Centos7 uses grub2 by default, add checks for proper file. [\#17](https://github.com/dev-sec/cis-dil-benchmark/pull/17) ([millerthomasj](https://github.com/millerthomasj))
 - On both Centos7 and latest Amazon Linux ansible auto creates cron ent… [\#16](https://github.com/dev-sec/cis-dil-benchmark/pull/16) ([millerthomasj](https://github.com/millerthomasj))
-- updated regex to detect proper string [\#15](https://github.com/dev-sec/cis-dil-benchmark/pull/15) ([crashdummymch](https://github.com/crashdummymch))
-- Undefinedmethod [\#14](https://github.com/dev-sec/cis-dil-benchmark/pull/14) ([crashdummymch](https://github.com/crashdummymch))
-- changed command for redhat family to modprobe to properly evaluate test [\#10](https://github.com/dev-sec/cis-dil-benchmark/pull/10) ([crashdummymch](https://github.com/crashdummymch))
+- updated regex to detect proper string [\#15](https://github.com/dev-sec/cis-dil-benchmark/pull/15) ([michael-c-hoffman](https://github.com/michael-c-hoffman))
+- Undefinedmethod [\#14](https://github.com/dev-sec/cis-dil-benchmark/pull/14) ([michael-c-hoffman](https://github.com/michael-c-hoffman))
+- changed command for redhat family to modprobe to properly evaluate test [\#10](https://github.com/dev-sec/cis-dil-benchmark/pull/10) ([michael-c-hoffman](https://github.com/michael-c-hoffman))
 - implements inspec check and enables it in travis [\#9](https://github.com/dev-sec/cis-dil-benchmark/pull/9) ([chris-rock](https://github.com/chris-rock))
 - use inspec's os\_env split method [\#8](https://github.com/dev-sec/cis-dil-benchmark/pull/8) ([chris-rock](https://github.com/chris-rock))
-- Passwords to password [\#6](https://github.com/dev-sec/cis-dil-benchmark/pull/6) ([crashdummymch](https://github.com/crashdummymch))
+- Passwords to password [\#6](https://github.com/dev-sec/cis-dil-benchmark/pull/6) ([michael-c-hoffman](https://github.com/michael-c-hoffman))
 
 ## [0.1.0](https://github.com/dev-sec/cis-dil-benchmark/tree/0.1.0) (2017-08-15)
 
