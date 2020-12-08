@@ -133,7 +133,7 @@ control 'cis-dil-benchmark-2.2.1.4' do
   describe file('/etc/systemd/timesyncd.conf') do
     its('content') { should match /^NTP=\S+/ }
     its('content') { should match /^FallbackNTP=\S+/ }
-    its('content') { should match /^RootDistanceMax=[0-9]/ }
+    its('content') { should match /^RootDistanceMaxSec=[0-9]/ }
   end
 end
 
