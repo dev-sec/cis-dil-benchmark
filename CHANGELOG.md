@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.5](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.5) (2020-12-22)
+
+[Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.4...0.4.5)
+
+**Closed issues:**
+
+- The version on README.md is old [\#94](https://github.com/dev-sec/cis-dil-benchmark/issues/94)
+
+**Merged pull requests:**
+
+- docs: update README with correct benchmark ver [\#95](https://github.com/dev-sec/cis-dil-benchmark/pull/95) ([deric4](https://github.com/deric4))
+
 ## [0.4.4](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.4) (2020-11-30)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.3...0.4.4)
