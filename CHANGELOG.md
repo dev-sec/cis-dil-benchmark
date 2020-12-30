@@ -1,15 +1,17 @@
 # Changelog
 
-## [0.4.5](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.5) (2020-12-22)
+## [0.4.5](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.5) (2020-12-30)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.4...0.4.5)
 
 **Closed issues:**
 
+- Travis CI status check failing [\#98](https://github.com/dev-sec/cis-dil-benchmark/issues/98)
 - The version on README.md is old [\#94](https://github.com/dev-sec/cis-dil-benchmark/issues/94)
 
 **Merged pull requests:**
 
+- Change travis rvm to 2.6 [\#99](https://github.com/dev-sec/cis-dil-benchmark/pull/99) ([micheelengronne](https://github.com/micheelengronne))
 - docs: update README with correct benchmark ver [\#95](https://github.com/dev-sec/cis-dil-benchmark/pull/95) ([deric4](https://github.com/deric4))
 
 ## [0.4.4](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.4) (2020-11-30)
