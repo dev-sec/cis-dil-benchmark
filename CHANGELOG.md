@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.7](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.7) (2021-01-06)
+
+[Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.6...0.4.7)
+
+**Merged pull requests:**
+
+- Check for `pool` or `server` in chrony.conf [\#101](https://github.com/dev-sec/cis-dil-benchmark/pull/101) ([nvwls](https://github.com/nvwls))
+
 ## [0.4.6](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.6) (2021-01-05)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.5...0.4.6)
@@ -83,7 +91,6 @@
 - reverse rubocop updates to support ruby versions bundled with InSpec 3 [\#73](https://github.com/dev-sec/cis-dil-benchmark/pull/73) ([chris-rock](https://github.com/chris-rock))
 - pin to inspec 3 [\#71](https://github.com/dev-sec/cis-dil-benchmark/pull/71) ([chris-rock](https://github.com/chris-rock))
 - Inspec 4 warning [\#70](https://github.com/dev-sec/cis-dil-benchmark/pull/70) ([micheelengronne](https://github.com/micheelengronne))
-- use inspec's new unified attributes feature [\#55](https://github.com/dev-sec/cis-dil-benchmark/pull/55) ([chris-rock](https://github.com/chris-rock))
 
 ## [0.3.0](https://github.com/dev-sec/cis-dil-benchmark/tree/0.3.0) (2019-02-04)
 
@@ -103,6 +110,7 @@
 - Fixes [\#62](https://github.com/dev-sec/cis-dil-benchmark/pull/62) ([bdwyertech](https://github.com/bdwyertech))
 - Change `password` to `passwords` [\#60](https://github.com/dev-sec/cis-dil-benchmark/pull/60) ([jerryaldrichiii](https://github.com/jerryaldrichiii))
 - Update issue templates [\#56](https://github.com/dev-sec/cis-dil-benchmark/pull/56) ([rndmh3ro](https://github.com/rndmh3ro))
+- use inspec's new unified attributes feature [\#55](https://github.com/dev-sec/cis-dil-benchmark/pull/55) ([chris-rock](https://github.com/chris-rock))
 - modify package check to satisfy openjdk dependency [\#53](https://github.com/dev-sec/cis-dil-benchmark/pull/53) ([alval5280](https://github.com/alval5280))
 - allow group write /var/log/wtmp [\#50](https://github.com/dev-sec/cis-dil-benchmark/pull/50) ([alval5280](https://github.com/alval5280))
 
