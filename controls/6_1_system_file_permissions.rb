@@ -15,7 +15,10 @@
 #
 # author: Kristian Vlaardingerbroek
 
-cis_level = attribute('cis_level')
+cis_level = input('cis_level')
+
+expected_gid = 0
+expected_gid = 42 if os.debian? || os.suse? || os.name == 'alpine'
 
 title '6.1 System File Permissions'
 
@@ -129,13 +132,10 @@ control 'cis-dil-benchmark-6.1.3' do
   shadow_files = ['/etc/shadow']
   shadow_files << '/usr/share/baselayout/shadow' if file('/etc/nsswitch.conf').content =~ /^shadow:\s+(\S+\s+)*usrfiles/
 
-  expected_gid = 0
-  expected_gid = 42 if os.debian?
-
   shadow_files.each do |f|
     describe file(f) do
       it { should exist }
-      it { should_not be_more_permissive_than('0644') }
+      it { should_not be_more_permissive_than('0640') }
       its('uid') { should cmp 0 }
       its('gid') { should cmp expected_gid }
     end
@@ -191,9 +191,6 @@ control 'cis-dil-benchmark-6.1.5' do
   gshadow_files = ['/etc/gshadow']
   gshadow_files << '/usr/share/baselayout/gshadow' if file('/etc/nsswitch.conf').content =~ /^gshadow:\s+(\S+\s+)*usrfiles/
 
-  expected_gid = 0
-  expected_gid = 42 if os.debian?
-
   gshadow_files.each do |f|
     describe file(f) do
       it { should exist }
@@ -248,7 +245,7 @@ control 'cis-dil-benchmark-6.1.7' do
     it { should_not be_more_permissive_than('0640') }
 
     its('uid') { should cmp 0 }
-    its('gid') { should cmp 0 }
+    its('gid') { should cmp expected_gid }
   end
 end
 
@@ -297,7 +294,7 @@ control 'cis-dil-benchmark-6.1.9' do
     it { should exist }
     it { should_not be_more_permissive_than('0640') }
     its('uid') { should cmp 0 }
-    its('gid') { should cmp 0 }
+    its('gid') { should cmp expected_gid }
   end
 end
 
