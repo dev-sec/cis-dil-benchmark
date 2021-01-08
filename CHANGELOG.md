@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.8](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.8) (2021-01-08)
+
+[Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.7...0.4.8)
+
+**Merged pull requests:**
+
+- fix\(6.1\): regression expected\_gid [\#100](https://github.com/dev-sec/cis-dil-benchmark/pull/100) ([deric4](https://github.com/deric4))
+
 ## [0.4.7](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.7) (2021-01-06)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.6...0.4.7)
