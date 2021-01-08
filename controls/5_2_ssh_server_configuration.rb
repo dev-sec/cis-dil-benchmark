@@ -59,15 +59,16 @@ control 'cis-dil-benchmark-5.2.2' do
   tag cis: 'distribution-independent-linux:5.2.2'
   tag level: 1
 
+  expected_gid = 0
+  expected_gid = 995 if os.redhat?
+
+  expected_perms = '0600'
+  expected_perms = '0640' if os.redhat?
+
   command('find /etc/ssh -xdev -type f -name "ssh_host_*_key"').stdout.split.each do |f|
     describe file(f) do
-      it { should_not be_readable.by 'group' }
-      it { should_not be_writable.by 'group' }
-      it { should_not be_executable.by 'group' }
-      it { should_not be_readable.by 'other' }
-      it { should_not be_writable.by 'other' }
-      it { should_not be_executable.by 'other' }
-      its('gid') { should cmp 0 }
+      it { should_not be_more_permissive_than(expected_perms) }
+      its('gid') { should cmp expected_gid }
       its('uid') { should cmp 0 }
     end
   end
