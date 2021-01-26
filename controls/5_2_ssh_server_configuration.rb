@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Copyright 2017, Schuberg Philis B.V.
 #
@@ -343,11 +345,9 @@ control 'cis-dil-benchmark-5.2.14' do
     'hmac-sha2-256'
   ].freeze
 
-  if sshd_config.MACs
-    sshd_config.MACs.split(',').each do |m|
-      describe m do
-        it { should be_in allowed_macs }
-      end
+  sshd_config.MACs&.split(',')&.each do |m|
+    describe m do
+      it { should be_in allowed_macs }
     end
   end
 end
@@ -381,11 +381,9 @@ control 'cis-dil-benchmark-5.2.15' do
     'diffie-hellman-group14-sha256'
   ].freeze
 
-  if sshd_config.KexAlgorithms
-    sshd_config.KexAlgorithms.split(',').each do |m|
-      describe m do
-        it { should be_in allowed_kex_algorithms }
-      end
+  sshd_config.KexAlgorithms&.split(',')&.each do |m|
+    describe m do
+      it { should be_in allowed_kex_algorithms }
     end
   end
 end
@@ -476,7 +474,7 @@ control 'cis-dil-benchmark-5.2.18' do
   tag level: 1
 
   describe.one do
-    %w(AllowUsers AllowGroups DenyUsers DenyGroups).each do |p|
+    %w[AllowUsers AllowGroups DenyUsers DenyGroups].each do |p|
       describe sshd_config do
         its(p) { should_not be_nil }
       end
