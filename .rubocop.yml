@@ -1,15 +1,18 @@
 ---
+AllCops:
+  Exclude:
+  - vendor/**/*
 Documentation:
   Enabled: false
 Layout/ParameterAlignment:
   Enabled: true
-Lint/AmbiguousRegexpLiteral:
-  Enabled: false
 HashSyntax:
   Enabled: true
 LineLength:
   Enabled: false
 EmptyLinesAroundBlockBody:
+  Enabled: false
+Style/Encoding:
   Enabled: false
 MethodLength:
   Max: 40
@@ -23,16 +26,3 @@ Metrics/PerceivedComplexity:
   Max: 10
 Metrics/AbcSize:
   Max: 30
-# temporary deactivated
-Style/PercentLiteralDelimiters:
-  Enabled: false
-Lint/AmbiguousBlockAssociation:
-  Enabled: false
-Style/Encoding:
-  Enabled: false
-Style/FrozenStringLiteralComment:
-  Enabled: false
-Style/NumericPredicate:
-  Enabled: false
-Style/SafeNavigation:
-  Enabled: false
