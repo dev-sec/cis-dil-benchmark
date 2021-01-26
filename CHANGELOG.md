@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.9](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.9) (2021-01-26)
+
+[Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.8...0.4.9)
+
+**Merged pull requests:**
+
+- GitHub action [\#103](https://github.com/dev-sec/cis-dil-benchmark/pull/103) ([rndmh3ro](https://github.com/rndmh3ro))
+
 ## [0.4.8](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.8) (2021-01-08)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.7...0.4.8)
