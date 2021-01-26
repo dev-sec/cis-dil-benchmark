@@ -19,7 +19,7 @@ MethodLength:
 NumericLiterals:
   MinDigits: 10
 Metrics/BlockLength:
-  Max: 35
+  Max: 45 # needed for 6.1.1
 Metrics/CyclomaticComplexity:
   Max: 10
 Metrics/PerceivedComplexity:
