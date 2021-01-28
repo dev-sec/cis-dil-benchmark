@@ -30,3 +30,5 @@ Metrics/AbcSize:
 # https://github.com/rubocop-hq/rubocop/issues/4222
 Lint/AmbiguousBlockAssociation:
   Enabled: false
+Lint/AmbiguousRegexpLiteral:
+  Enabled: false

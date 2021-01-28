@@ -51,8 +51,8 @@ control 'cis-dil-benchmark-1.6.2.1' do
   describe.one do
     %w[/boot/grub2/grub.cfg /boot/grub/menu.lst].each do |f|
       describe file(f) do
-        its('content') { should_not match(/selinux=0/) }
-        its('content') { should_not match(/enforcing=0/) }
+        its('content') { should_not match /selinux=0/ }
+        its('content') { should_not match /enforcing=0/ }
       end
     end
   end
@@ -69,13 +69,13 @@ control 'cis-dil-benchmark-1.6.2.2' do
   tag level: 2
 
   describe file('/etc/selinux/config') do
-    its('content') { should match(/^SELINUX=enforcing\s*(?:#.*)?$/) }
+    its('content') { should match /^SELINUX=enforcing\s*(?:#.*)?$/ }
   end
 
   describe command('sestatus') do
-    its('stdout') { should match(/SELinux status:\s+enabled/) }
-    its('stdout') { should match(/Current mode:\s+enforcing/) }
-    its('stdout') { should match(/Mode from config file:\s+enforcing/) }
+    its('stdout') { should match /SELinux status:\s+enabled/ }
+    its('stdout') { should match /Current mode:\s+enforcing/ }
+    its('stdout') { should match /Mode from config file:\s+enforcing/ }
   end
 
   only_if { cis_level == 2 }
@@ -90,11 +90,11 @@ control 'cis-dil-benchmark-1.6.2.3' do
   tag level: 2
 
   describe file('/etc/selinux/config') do
-    its('content') { should match(/^SELINUXTYPE=(targeted|mls)\s*(?:#.*)?$/) }
+    its('content') { should match /^SELINUXTYPE=(targeted|mls)\s*(?:#.*)?$/ }
   end
 
   describe command('sestatus') do
-    its('stdout') { should match(/Policy from config file:\s+(targeted|mls)/) }
+    its('stdout') { should match /Policy from config file:\s+(targeted|mls)/ }
   end
 
   only_if { cis_level == 2 }
@@ -166,7 +166,7 @@ control 'cis-dil-benchmark-1.6.3.1' do
   describe.one do
     grub_conf.locations.each do |f|
       describe file(f) do
-        its('content') { should_not match(/apparmor=0/) }
+        its('content') { should_not match /apparmor=0/ }
       end
     end
   end
