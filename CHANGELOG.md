@@ -1,11 +1,12 @@
 # Changelog
 
-## [0.4.9](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.9) (2021-01-26)
+## [0.4.9](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.9) (2021-01-29)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.8...0.4.9)
 
 **Merged pull requests:**
 
+- Fix lint [\#104](https://github.com/dev-sec/cis-dil-benchmark/pull/104) ([schurzi](https://github.com/schurzi))
 - GitHub action [\#103](https://github.com/dev-sec/cis-dil-benchmark/pull/103) ([rndmh3ro](https://github.com/rndmh3ro))
 
 ## [0.4.8](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.8) (2021-01-08)
