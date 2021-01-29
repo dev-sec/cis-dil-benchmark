@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Copyright 2017, Schuberg Philis B.V.
 #
@@ -80,7 +82,7 @@ control 'cis-dil-benchmark-4.1.2' do
   only_if { cis_level == 2 }
 
   describe.one do
-    %w(audit auditd).each do |p|
+    %w[audit auditd].each do |p|
       describe package(p) do
         it { should be_installed }
       end
@@ -88,7 +90,7 @@ control 'cis-dil-benchmark-4.1.2' do
   end
 
   describe.one do
-    %w(audit-libs audispd-plugins).each do |p|
+    %w[audit-libs audispd-plugins].each do |p|
       describe package(p) do
         it { should be_installed }
       end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Copyright 2017, Schuberg Philis B.V.
 #
@@ -33,7 +35,7 @@ control 'cis-dil-benchmark-3.5.1.1' do
     it { should have_rule('-P FORWARD DROP') }
   end
 
-  only_if { ipv6 == 0 }
+  only_if { ipv6.zero? }
 end
 
 control 'cis-dil-benchmark-3.5.1.2' do
@@ -73,7 +75,7 @@ control 'cis-dil-benchmark-3.5.1.2' do
     end
   end
 
-  only_if { ipv6 == 0 }
+  only_if { ipv6.zero? }
 end
 
 control 'cis-dil-benchmark-3.5.1.3' do
@@ -86,7 +88,7 @@ control 'cis-dil-benchmark-3.5.1.3' do
 
   rules = ip6tables.retrieve_rules
 
-  %w(tcp udp icmp).each do |proto|
+  %w[tcp udp icmp].each do |proto|
     describe.one do
       rules.each do |rule|
         describe rule do
@@ -104,7 +106,7 @@ control 'cis-dil-benchmark-3.5.1.3' do
     end
   end
 
-  only_if { ipv6 == 0 }
+  only_if { ipv6.zero? }
 end
 
 control 'cis-dil-benchmark-3.5.1.4' do
@@ -122,7 +124,7 @@ control 'cis-dil-benchmark-3.5.1.4' do
     end
   end
 
-  only_if { ipv6 == 0 }
+  only_if { ipv6.zero? }
 end
 
 control 'cis-dil-benchmark-3.5.2.1' do
@@ -186,7 +188,7 @@ control 'cis-dil-benchmark-3.5.2.3' do
 
   rules = iptables.retrieve_rules
 
-  %w(tcp udp icmp).each do |proto|
+  %w[tcp udp icmp].each do |proto|
     describe.one do
       rules.each do |rule|
         describe rule do

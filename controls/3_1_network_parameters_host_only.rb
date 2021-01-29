@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Copyright 2017, Schuberg Philis B.V.
 #
@@ -25,10 +27,10 @@ control 'cis-dil-benchmark-3.1.1' do
   tag cis: 'distribution-independent-linux:3.1.1'
   tag level: 1
 
-  %w{
+  %w[
     net.ipv4.ip_forward
     net.ipv6.conf.all.forwarding
-  }.each do |kp|
+  ].each do |kp|
     describe kernel_parameter(kp) do
       its('value') { should_not be_nil }
       its('value') { should cmp 0 }
@@ -44,10 +46,10 @@ control 'cis-dil-benchmark-3.1.2' do
   tag cis: 'distribution-independent-linux:3.1.2'
   tag level: 1
 
-  %w{
+  %w[
     net.ipv4.conf.all.send_redirects
     net.ipv4.conf.default.send_redirects
-  }.each do |kp|
+  ].each do |kp|
     describe kernel_parameter(kp) do
       its('value') { should_not be_nil }
       its('value') { should cmp 0 }

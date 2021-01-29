@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Copyright 2017, Schuberg Philis B.V.
 #
@@ -28,7 +30,7 @@ control 'cis-dil-benchmark-1.6.1.1' do
   tag level: 2
 
   describe.one do
-    %w(libselinux libselinux1 apparmor).each do |p|
+    %w[libselinux libselinux1 apparmor].each do |p|
       describe package(p) do
         it { should be_installed }
       end
@@ -47,7 +49,7 @@ control 'cis-dil-benchmark-1.6.2.1' do
   tag level: 2
 
   describe.one do
-    %w(/boot/grub2/grub.cfg /boot/grub/menu.lst).each do |f|
+    %w[/boot/grub2/grub.cfg /boot/grub/menu.lst].each do |f|
       describe file(f) do
         its('content') { should_not match /selinux=0/ }
         its('content') { should_not match /enforcing=0/ }
@@ -181,7 +183,7 @@ control 'cis-dil-benchmark-1.6.3.2' do
   only_if { cis_level == 2 && package('apparmor').installed? }
 
   describe command('apparmor_status --profiled') do
-    its('stdout') { should cmp > 0 }
+    its('stdout') { should cmp.positive? }
   end
 
   describe command('apparmor_status --complaining') do
