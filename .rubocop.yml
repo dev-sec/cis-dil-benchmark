@@ -32,3 +32,5 @@ Lint/AmbiguousBlockAssociation:
   Enabled: false
 Lint/AmbiguousRegexpLiteral:
   Enabled: false
+Style/NumericPredicate:
+  Enabled: false

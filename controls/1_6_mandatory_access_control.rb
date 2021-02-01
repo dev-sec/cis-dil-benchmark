@@ -183,7 +183,7 @@ control 'cis-dil-benchmark-1.6.3.2' do
   only_if { cis_level == 2 && package('apparmor').installed? }
 
   describe command('apparmor_status --profiled') do
-    its('stdout') { should cmp.positive? }
+    its('stdout') { should cmp > 0 }
   end
 
   describe command('apparmor_status --complaining') do
