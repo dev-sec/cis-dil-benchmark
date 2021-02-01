@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.10](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.10) (2021-02-01)
+
+[Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.9...0.4.10)
+
+**Closed issues:**
+
+- cis-dil-benchmark-1.6.3.2: undefined method `positive?' for \#\<RSpec::Matchers::DSL::Matcher cmp\> [\#105](https://github.com/dev-sec/cis-dil-benchmark/issues/105)
+
+**Merged pull requests:**
+
+- revert to using cmp for 1.6.3.2 because of implicit string conversion [\#106](https://github.com/dev-sec/cis-dil-benchmark/pull/106) ([schurzi](https://github.com/schurzi))
+
 ## [0.4.9](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.9) (2021-01-29)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.8...0.4.9)
