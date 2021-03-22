@@ -1,11 +1,12 @@
 # Changelog
 
-## [0.4.11](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.11) (2021-02-02)
+## [0.4.11](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.11) (2021-03-22)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.10...0.4.11)
 
 **Merged pull requests:**
 
+- add dependency to chef-config for CI [\#108](https://github.com/dev-sec/cis-dil-benchmark/pull/108) ([schurzi](https://github.com/schurzi))
 - use version tag for changelog action [\#107](https://github.com/dev-sec/cis-dil-benchmark/pull/107) ([schurzi](https://github.com/schurzi))
 
 ## [0.4.10](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.10) (2021-02-01)
@@ -147,6 +148,7 @@
 - Fixes [\#62](https://github.com/dev-sec/cis-dil-benchmark/pull/62) ([bdwyertech](https://github.com/bdwyertech))
 - Change `password` to `passwords` [\#60](https://github.com/dev-sec/cis-dil-benchmark/pull/60) ([jerryaldrichiii](https://github.com/jerryaldrichiii))
 - Update issue templates [\#56](https://github.com/dev-sec/cis-dil-benchmark/pull/56) ([rndmh3ro](https://github.com/rndmh3ro))
+- use inspec's new unified attributes feature [\#55](https://github.com/dev-sec/cis-dil-benchmark/pull/55) ([chris-rock](https://github.com/chris-rock))
 - modify package check to satisfy openjdk dependency [\#53](https://github.com/dev-sec/cis-dil-benchmark/pull/53) ([alval5280](https://github.com/alval5280))
 - allow group write /var/log/wtmp [\#50](https://github.com/dev-sec/cis-dil-benchmark/pull/50) ([alval5280](https://github.com/alval5280))
 
@@ -164,7 +166,6 @@
 
 **Merged pull requests:**
 
-- use inspec's new unified attributes feature [\#55](https://github.com/dev-sec/cis-dil-benchmark/pull/55) ([chris-rock](https://github.com/chris-rock))
 - 0.2.0 [\#52](https://github.com/dev-sec/cis-dil-benchmark/pull/52) ([chris-rock](https://github.com/chris-rock))
 - Modified controls to use the built in kernel\_module of Inspec [\#49](https://github.com/dev-sec/cis-dil-benchmark/pull/49) ([itoperatorguy](https://github.com/itoperatorguy))
 - handle potential leading space for umask regex [\#47](https://github.com/dev-sec/cis-dil-benchmark/pull/47) ([veetow](https://github.com/veetow))
