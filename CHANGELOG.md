@@ -1,8 +1,17 @@
 # Changelog
 
-## [0.4.11](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.11) (2021-03-22)
+## [0.4.11](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.11) (2021-04-24)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.10...0.4.11)
+
+**Fixed bugs:**
+
+- cis-dil-benchmark-5.2.5 should allow sshd LogLevel to be INFO or VERBOSE [\#109](https://github.com/dev-sec/cis-dil-benchmark/issues/109)
+- fix\(5.2.5\): allow INFO as SSH LogLevel [\#111](https://github.com/dev-sec/cis-dil-benchmark/pull/111) ([deric4](https://github.com/deric4))
+
+**Closed issues:**
+
+- this repo should be labelled inspec [\#110](https://github.com/dev-sec/cis-dil-benchmark/issues/110)
 
 **Merged pull requests:**
 
