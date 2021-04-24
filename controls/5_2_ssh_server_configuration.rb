@@ -138,8 +138,10 @@ control 'cis-dil-benchmark-5.2.5' do
   tag cis: 'distribution-independent-linux:5.2.5'
   tag level: 1
 
+  allowed_log_levels = %w[INFO VERBOSE]
+
   describe sshd_config do
-    its('LogLevel') { should eq 'VERBOSE' }
+    its('LogLevel') { should be_in allowed_log_levels }
   end
 end
 
