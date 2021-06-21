@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 #
-# Copyright 2017, Schuberg Philis B.V.
+# Copyright:: 2017, Schuberg Philis B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ control 'cis-dil-benchmark-3.3.1' do
   tag level: 1
 
   describe.one do
-    %w[tcpd tcp_wrappers].each do |p|
+    %w(tcpd tcp_wrappers).each do |p|
       describe package(p) do
         it { should be_installed }
       end

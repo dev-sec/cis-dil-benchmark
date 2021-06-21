@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 #
-# Copyright 2017, Schuberg Philis B.V.
+# Copyright:: 2017, Schuberg Philis B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 #
 # author: Kristian Vlaardingerbroek
 
-cis_level = attribute('cis_level')
+cis_level = input('cis_level')
 
 title '4.1 Configure System Accounting (auditd)'
 
@@ -82,7 +82,7 @@ control 'cis-dil-benchmark-4.1.2' do
   only_if { cis_level == 2 }
 
   describe.one do
-    %w[audit auditd].each do |p|
+    %w(audit auditd).each do |p|
       describe package(p) do
         it { should be_installed }
       end
@@ -90,7 +90,7 @@ control 'cis-dil-benchmark-4.1.2' do
   end
 
   describe.one do
-    %w[audit-libs audispd-plugins].each do |p|
+    %w(audit-libs audispd-plugins).each do |p|
       describe package(p) do
         it { should be_installed }
       end

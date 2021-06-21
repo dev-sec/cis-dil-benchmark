@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 #
-# Copyright 2017, Schuberg Philis B.V.
+# Copyright:: 2017, Schuberg Philis B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 #
 # author: Kristian Vlaardingerbroek
 
-cis_level = attribute('cis_level')
+cis_level = input('cis_level')
 
 title '5.4 User Accounts and Environments'
 
@@ -27,7 +27,7 @@ shadow_files << '/usr/share/baselayout/shadow' if file('/etc/nsswitch.conf').con
 passwd_files = ['/etc/passwd']
 passwd_files << '/usr/share/baselayout/passwd' if file('/etc/nsswitch.conf').content =~ /^passwd:\s+(\S+\s+)*usrfiles/
 
-shell_config_files = %w[bash.bashrc profile bashrc].map { |f| "/etc/#{f}" }.select { |f| file(f).file? }
+shell_config_files = %w(bash.bashrc profile bashrc).map { |f| "/etc/#{f}" }.select { |f| file(f).file? }
 
 control 'cis-dil-benchmark-5.4.1.1' do
   title 'Ensure password expiration is 365 days or less'
@@ -154,7 +154,7 @@ control 'cis-dil-benchmark-5.4.2' do
 
   passwd_files.each do |f|
     passwd(f).where { uid.to_i < uid_min }.entries.each do |user|
-      next if %w[root sync shutdown halt].include? user.user
+      next if %w(root sync shutdown halt).include? user.user
 
       describe user do
         its('shell') { should match(%r{(/usr/sbin/nologin|/sbin/nologin|/bin/false)}) }

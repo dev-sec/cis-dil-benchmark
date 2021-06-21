@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 #
-# Copyright 2017, Schuberg Philis B.V.
+# Copyright:: 2017, Schuberg Philis B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -108,7 +108,7 @@ control 'cis-dil-benchmark-2.2.1.3' do
   end
 
   describe.one do
-    %w[/etc/chrony/chrony.conf /etc/chrony.conf].each do |f|
+    %w(/etc/chrony/chrony.conf /etc/chrony.conf).each do |f|
       describe file(f) do
         its('content') { should match(/^(pool|server)\s+\S+/) }
       end
@@ -192,7 +192,7 @@ control 'cis-dil-benchmark-2.2.5' do
   tag cis: 'distribution-independent-linux:2.2.5'
   tag level: 1
 
-  %w[isc-dhcp-server isc-dhcp-server6 dhcpd].each do |s|
+  %w(isc-dhcp-server isc-dhcp-server6 dhcpd).each do |s|
     describe service(s) do
       it { should_not be_enabled }
       it { should_not be_running }
@@ -222,7 +222,7 @@ control 'cis-dil-benchmark-2.2.7' do
   tag cis: 'distribution-independent-linux:2.2.7'
   tag level: 1
 
-  %w[nfs-kernel-server nfs rpcbind].each do |s|
+  %w(nfs-kernel-server nfs rpcbind).each do |s|
     describe service(s) do
       it { should_not be_enabled }
       it { should_not be_running }
@@ -238,7 +238,7 @@ control 'cis-dil-benchmark-2.2.8' do
   tag cis: 'distribution-independent-linux:2.2.8'
   tag level: 1
 
-  %w[named bind bind9].each do |s|
+  %w(named bind bind9).each do |s|
     describe service(s) do
       it { should_not be_enabled }
       it { should_not be_running }
@@ -268,7 +268,7 @@ control 'cis-dil-benchmark-2.2.10' do
   tag cis: 'distribution-independent-linux:2.2.10'
   tag level: 1
 
-  %w[apache apache2 httpd lighttpd nginx].each do |s|
+  %w(apache apache2 httpd lighttpd nginx).each do |s|
     describe service(s) do
       it { should_not be_enabled }
       it { should_not be_running }
@@ -284,7 +284,7 @@ control 'cis-dil-benchmark-2.2.11' do
   tag cis: 'distribution-independent-linux:2.2.11'
   tag level: 1
 
-  %w[dovecot courier-imap cyrus-imap].each do |s|
+  %w(dovecot courier-imap cyrus-imap).each do |s|
     describe service(s) do
       it { should_not be_enabled }
       it { should_not be_running }
@@ -300,7 +300,7 @@ control 'cis-dil-benchmark-2.2.12' do
   tag cis: 'distribution-independent-linux:2.2.12'
   tag level: 1
 
-  %w[samba smb smbd].each do |s|
+  %w(samba smb smbd).each do |s|
     describe service(s) do
       it { should_not be_enabled }
       it { should_not be_running }
@@ -316,7 +316,7 @@ control 'cis-dil-benchmark-2.2.13' do
   tag cis: 'distribution-independent-linux:2.2.13'
   tag level: 1
 
-  %w[squid squid3].each do |s|
+  %w(squid squid3).each do |s|
     describe service(s) do
       it { should_not be_enabled }
       it { should_not be_running }
@@ -359,7 +359,7 @@ control 'cis-dil-benchmark-2.2.16' do
   tag cis: 'distribution-independent-linux:2.2.16'
   tag level: 1
 
-  %w[rsync rsyncd].each do |s|
+  %w(rsync rsyncd).each do |s|
     describe service(s) do
       it { should_not be_enabled }
       it { should_not be_running }
@@ -375,7 +375,7 @@ control 'cis-dil-benchmark-2.2.17' do
   tag cis: 'distribution-independent-linux:2.2.17'
   tag level: 1
 
-  %w[nis ypserv].each do |s|
+  %w(nis ypserv).each do |s|
     describe service(s) do
       it { should_not be_enabled }
       it { should_not be_running }

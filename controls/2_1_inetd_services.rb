@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 #
-# Copyright 2017, Schuberg Philis B.V.
+# Copyright:: 2017, Schuberg Philis B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -166,7 +166,7 @@ control 'cis-dil-benchmark-2.1.6' do
     file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
   end
 
-  %w[shell login exec rsh rlogin rexec].each do |s|
+  %w(shell login exec rsh rlogin rexec).each do |s|
     describe xinetd_conf.services(s) do
       it { should be_disabled }
     end
@@ -195,7 +195,7 @@ control 'cis-dil-benchmark-2.1.7' do
     file('/etc/xinetd.conf').exist? || file('/etc/inetd.conf').exist?
   end
 
-  %w[talk ntalk].each do |s|
+  %w(talk ntalk).each do |s|
     describe xinetd_conf.services(s) do
       it { should be_disabled }
     end

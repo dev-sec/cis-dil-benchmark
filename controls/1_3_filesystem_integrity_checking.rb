@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 #
-# Copyright 2017, Schuberg Philis B.V.
+# Copyright:: 2017, Schuberg Philis B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -48,13 +48,13 @@ control 'cis-dil-benchmark-1.3.2' do
   tag level: 1
 
   describe.one do
-    %w[/var/spool/cron/crontabs/root /var/spool/cron/root /etc/crontab].each do |f|
+    %w(/var/spool/cron/crontabs/root /var/spool/cron/root /etc/crontab).each do |f|
       describe file(f) do
         its('content') { should match(/aide (--check|-C)/) }
       end
     end
 
-    %w[cron.d cron.hourly cron.daily cron.weekly cron.monthly].each do |f|
+    %w(cron.d cron.hourly cron.daily cron.weekly cron.monthly).each do |f|
       command("find /etc/#{f} -type f").stdout.split.each do |entry|
         describe file(entry) do
           its('content') { should match(/aide (--check|-C)/) }

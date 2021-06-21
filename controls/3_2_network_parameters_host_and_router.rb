@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 #
-# Copyright 2017, Schuberg Philis B.V.
+# Copyright:: 2017, Schuberg Philis B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,12 +27,12 @@ control 'cis-dil-benchmark-3.2.1' do
   tag cis: 'distribution-independent-linux:3.2.1'
   tag level: 1
 
-  %w[
+  %w(
     net.ipv4.conf.all.accept_source_route
     net.ipv4.conf.default.accept_source_route
     net.ipv6.conf.all.accept_source_route
     net.ipv6.conf.default.accept_source_route
-  ].each do |kp|
+  ).each do |kp|
     describe kernel_parameter(kp) do
       its(:value) { should_not be_nil }
       its(:value) { should eq 0 }
@@ -48,12 +48,12 @@ control 'cis-dil-benchmark-3.2.2' do
   tag cis: 'distribution-independent-linux:3.2.2'
   tag level: 1
 
-  %w[
+  %w(
     net.ipv4.conf.all.accept_redirects
     net.ipv4.conf.default.accept_redirects
     net.ipv6.conf.all.accept_redirects
     net.ipv6.conf.default.accept_redirects
-  ].each do |kp|
+  ).each do |kp|
     describe kernel_parameter(kp) do
       its(:value) { should_not be_nil }
       its(:value) { should eq 0 }
@@ -69,7 +69,7 @@ control 'cis-dil-benchmark-3.2.3' do
   tag cis: 'distribution-independent-linux:3.2.3'
   tag level: 1
 
-  %w[net.ipv4.conf.all.secure_redirects net.ipv4.conf.default.secure_redirects].each do |kp|
+  %w(net.ipv4.conf.all.secure_redirects net.ipv4.conf.default.secure_redirects).each do |kp|
     describe kernel_parameter(kp) do
       its(:value) { should_not be_nil }
       its(:value) { should eq 0 }
@@ -85,7 +85,7 @@ control 'cis-dil-benchmark-3.2.4' do
   tag cis: 'distribution-independent-linux:3.2.4'
   tag level: 1
 
-  %w[net.ipv4.conf.all.log_martians net.ipv4.conf.default.log_martians].each do |kp|
+  %w(net.ipv4.conf.all.log_martians net.ipv4.conf.default.log_martians).each do |kp|
     describe kernel_parameter(kp) do
       its(:value) { should_not be_nil }
       its(:value) { should eq 1 }
@@ -129,7 +129,7 @@ control 'cis-dil-benchmark-3.2.7' do
   tag cis: 'distribution-independent-linux:3.2.7'
   tag level: 1
 
-  %w[net.ipv4.conf.all.rp_filter net.ipv4.conf.default.rp_filter].each do |kp|
+  %w(net.ipv4.conf.all.rp_filter net.ipv4.conf.default.rp_filter).each do |kp|
     describe kernel_parameter(kp) do
       its(:value) { should_not be_nil }
       its(:value) { should eq 1 }
@@ -159,7 +159,7 @@ control 'cis-dil-benchmark-3.2.9' do
   tag cis: 'distribution-independent-linux:3.2.9'
   tag level: 1
 
-  %w[net.ipv6.conf.all.accept_ra net.ipv6.conf.default.accept_ra].each do |kp|
+  %w(net.ipv6.conf.all.accept_ra net.ipv6.conf.default.accept_ra).each do |kp|
     describe kernel_parameter(kp) do
       its(:value) { should_not be_nil }
       its(:value) { should eq 0 }
