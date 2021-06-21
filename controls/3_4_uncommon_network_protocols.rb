@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 #
-# Copyright 2017, Schuberg Philis B.V.
+# Copyright:: 2017, Schuberg Philis B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 #
 # author: Kristian Vlaardingerbroek
 
-cis_level = attribute('cis_level')
+cis_level = input('cis_level')
 
 title '3.4 Uncommon Network Protocols'
 

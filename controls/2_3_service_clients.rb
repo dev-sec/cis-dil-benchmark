@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 #
-# Copyright 2017, Schuberg Philis B.V.
+# Copyright:: 2017, Schuberg Philis B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ control 'cis-dil-benchmark-2.3.1' do
   tag cis: 'distribution-independent-linux:2.3.1'
   tag level: 1
 
-  %w[nis ypbind].each do |p|
+  %w(nis ypbind).each do |p|
     describe package(p) do
       it { should_not be_installed }
     end
@@ -42,7 +42,7 @@ control 'cis-dil-benchmark-2.3.2' do
   tag cis: 'distribution-independent-linux:2.3.2'
   tag level: 1
 
-  %w[rsh-client rsh-redone-client rsh].each do |p|
+  %w(rsh-client rsh-redone-client rsh).each do |p|
     describe package(p) do
       it { should_not be_installed }
     end
@@ -83,7 +83,7 @@ control 'cis-dil-benchmark-2.3.5' do
   tag cis: 'distribution-independent-linux:2.3.5'
   tag level: 1
 
-  %w[ldap-utils openldap-clients openldap2-client].each do |p|
+  %w(ldap-utils openldap-clients openldap2-client).each do |p|
     describe package(p) do
       it { should_not be_installed }
     end
