@@ -218,7 +218,7 @@ control 'cis-dil-benchmark-4.2.3' do
   tag cis: 'distribution-independent-linux:4.2.3'
   tag level: 1
 
-  group_write_excepts = %w[lastlog wtmp]
+  group_write_excepts = %w[lastlog wtmp btmp]
 
   # wtmp needs other read for `last`, `who`, `w` commands
   # lastlog needs other read for `lastlog` command
