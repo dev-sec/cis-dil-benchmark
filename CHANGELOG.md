@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.11](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.11) (2021-04-24)
+## [0.4.11](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.11) (2022-01-12)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.10...0.4.11)
 
@@ -12,9 +12,11 @@
 **Closed issues:**
 
 - this repo should be labelled inspec [\#110](https://github.com/dev-sec/cis-dil-benchmark/issues/110)
+- Inputs set via 'attribute' is now deprecated. [\#81](https://github.com/dev-sec/cis-dil-benchmark/issues/81)
 
 **Merged pull requests:**
 
+- use input instead of attribute [\#117](https://github.com/dev-sec/cis-dil-benchmark/pull/117) ([micheelengronne](https://github.com/micheelengronne))
 - add dependency to chef-config for CI [\#108](https://github.com/dev-sec/cis-dil-benchmark/pull/108) ([schurzi](https://github.com/schurzi))
 - use version tag for changelog action [\#107](https://github.com/dev-sec/cis-dil-benchmark/pull/107) ([schurzi](https://github.com/schurzi))
 
@@ -176,7 +178,7 @@
 **Merged pull requests:**
 
 - 0.2.0 [\#52](https://github.com/dev-sec/cis-dil-benchmark/pull/52) ([chris-rock](https://github.com/chris-rock))
-- Modified controls to use the built in kernel\_module of Inspec [\#49](https://github.com/dev-sec/cis-dil-benchmark/pull/49) ([itoperatorguy](https://github.com/itoperatorguy))
+- Modified controls to use the built in kernel\_module of Inspec [\#49](https://github.com/dev-sec/cis-dil-benchmark/pull/49) ([csabapatyi](https://github.com/csabapatyi))
 - handle potential leading space for umask regex [\#47](https://github.com/dev-sec/cis-dil-benchmark/pull/47) ([veetow](https://github.com/veetow))
 - increase rubocop block length [\#44](https://github.com/dev-sec/cis-dil-benchmark/pull/44) ([chris-rock](https://github.com/chris-rock))
 - Fix shadow user and password deprecations [\#42](https://github.com/dev-sec/cis-dil-benchmark/pull/42) ([timstoop](https://github.com/timstoop))
