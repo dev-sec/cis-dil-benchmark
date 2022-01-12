@@ -17,7 +17,7 @@
 #
 # author: Kristian Vlaardingerbroek
 
-cis_level = attribute('cis_level')
+cis_level = input('cis_level')
 
 title '3.4 Uncommon Network Protocols'
 
