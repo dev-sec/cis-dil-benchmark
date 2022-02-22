@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.12](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.12) (2022-02-22)
+
+[Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.11...0.4.12)
+
+**Merged pull requests:**
+
+- cis-dil-benchmark-5.3.4 should match spaces better [\#119](https://github.com/dev-sec/cis-dil-benchmark/pull/119) ([fargburger](https://github.com/fargburger))
+
 ## [0.4.11](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.11) (2022-01-12)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.10...0.4.11)
