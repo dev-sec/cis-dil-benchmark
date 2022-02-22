@@ -169,7 +169,7 @@ control 'cis-dil-benchmark-5.3.4' do
   describe.one do
     %w[common-password system-auth password-auth].each do |f|
       describe file("/etc/pam.d/#{f}") do
-        its('content') { should match(/^password(\s+\S+\s+)+pam_unix\.so\s+(\S+\s+)*sha512/) }
+        its('content') { should match(/^password\s+(\S+\s+)+pam_unix\.so\s+(\S+\s+)*sha512/) }
       end
     end
   end
