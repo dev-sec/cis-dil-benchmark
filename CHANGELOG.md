@@ -1,12 +1,17 @@
 # Changelog
 
-## [0.4.12](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.12) (2022-02-22)
+## [0.4.12](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.12) (2022-03-07)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.11...0.4.12)
+
+**Closed issues:**
+
+- `/var/log/btmp` should be included in `group_write_excepts` for CIS 4.2.3 [\#112](https://github.com/dev-sec/cis-dil-benchmark/issues/112)
 
 **Merged pull requests:**
 
 - cis-dil-benchmark-5.3.4 should match spaces better [\#119](https://github.com/dev-sec/cis-dil-benchmark/pull/119) ([fargburger](https://github.com/fargburger))
+- \(4.2.3\) Add group write exemption for btmp [\#116](https://github.com/dev-sec/cis-dil-benchmark/pull/116) ([bendres97](https://github.com/bendres97))
 
 ## [0.4.11](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.11) (2022-01-12)
 
