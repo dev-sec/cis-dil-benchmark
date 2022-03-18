@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.12](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.12) (2022-03-07)
+## [0.4.12](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.12) (2022-03-18)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.11...0.4.12)
 
@@ -10,6 +10,7 @@
 
 **Merged pull requests:**
 
+- Change linting to Cookstyle [\#120](https://github.com/dev-sec/cis-dil-benchmark/pull/120) ([schurzi](https://github.com/schurzi))
 - cis-dil-benchmark-5.3.4 should match spaces better [\#119](https://github.com/dev-sec/cis-dil-benchmark/pull/119) ([fargburger](https://github.com/fargburger))
 - \(4.2.3\) Add group write exemption for btmp [\#116](https://github.com/dev-sec/cis-dil-benchmark/pull/116) ([bendres97](https://github.com/bendres97))
 
