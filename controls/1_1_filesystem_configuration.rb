@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 #
-# Copyright 2017, Schuberg Philis B.V.
+# Copyright:: 2017, Schuberg Philis B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -230,7 +230,6 @@ control 'cis-dil-benchmark-1.1.8' do
   describe mount('/var/tmp') do
     its('options') { should include 'nodev' }
   end
-
 end
 
 control 'cis-dil-benchmark-1.1.9' do
@@ -248,7 +247,6 @@ control 'cis-dil-benchmark-1.1.9' do
   describe mount('/var/tmp') do
     its('options') { should include 'nosuid' }
   end
-
 end
 
 control 'cis-dil-benchmark-1.1.10' do
@@ -266,7 +264,6 @@ control 'cis-dil-benchmark-1.1.10' do
   describe mount('/var/tmp') do
     its('options') { should include 'noexec' }
   end
-
 end
 
 control 'cis-dil-benchmark-1.1.11' do

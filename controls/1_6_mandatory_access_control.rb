@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 #
-# Copyright 2017, Schuberg Philis B.V.
+# Copyright:: 2017, Schuberg Philis B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ control 'cis-dil-benchmark-1.6.1.1' do
   tag level: 2
 
   describe.one do
-    %w[libselinux libselinux1 apparmor].each do |p|
+    %w(libselinux libselinux1 apparmor).each do |p|
       describe package(p) do
         it { should be_installed }
       end
@@ -49,7 +49,7 @@ control 'cis-dil-benchmark-1.6.2.1' do
   tag level: 2
 
   describe.one do
-    %w[/boot/grub2/grub.cfg /boot/grub/menu.lst].each do |f|
+    %w(/boot/grub2/grub.cfg /boot/grub/menu.lst).each do |f|
       describe file(f) do
         its('content') { should_not match /selinux=0/ }
         its('content') { should_not match /enforcing=0/ }
