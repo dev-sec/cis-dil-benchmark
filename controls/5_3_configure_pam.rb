@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 #
-# Copyright 2017, Schuberg Philis B.V.
+# Copyright:: 2017, Schuberg Philis B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 
 title '5.3 Configure PAM'
 
-control 'cis-dil-benchmark-5.3.1' do # rubocop:disable Metrics/BlockLength
+control 'cis-dil-benchmark-5.3.1' do
   title 'Ensure password creation requirements are configured'
   desc '
     The pam_cracklib.so module checks the strength of passwords. It performs
@@ -53,7 +53,7 @@ control 'cis-dil-benchmark-5.3.1' do # rubocop:disable Metrics/BlockLength
 
   if package('pam_cracklib').installed?
     describe.one do
-      %w[common-password system-auth].each do |f|
+      %w(common-password system-auth).each do |f|
         describe file("/etc/pam.d/#{f}") do
           its('content') { should match(/^password\s+required\s+pam_cracklib\.so (\S+\s+)*try_first_pass/) }
           its('content') { should match(/^password\s+required\s+pam_cracklib\.so (\S+\s+)*retry=[3210]/) }
@@ -62,7 +62,7 @@ control 'cis-dil-benchmark-5.3.1' do # rubocop:disable Metrics/BlockLength
     end
 
     describe.one do
-      %w[common-password system-auth].each do |f|
+      %w(common-password system-auth).each do |f|
         describe file("/etc/pam.d/#{f}") do
           its('content') { should match(/^password\s+required\s+pam_cracklib\.so (\S+\s+)*minlen=(1[4-9]|[2-9][0-9]|[1-9][0-9][0-9]+)/) }
           its('content') { should match(/^password\s+required\s+pam_cracklib\.so (\S+\s+)*dcredit=-[1-9][0-9]*\s*(?:#.*)?/) }
@@ -76,7 +76,7 @@ control 'cis-dil-benchmark-5.3.1' do # rubocop:disable Metrics/BlockLength
 
   if package('pam_passwdqc').installed? || package('libpwquality').installed?
     describe.one do
-      %w[common-password system-auth].each do |f|
+      %w(common-password system-auth).each do |f|
         describe file("/etc/pam.d/#{f}") do
           its('content') { should match(/^password\s+requisite\s+pam_pwquality\.so (\S+\s+)*retry=[3210]/) }
           its('content') { should match(/^password\s+requisite\s+pam_pwquality\.so (\S+\s+)*try_first_pass/) }
@@ -136,7 +136,7 @@ control 'cis-dil-benchmark-5.3.3' do
   tag level: 1
 
   describe.one do
-    %w[common-password system-auth].each do |f|
+    %w(common-password system-auth).each do |f|
       describe file("/etc/pam.d/#{f}") do
         its('content') { should match(/^password\s+(\S+\s+)+pam_unix\.so (\S+\s+)*remember=([56789]|[1-9][0-9]+)/) }
       end
@@ -167,7 +167,7 @@ control 'cis-dil-benchmark-5.3.4' do
   tag level: 1
 
   describe.one do
-    %w[common-password system-auth password-auth].each do |f|
+    %w(common-password system-auth password-auth).each do |f|
       describe file("/etc/pam.d/#{f}") do
         its('content') { should match(/^password\s+(\S+\s+)+pam_unix\.so\s+(\S+\s+)*sha512/) }
       end

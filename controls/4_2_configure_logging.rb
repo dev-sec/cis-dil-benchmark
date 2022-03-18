@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 #
-# Copyright 2017, Schuberg Philis B.V.
+# Copyright:: 2017, Schuberg Philis B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -204,7 +204,6 @@ control 'cis-dil-benchmark-4.2.2.3' do
   describe parse_config_file('/etc/systemd/journald.conf') do
     its('Journal') { should include({ 'Storage' => 'persistent' }) }
   end
-
 end
 
 control 'cis-dil-benchmark-4.2.3' do
@@ -218,11 +217,11 @@ control 'cis-dil-benchmark-4.2.3' do
   tag cis: 'distribution-independent-linux:4.2.3'
   tag level: 1
 
-  group_write_excepts = %w[lastlog wtmp btmp]
+  group_write_excepts = %w(lastlog wtmp btmp)
 
   # wtmp needs other read for `last`, `who`, `w` commands
   # lastlog needs other read for `lastlog` command
-  other_read_excepts = %w[lastlog wtmp]
+  other_read_excepts = %w(lastlog wtmp)
 
   command('find /var/log -type f').stdout.split.each do |f|
     describe file(f) do
@@ -233,7 +232,6 @@ control 'cis-dil-benchmark-4.2.3' do
       it { should_not be_executable.by 'other' }
     end
   end
-
 end
 
 control 'cis-dil-benchmark-4.3' do

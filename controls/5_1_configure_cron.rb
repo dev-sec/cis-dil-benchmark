@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 #
-# Copyright 2017, Schuberg Philis B.V.
+# Copyright:: 2017, Schuberg Philis B.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ control 'cis-dil-benchmark-5.1.1' do
   tag level: 1
 
   describe.one do
-    %w[cron crond].each do |s|
+    %w(cron crond).each do |s|
       describe service(s) do
         it { should be_enabled }
         it { should be_running }
@@ -259,7 +259,7 @@ control 'cis-dil-benchmark-5.1.8' do
   tag cis: 'distribution-independent-linux:5.1.8'
   tag level: 1
 
-  %w[cron at].each do |s|
+  %w(cron at).each do |s|
     describe file("/etc/#{s}.deny") do
       it { should_not exist }
     end
