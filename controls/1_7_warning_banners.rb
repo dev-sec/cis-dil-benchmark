@@ -59,17 +59,28 @@ control 'cis-dil-benchmark-1.7.1.3' do
 end
 
 control 'cis-dil-benchmark-1.7.1.4' do
-  title 'Ensure permissions on /etc/motd are configured'
-  desc  "The contents of the /etc/motd file are displayed to users after login and function as a message of the day for authenticated users.\n\nRationale: If the /etc/motd file does not have the correct ownership it could be modified by unauthorized users with incorrect or misleading information."
+  title 'Ensure permissions on /etc/motd and /etc/update-motd.d/* are configured'
+  desc  "The contents of the /etc/motd and /etc/update-motd.d/* files are displayed to users after login and function as a message of the day for authenticated users.\n\nRationale: If the files do not have the correct ownership, they could be modified by unauthorized users with incorrect or misleading information."
   impact 0.0
 
   tag cis: 'distribution-independent-linux:1.7.1.4'
   tag level: 1
 
-  describe file('/etc/motd') do
-    its('group') { should eq 'root' }
-    its('owner') { should eq 'root' }
-    its('mode') { should cmp '0644' }
+  motd_file = '/etc/motd'
+
+  if File.exists?(motd_file)
+    describe file(motd_file) do
+      its('group') { should eq 'root' }
+      its('owner') { should eq 'root' }
+      its('mode') { should cmp '0644' }
+    end
+  end
+  command('find /etc/update-motd.d/ -type f').stdout.split.each do |f|
+    describe file(f) do
+      its('group') { should eq 'root' }
+      its('owner') { should eq 'root' }
+      its('mode') { should cmp '0755' }
+    end
   end
 end
 
