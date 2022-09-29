@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2022-09-29)
+
+[Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.12...0.4.13)
+
+**Closed issues:**
+
+- Missing release for 0.4.12? [\#123](https://github.com/dev-sec/cis-dil-benchmark/issues/123)
+
 ## [0.4.12](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.12) (2022-03-18)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.11...0.4.12)
