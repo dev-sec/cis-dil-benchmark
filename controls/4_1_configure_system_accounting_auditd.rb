@@ -144,8 +144,6 @@ control 'cis-dil-benchmark-4.1.5' do
   only_if { cis_level == 2 }
 
   describe file('/etc/audit/audit.rules') do
-    its('content') { should match(/^-a (always,exit|exit,always) -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change$/) }
-    its('content') { should match(/^-a (always,exit|exit,always) -F arch=b32 -S clock_settime -k time-change$/) }
     its('content') { should match %r{^-w /etc/localtime -p wa -k time-change$} }
   end
 
@@ -154,6 +152,13 @@ control 'cis-dil-benchmark-4.1.5' do
       its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S adjtimex -S settimeofday -k time-change$/) }
       its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S clock_settime -k time-change$/) }
     end
+  elsif command('uname -m').stdout.strip == 'i386'
+    describe file('/etc/audit/audit.rules') do
+      its('content') { should match(/^-a (always,exit|exit,always) -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change$/) }
+      its('content') { should match(/^-a (always,exit|exit,always) -F arch=b32 -S clock_settime -k time-change$/) }
+    end
+  else
+    raise "unsupported architecture"
   end
 end
 
