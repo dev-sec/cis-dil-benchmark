@@ -1,12 +1,16 @@
 # Changelog
 
-## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2022-09-29)
+## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2022-11-02)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.12...0.4.13)
 
 **Closed issues:**
 
 - Missing release for 0.4.12? [\#123](https://github.com/dev-sec/cis-dil-benchmark/issues/123)
+
+**Merged pull requests:**
+
+- Document why audit.rules should include 32 on 64 bit systems [\#132](https://github.com/dev-sec/cis-dil-benchmark/pull/132) ([spencer-cdw](https://github.com/spencer-cdw))
 
 ## [0.4.12](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.12) (2022-03-18)
 
