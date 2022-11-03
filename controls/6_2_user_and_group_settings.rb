@@ -384,7 +384,7 @@ control 'cis-dil-benchmark-6.2.15' do
       describe.one do
         group_files.each do |gf|
           describe etc_group(gf) do
-            it { should be_grouped_into gid }
+            its(:gids) { should include gid }
           end
         end
       end
