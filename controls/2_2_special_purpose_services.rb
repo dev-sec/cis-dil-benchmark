@@ -116,7 +116,7 @@ control 'cis-dil-benchmark-2.2.1.3' do
   end
 
   describe processes('chronyd') do
-    its(:users) { should be_in ['chrony', '_chrony'] }
+    its(:users) { should be_in %w(chrony _chrony) }
   end
 end
 
