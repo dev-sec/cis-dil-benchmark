@@ -162,7 +162,7 @@ control 'cis-dil-benchmark-6.2.6' do
       it { should be_directory }
       it { should_not be_writable.by 'group' }
       it { should_not be_writable.by 'other' }
-      its('uid') { should cmp 0 }
+      it { should be_owned_by 'root' }
     end
   end
 end
@@ -384,7 +384,7 @@ control 'cis-dil-benchmark-6.2.15' do
       describe.one do
         group_files.each do |gf|
           describe etc_group(gf) do
-            its(:gids) { should include gid }
+            it { should be_grouped_into gid }
           end
         end
       end

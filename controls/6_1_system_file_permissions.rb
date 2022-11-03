@@ -107,8 +107,8 @@ control 'cis-dil-benchmark-6.1.2' do
     describe file(f) do
       it { should exist }
       its('mode') { should cmp '0644' }
-      its('uid') { should cmp 0 }
-      its('gid') { should cmp 0 }
+      it { should be_owned_by 'root' }
+      it { should be_grouped_into 'root' }
       its('sticky') { should equal false }
       its('suid') { should equal false }
       its('sgid') { should equal false }
@@ -138,8 +138,8 @@ control 'cis-dil-benchmark-6.1.3' do
     describe file(f) do
       it { should exist }
       it { should_not be_more_permissive_than('0640') }
-      its('uid') { should cmp 0 }
-      its('gid') { should cmp expected_gid }
+      it { should be_owned_by 'root' }
+      it { should be_grouped_into expected_gid }
     end
   end
 end
@@ -167,8 +167,8 @@ control 'cis-dil-benchmark-6.1.4' do
     describe file(f) do
       it { should exist }
       its('mode') { should cmp '0644' }
-      its('uid') { should cmp 0 }
-      its('gid') { should cmp 0 }
+      it { should be_owned_by 'root' }
+      it { should be_grouped_into 'root' }
     end
   end
 end
@@ -197,8 +197,8 @@ control 'cis-dil-benchmark-6.1.5' do
     describe file(f) do
       it { should exist }
       it { should_not be_more_permissive_than('0640') }
-      its('uid') { should cmp 0 }
-      its('gid') { should cmp expected_gid }
+      it { should be_owned_by 'root' }
+      it { should be_grouped_into expected_gid }
     end
   end
 end
@@ -222,8 +222,8 @@ control 'cis-dil-benchmark-6.1.6' do
   describe file('/etc/passwd-') do
     it { should exist }
     it { should_not be_more_permissive_than('0600') }
-    its('uid') { should cmp 0 }
-    its('gid') { should cmp 0 }
+    it { should be_owned_by 'root' }
+    it { should be_grouped_into 'root' }
   end
 end
 
@@ -246,8 +246,8 @@ control 'cis-dil-benchmark-6.1.7' do
     it { should exist }
     it { should_not be_more_permissive_than('0640') }
 
-    its('uid') { should cmp 0 }
-    its('gid') { should cmp expected_gid }
+    it { should be_owned_by 'root' }
+    it { should be_grouped_into expected_gid }
   end
 end
 
@@ -270,8 +270,8 @@ control 'cis-dil-benchmark-6.1.8' do
   describe file('/etc/group-') do
     it { should exist }
     it { should_not be_more_permissive_than('0644') }
-    its('uid') { should cmp 0 }
-    its('gid') { should cmp 0 }
+    it { should be_owned_by 'root' }
+    it { should be_grouped_into 'root' }
   end
 end
 
@@ -295,8 +295,8 @@ control 'cis-dil-benchmark-6.1.9' do
   describe file('/etc/gshadow-') do
     it { should exist }
     it { should_not be_more_permissive_than('0640') }
-    its('uid') { should cmp 0 }
-    its('gid') { should cmp expected_gid }
+    it { should be_owned_by 'root' }
+    it { should be_grouped_into expected_gid }
   end
 end
 

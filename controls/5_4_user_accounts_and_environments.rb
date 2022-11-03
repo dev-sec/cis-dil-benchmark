@@ -176,7 +176,7 @@ control 'cis-dil-benchmark-5.4.3' do
   tag level: 1
 
   describe passwd.users('root') do
-    its('gids') { should cmp 0 }
+    it { should be_grouped_into 'root' }
   end
 end
 
