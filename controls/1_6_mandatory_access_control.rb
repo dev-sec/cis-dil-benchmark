@@ -166,6 +166,7 @@ control 'cis-dil-benchmark-1.6.3.1' do
   describe.one do
     grub_conf.locations.each do |f|
       describe file(f) do
+        next unless file(f).exist?
         its('content') { should_not match /apparmor=0/ }
       end
     end

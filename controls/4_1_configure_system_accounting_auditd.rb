@@ -127,6 +127,7 @@ control 'cis-dil-benchmark-4.1.4' do
   describe.one do
     grub_conf.locations.each do |f|
       describe file(f) do
+        next unless file(f).exist?
         its('content') { should match(/audit=1/) }
       end
     end
