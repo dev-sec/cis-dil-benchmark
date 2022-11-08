@@ -19,6 +19,9 @@
 
 cis_level = input('cis_level')
 
+expected_group = 'wheel'
+expected_group = 'sudo' if os.name == 'ubuntu'
+
 title '5.4 User Accounts and Environments'
 
 shadow_files = ['/etc/shadow']
@@ -238,7 +241,7 @@ control 'cis-dil-benchmark-5.6' do
     its('content') { should match(/^auth\s+required\s+pam_wheel.so use_uid$/) }
   end
 
-  describe groups.where { name == 'wheel' } do
+  describe groups.where { name == expected_group } do
     it { should exist }
   end
 end
