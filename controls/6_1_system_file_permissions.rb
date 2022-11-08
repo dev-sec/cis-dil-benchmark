@@ -139,7 +139,7 @@ control 'cis-dil-benchmark-6.1.3' do
       it { should exist }
       it { should_not be_more_permissive_than('0640') }
       it { should be_owned_by 'root' }
-      it { should be_grouped_into expected_gid }
+      its('gid') { should cmp expected_gid }
     end
   end
 end
@@ -198,7 +198,7 @@ control 'cis-dil-benchmark-6.1.5' do
       it { should exist }
       it { should_not be_more_permissive_than('0640') }
       it { should be_owned_by 'root' }
-      it { should be_grouped_into expected_gid }
+      its('gid') { should cmp expected_gid }
     end
   end
 end
@@ -247,7 +247,7 @@ control 'cis-dil-benchmark-6.1.7' do
     it { should_not be_more_permissive_than('0640') }
 
     it { should be_owned_by 'root' }
-    it { should be_grouped_into expected_gid }
+    its('gid') { should cmp expected_gid }
   end
 end
 
@@ -296,7 +296,7 @@ control 'cis-dil-benchmark-6.1.9' do
     it { should exist }
     it { should_not be_more_permissive_than('0640') }
     it { should be_owned_by 'root' }
-    it { should be_grouped_into expected_gid }
+    its('gid') { should cmp expected_gid }
   end
 end
 
