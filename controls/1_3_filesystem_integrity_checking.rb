@@ -48,7 +48,9 @@ control 'cis-dil-benchmark-1.3.2' do
   tag level: 1
 
   describe.one do
-    %w(/var/spool/cron/crontabs/root /var/spool/cron/root /etc/crontab).each do |f|
+    cron_files = %w(/var/spool/cron/crontabs/root /var/spool/cron/root /etc/crontab)
+    crond_files = command('find /etc/cron.d/* -type f').stdout.split
+    (cron_files + crond_files).each do |f|
       describe file(f) do
         its('content') { should match(/aide (--check|-C)/) }
       end
