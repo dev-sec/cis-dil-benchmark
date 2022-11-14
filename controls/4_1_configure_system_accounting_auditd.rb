@@ -143,6 +143,7 @@ control 'cis-dil-benchmark-4.1.5' do
 
   only_if { cis_level == 2 }
 
+  # arch=b32 should be set on both 32bit and 64bit systems https://security.stackexchange.com/a/242462
   describe file('/etc/audit/audit.rules') do
     its('content') { should match(/^-a (always,exit|exit,always) -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change$/) }
     its('content') { should match(/^-a (always,exit|exit,always) -F arch=b32 -S clock_settime -k time-change$/) }
