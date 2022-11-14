@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2022-11-03)
+## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2022-11-14)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.12...0.4.13)
 
@@ -12,6 +12,7 @@
 **Merged pull requests:**
 
 - Fixes chrony on ubuntu  [\#135](https://github.com/dev-sec/cis-dil-benchmark/pull/135) ([spencer-cdw](https://github.com/spencer-cdw))
+- Use native severspec functions to check uid and gid of files [\#134](https://github.com/dev-sec/cis-dil-benchmark/pull/134) ([spencer-cdw](https://github.com/spencer-cdw))
 - Document why audit.rules should include 32 on 64 bit systems [\#132](https://github.com/dev-sec/cis-dil-benchmark/pull/132) ([spencer-cdw](https://github.com/spencer-cdw))
 
 ## [0.4.12](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.12) (2022-03-18)
