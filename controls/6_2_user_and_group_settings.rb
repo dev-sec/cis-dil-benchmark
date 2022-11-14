@@ -162,7 +162,7 @@ control 'cis-dil-benchmark-6.2.6' do
       it { should be_directory }
       it { should_not be_writable.by 'group' }
       it { should_not be_writable.by 'other' }
-      its('uid') { should cmp 0 }
+      it { should be_owned_by 'root' }
     end
   end
 end
