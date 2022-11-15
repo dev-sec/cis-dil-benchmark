@@ -150,7 +150,8 @@ control 'cis-dil-benchmark-4.1.5' do
     its('content') { should match %r{^-w /etc/localtime -p wa -k time-change$} }
   end
 
-  if command('uname -m').stdout.strip == 'x86_64'
+  uname = command('uname -m').stdout.strip
+  if uname == 'x86_64' || uname == 'aarch64'
     describe file('/etc/audit/audit.rules') do
       its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S adjtimex -S settimeofday -k time-change$/) }
       its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S clock_settime -k time-change$/) }
@@ -195,7 +196,8 @@ control 'cis-dil-benchmark-4.1.7' do
     its('content') { should match %r{^-w /etc/sysconfig/network -p wa -k system-locale$} }
   end
 
-  if command('uname -m').stdout.strip == 'x86_64'
+  uname = command('uname -m').stdout.strip
+  if uname == 'x86_64' || uname == 'aarch64'
     describe file('/etc/audit/audit.rules') do
       its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S sethostname -S setdomainname -k system-locale$/) }
     end
@@ -274,7 +276,8 @@ control 'cis-dil-benchmark-4.1.11' do
     its('content') { should match(/^-a (always,exit|exit,always) -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=#{uid_min} -F auid!=4294967295 -k perm_mod$/) }
   end
 
-  if command('uname -m').stdout.strip == 'x86_64'
+  uname = command('uname -m').stdout.strip
+  if uname == 'x86_64' || uname == 'aarch64'
     describe file('/etc/audit/audit.rules') do
       its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=#{uid_min} -F auid!=4294967295 -k perm_mod$/) }
       its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=#{uid_min} -F auid!=4294967295 -k perm_mod$/) }
@@ -298,7 +301,8 @@ control 'cis-dil-benchmark-4.1.12' do
     its('content') { should match(/^-a (always,exit|exit,always) -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=#{uid_min} -F auid!=4294967295 -k access$/) }
   end
 
-  if command('uname -m').stdout.strip == 'x86_64'
+  uname = command('uname -m').stdout.strip
+  if uname == 'x86_64' || uname == 'aarch64'
     describe file('/etc/audit/audit.rules') do
       its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=#{uid_min} -F auid!=4294967295 -k access$/) }
       its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=#{uid_min} -F auid!=4294967295 -k access$/) }
@@ -337,7 +341,8 @@ control 'cis-dil-benchmark-4.1.14' do
     its('content') { should match(/^-a (always,exit|exit,always) -F arch=b32 -S mount -F auid>=#{uid_min} -F auid!=4294967295 -k mounts$/) }
   end
 
-  if command('uname -m').stdout.strip == 'x86_64'
+  uname = command('uname -m').stdout.strip
+  if uname == 'x86_64' || uname == 'aarch64'
     describe file('/etc/audit/audit.rules') do
       its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S mount -F auid>=#{uid_min} -F auid!=4294967295 -k mounts$/) }
     end
@@ -358,7 +363,8 @@ control 'cis-dil-benchmark-4.1.15' do
     its('content') { should match(/^-a (always,exit|exit,always) -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=#{uid_min} -F auid!=4294967295 -k delete$/) }
   end
 
-  if command('uname -m').stdout.strip == 'x86_64'
+  uname = command('uname -m').stdout.strip
+  if uname == 'x86_64' || uname == 'aarch64'
     describe file('/etc/audit/audit.rules') do
       its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=#{uid_min} -F auid!=4294967295 -k delete$/) }
     end
@@ -412,7 +418,8 @@ control 'cis-dil-benchmark-4.1.18' do
     its('content') { should match(%r{^-w /sbin/modprobe -p x -k modules$}) }
   end
 
-  if command('uname -m').stdout.strip == 'x86_64'
+  uname = command('uname -m').stdout.strip
+  if uname == 'x86_64' || uname == 'aarch64'
     describe file('/etc/audit/audit.rules') do
       its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S init_module -S delete_module -k modules$/) }
     end
