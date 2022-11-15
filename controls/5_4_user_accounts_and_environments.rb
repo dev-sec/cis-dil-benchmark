@@ -237,8 +237,4 @@ control 'cis-dil-benchmark-5.6' do
   describe file('/etc/pam.d/su') do
     its('content') { should match(/^auth\s+required\s+pam_wheel.so use_uid$/) }
   end
-
-  describe groups.where { name == 'wheel' } do
-    it { should exist }
-  end
 end
