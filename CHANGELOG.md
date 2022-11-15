@@ -6,12 +6,14 @@
 
 **Closed issues:**
 
+- cis-dil-benchmark-5.6 Ubuntu does not have group 'wheel' [\#138](https://github.com/dev-sec/cis-dil-benchmark/issues/138)
 - Add support for arm64 architectures [\#130](https://github.com/dev-sec/cis-dil-benchmark/issues/130)
 - cis-dil-benchmark-2.2.1.3 assumes user `chrony` exists [\#129](https://github.com/dev-sec/cis-dil-benchmark/issues/129)
 - Missing release for 0.4.12? [\#123](https://github.com/dev-sec/cis-dil-benchmark/issues/123)
 
 **Merged pull requests:**
 
+- Remove controll for group 'wheel', since it is not required by benchmark [\#139](https://github.com/dev-sec/cis-dil-benchmark/pull/139) ([spencer-cdw](https://github.com/spencer-cdw))
 - Fixes chrony on ubuntu  [\#135](https://github.com/dev-sec/cis-dil-benchmark/pull/135) ([spencer-cdw](https://github.com/spencer-cdw))
 - Use native severspec functions to check uid and gid of files [\#134](https://github.com/dev-sec/cis-dil-benchmark/pull/134) ([spencer-cdw](https://github.com/spencer-cdw))
 - Add ARM64 support [\#133](https://github.com/dev-sec/cis-dil-benchmark/pull/133) ([spencer-cdw](https://github.com/spencer-cdw))
