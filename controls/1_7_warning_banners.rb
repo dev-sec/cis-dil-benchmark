@@ -68,7 +68,7 @@ control 'cis-dil-benchmark-1.7.1.4' do
 
   motd_file = '/etc/motd'
 
-  if File.exists?(motd_file)
+  if File.exist?(motd_file)
     describe file(motd_file) do
       its('group') { should eq 'root' }
       its('owner') { should eq 'root' }
