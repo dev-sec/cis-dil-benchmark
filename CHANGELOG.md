@@ -1,8 +1,12 @@
 # Changelog
 
-## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2022-11-15)
+## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2022-12-05)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.12...0.4.13)
+
+**Implemented enhancements:**
+
+- use centralised issue templates and workflows [\#142](https://github.com/dev-sec/cis-dil-benchmark/pull/142) ([schurzi](https://github.com/schurzi))
 
 **Closed issues:**
 
