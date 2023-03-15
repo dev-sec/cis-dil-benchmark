@@ -43,8 +43,8 @@ control 'cis-dil-benchmark-5.2.1' do
     it { should_not be_readable.by 'other' }
     it { should_not be_writable.by 'other' }
     it { should_not be_executable.by 'other' }
-    its('uid') { should cmp 0 }
-    its('gid') { should cmp 0 }
+    it { should be_owned_by 'root' }
+    it { should be_grouped_into 'root' }
   end
 end
 
@@ -69,8 +69,8 @@ control 'cis-dil-benchmark-5.2.2' do
       it { should_not be_readable.by 'other' }
       it { should_not be_writable.by 'other' }
       it { should_not be_executable.by 'other' }
-      its('gid') { should cmp 0 }
-      its('uid') { should cmp 0 }
+      it { should be_grouped_into 'root' }
+      it { should be_owned_by 'root' }
     end
   end
 end
@@ -96,8 +96,8 @@ control 'cis-dil-benchmark-5.2.3' do
       it { should be_readable.by 'other' }
       it { should_not be_writable.by 'other' }
       it { should_not be_executable.by 'other' }
-      its('gid') { should cmp 0 }
-      its('uid') { should cmp 0 }
+      it { should be_grouped_into 'root' }
+      it { should be_owned_by 'root' }
     end
   end
 end
