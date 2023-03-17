@@ -31,9 +31,14 @@ control 'cis-dil-benchmark-3.4.1' do
 
   only_if { cis_level == 2 }
 
-  describe kernel_module('dccp') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe file('/proc/modules') do
+      its('content') { should_not match(/^dccp\s/) }
+    end
+    describe kernel_module('dccp') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -47,9 +52,14 @@ control 'cis-dil-benchmark-3.4.2' do
 
   only_if { cis_level == 2 }
 
-  describe kernel_module('sctp') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe file('/proc/modules') do
+      its('content') { should_not match(/^sctp\s/) }
+    end
+    describe kernel_module('sctp') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -63,9 +73,14 @@ control 'cis-dil-benchmark-3.4.3' do
 
   only_if { cis_level == 2 }
 
-  describe kernel_module('rds') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe file('/proc/modules') do
+      its('content') { should_not match(/^rds\s/) }
+    end
+    describe kernel_module('rds') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -79,8 +94,13 @@ control 'cis-dil-benchmark-3.4.4' do
 
   only_if { cis_level == 2 }
 
-  describe kernel_module('tipc') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe file('/proc/modules') do
+      its('content') { should_not match(/^tipc\s/) }
+    end
+    describe kernel_module('tipc') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
