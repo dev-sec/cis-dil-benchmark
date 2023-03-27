@@ -1,12 +1,16 @@
 # Changelog
 
-## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2022-12-05)
+## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2023-03-27)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.12...0.4.13)
 
 **Implemented enhancements:**
 
 - use centralised issue templates and workflows [\#142](https://github.com/dev-sec/cis-dil-benchmark/pull/142) ([schurzi](https://github.com/schurzi))
+
+**Fixed bugs:**
+
+- Local loopback is 127.0.0.0/8, not just 127.0.0.1 [\#147](https://github.com/dev-sec/cis-dil-benchmark/pull/147) ([bendres97](https://github.com/bendres97))
 
 **Closed issues:**
 
