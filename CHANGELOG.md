@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2023-03-31)
+## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2023-05-02)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.12...0.4.13)
 
@@ -21,8 +21,9 @@
 
 **Merged pull requests:**
 
+- add spellchecking with codespell [\#151](https://github.com/dev-sec/cis-dil-benchmark/pull/151) ([schurzi](https://github.com/schurzi))
 - Configure Renovate [\#150](https://github.com/dev-sec/cis-dil-benchmark/pull/150) ([renovate[bot]](https://github.com/apps/renovate))
-- Remove controll for group 'wheel', since it is not required by benchmark [\#139](https://github.com/dev-sec/cis-dil-benchmark/pull/139) ([spencer-cdw](https://github.com/spencer-cdw))
+- Remove control for group 'wheel', since it is not required by benchmark [\#139](https://github.com/dev-sec/cis-dil-benchmark/pull/139) ([spencer-cdw](https://github.com/spencer-cdw))
 - Fixes chrony on ubuntu  [\#135](https://github.com/dev-sec/cis-dil-benchmark/pull/135) ([spencer-cdw](https://github.com/spencer-cdw))
 - Use native severspec functions to check uid and gid of files [\#134](https://github.com/dev-sec/cis-dil-benchmark/pull/134) ([spencer-cdw](https://github.com/spencer-cdw))
 - Add ARM64 support [\#133](https://github.com/dev-sec/cis-dil-benchmark/pull/133) ([spencer-cdw](https://github.com/spencer-cdw))
