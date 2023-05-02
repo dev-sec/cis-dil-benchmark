@@ -103,7 +103,7 @@ control 'cis-dil-benchmark-4.2.1.4' do
     end
   end
 
-  # Check the new RainerScript format in addtion to the 'legacy' rsyslog syntax
+  # Check the new RainerScript format in addition to the 'legacy' rsyslog syntax
   # which is documented as 'obsolete'
   # ref: https://www.rsyslog.com/doc/v8-stable/configuration/modules/omfile.html#filecreatemode
   new_rsyslog_conf = command('grep -orE \'FileCreateMode="[0-7]{4}"\' /etc/rsyslog.*').stdout
