@@ -94,7 +94,7 @@ control 'cis-dil-benchmark-1.6.2.3' do
   end
 
   describe command('sestatus') do
-    its('stdout') { should match /Policy from config file:\s+(targeted|mls)/ }
+    its('stdout') { should match /(Loaded policy name|Policy from config file):\s+(targeted|mls)/ }
   end
 
   only_if { cis_level == 2 }
