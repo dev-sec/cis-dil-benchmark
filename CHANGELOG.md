@@ -6,6 +6,7 @@
 
 **Implemented enhancements:**
 
+- fix: handle chrony configuration sourced via amazon-chrony-config [\#153](https://github.com/dev-sec/cis-dil-benchmark/pull/153) ([nejch](https://github.com/nejch))
 - fix: allow alternative output for sestatus policy [\#152](https://github.com/dev-sec/cis-dil-benchmark/pull/152) ([nejch](https://github.com/nejch))
 - use centralised issue templates and workflows [\#142](https://github.com/dev-sec/cis-dil-benchmark/pull/142) ([schurzi](https://github.com/schurzi))
 
