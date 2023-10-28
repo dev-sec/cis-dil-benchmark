@@ -1,11 +1,12 @@
 # Changelog
 
-## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2023-05-02)
+## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2023-10-28)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.12...0.4.13)
 
 **Implemented enhancements:**
 
+- fix: allow alternative output for sestatus policy [\#152](https://github.com/dev-sec/cis-dil-benchmark/pull/152) ([nejch](https://github.com/nejch))
 - use centralised issue templates and workflows [\#142](https://github.com/dev-sec/cis-dil-benchmark/pull/142) ([schurzi](https://github.com/schurzi))
 
 **Fixed bugs:**
