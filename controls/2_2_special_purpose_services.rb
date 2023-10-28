@@ -108,7 +108,7 @@ control 'cis-dil-benchmark-2.2.1.3' do
   end
 
   # Amazon Linux sources configuration from /run/chrony.d
-  chrony_conf_files = ["/etc/chrony/chrony.conf", "/etc/chrony.conf"]
+  chrony_conf_files = ['/etc/chrony/chrony.conf', '/etc/chrony.conf']
   chrony_conf_files += command('find /run/chrony.d -name \'*.sources\'').stdout.split
 
   describe.one do
