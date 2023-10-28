@@ -107,8 +107,12 @@ control 'cis-dil-benchmark-2.2.1.3' do
     package('chrony').installed? || command('chronyd').exist?
   end
 
+  # Amazon Linux sources configuration from /run/chrony.d
+  chrony_conf_files = ['/etc/chrony/chrony.conf', '/etc/chrony.conf']
+  chrony_conf_files += command('find /run/chrony.d -name \'*.sources\'').stdout.split
+
   describe.one do
-    %w(/etc/chrony/chrony.conf /etc/chrony.conf).each do |f|
+    chrony_conf_files.each do |f|
       describe file(f) do
         its('content') { should match(/^(pool|server)\s+\S+/) }
       end
