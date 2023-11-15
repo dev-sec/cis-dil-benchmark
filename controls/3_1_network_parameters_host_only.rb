@@ -19,6 +19,8 @@
 
 title '3.1 Network Parameters (Host Only)'
 
+ipv6 = command('test -f /proc/net/if_inet6').exit_status
+
 control 'cis-dil-benchmark-3.1.1' do
   title 'Ensure IP forwarding is disabled'
   desc  "The net.ipv4.ip_forward flag is used to tell the system whether it can forward packets or not.\n\nRationale: Setting the flag to 0 ensures that a system with multiple interfaces (for example, a hard proxy), will never be able to forward packets, and therefore, never serve as a router."
@@ -27,10 +29,12 @@ control 'cis-dil-benchmark-3.1.1' do
   tag cis: 'distribution-independent-linux:3.1.1'
   tag level: 1
 
-  %w(
-    net.ipv4.ip_forward
-    net.ipv6.conf.all.forwarding
-  ).each do |kp|
+  parameters = ['net.ipv4.ip_forward']
+  if ipv6.zero?
+    parameters += ['net.ipv6.conf.all.forwarding']
+  end
+
+  parameters.each do |kp|
     describe kernel_parameter(kp) do
       its('value') { should_not be_nil }
       its('value') { should cmp 0 }

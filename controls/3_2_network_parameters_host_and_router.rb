@@ -19,6 +19,8 @@
 
 title '3.2 Network Parameters (Host and Router)'
 
+ipv6 = command('test -f /proc/net/if_inet6').exit_status
+
 control 'cis-dil-benchmark-3.2.1' do
   title 'Ensure source routed packets are not accepted'
   desc  "In networking, source routing allows a sender to partially or fully specify the route packets take through a network. In contrast, non-source routed packets travel a path determined by routers in the network. In some cases, systems may not be routable or reachable from some locations (e.g. private addresses vs. Internet routable), and so source routed packets would need to be used.\n\nRationale: Setting net.ipv4.conf.all.accept_source_route and net.ipv4.conf.default.accept_source_route to 0 disables the system from accepting source routed packets. Assume this system was capable of routing packets to Internet routable addresses on one interface and private addresses on another interface. Assume that the private addresses were not routable to the Internet routable addresses and vice versa. Under normal routing circumstances, an attacker from the Internet routable addresses could not use the system as a way to reach the private address systems. If, however, source routed packets were allowed, they could be used to gain access to the private address systems as the route could be specified, rather than rely on routing protocols that did not allow this routing."
@@ -27,12 +29,18 @@ control 'cis-dil-benchmark-3.2.1' do
   tag cis: 'distribution-independent-linux:3.2.1'
   tag level: 1
 
-  %w(
-    net.ipv4.conf.all.accept_source_route
-    net.ipv4.conf.default.accept_source_route
-    net.ipv6.conf.all.accept_source_route
-    net.ipv6.conf.default.accept_source_route
-  ).each do |kp|
+  parameters = [
+    'net.ipv4.conf.all.accept_source_route',
+    'net.ipv4.conf.default.accept_source_route',
+  ]
+  if ipv6.zero?
+    parameters += [
+	  'net.ipv6.conf.all.accept_source_route',
+	  'net.ipv6.conf.default.accept_source_route',
+    ]
+  end
+
+  parameters.each do |kp|
     describe kernel_parameter(kp) do
       its(:value) { should_not be_nil }
       its(:value) { should eq 0 }
@@ -48,12 +56,18 @@ control 'cis-dil-benchmark-3.2.2' do
   tag cis: 'distribution-independent-linux:3.2.2'
   tag level: 1
 
-  %w(
-    net.ipv4.conf.all.accept_redirects
-    net.ipv4.conf.default.accept_redirects
-    net.ipv6.conf.all.accept_redirects
-    net.ipv6.conf.default.accept_redirects
-  ).each do |kp|
+  parameters = [
+    'net.ipv4.conf.all.accept_redirects',
+    'net.ipv4.conf.default.accept_redirects',
+  ]
+  if ipv6.zero?
+    parameters += [
+      'net.ipv6.conf.all.accept_redirects',
+      'net.ipv6.conf.default.accept_redirects',
+    ]
+  end
+
+  parameters.each do |kp|
     describe kernel_parameter(kp) do
       its(:value) { should_not be_nil }
       its(:value) { should eq 0 }
@@ -165,4 +179,6 @@ control 'cis-dil-benchmark-3.2.9' do
       its(:value) { should eq 0 }
     end
   end
+
+  only_if { ipv6.zero? }
 end
