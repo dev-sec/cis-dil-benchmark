@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2023-10-28)
+## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2023-11-15)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.12...0.4.13)
 
@@ -23,6 +23,7 @@
 
 **Merged pull requests:**
 
+- fix: cis-dil-benchmark-2.2.1.3 read /etc/chrony.d [\#154](https://github.com/dev-sec/cis-dil-benchmark/pull/154) ([IvDoorn](https://github.com/IvDoorn))
 - add spellchecking with codespell [\#151](https://github.com/dev-sec/cis-dil-benchmark/pull/151) ([schurzi](https://github.com/schurzi))
 - Configure Renovate [\#150](https://github.com/dev-sec/cis-dil-benchmark/pull/150) ([renovate[bot]](https://github.com/apps/renovate))
 - Remove control for group 'wheel', since it is not required by benchmark [\#139](https://github.com/dev-sec/cis-dil-benchmark/pull/139) ([spencer-cdw](https://github.com/spencer-cdw))
