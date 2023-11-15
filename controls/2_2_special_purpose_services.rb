@@ -107,9 +107,10 @@ control 'cis-dil-benchmark-2.2.1.3' do
     package('chrony').installed? || command('chronyd').exist?
   end
 
-  # Amazon Linux sources configuration from /run/chrony.d
+  # Amazon Linux sources configuration from /run/chrony.d and /etc/chrony.d
   chrony_conf_files = ['/etc/chrony/chrony.conf', '/etc/chrony.conf']
   chrony_conf_files += command('find /run/chrony.d -name \'*.sources\'').stdout.split
+  chrony_conf_files += command('find /etc/chrony.d -name \'*.sources\'').stdout.split
 
   describe.one do
     chrony_conf_files.each do |f|
