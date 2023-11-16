@@ -35,8 +35,8 @@ control 'cis-dil-benchmark-3.2.1' do
   ]
   if ipv6.zero?
     parameters += [
-	  'net.ipv6.conf.all.accept_source_route',
-	  'net.ipv6.conf.default.accept_source_route',
+      'net.ipv6.conf.all.accept_source_route',
+      'net.ipv6.conf.default.accept_source_route',
     ]
   end
 
