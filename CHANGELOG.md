@@ -6,6 +6,8 @@
 
 **Implemented enhancements:**
 
+- Add alternative package name for iptables [\#156](https://github.com/dev-sec/cis-dil-benchmark/pull/156) ([IvDoorn](https://github.com/IvDoorn))
+- Make all kernel parameter checks related to net.ipv6 conditional [\#155](https://github.com/dev-sec/cis-dil-benchmark/pull/155) ([IvDoorn](https://github.com/IvDoorn))
 - fix: handle chrony configuration sourced via amazon-chrony-config [\#153](https://github.com/dev-sec/cis-dil-benchmark/pull/153) ([nejch](https://github.com/nejch))
 - fix: allow alternative output for sestatus policy [\#152](https://github.com/dev-sec/cis-dil-benchmark/pull/152) ([nejch](https://github.com/nejch))
 - use centralised issue templates and workflows [\#142](https://github.com/dev-sec/cis-dil-benchmark/pull/142) ([schurzi](https://github.com/schurzi))
@@ -23,7 +25,6 @@
 
 **Merged pull requests:**
 
-- Add alternative package name for iptables [\#156](https://github.com/dev-sec/cis-dil-benchmark/pull/156) ([IvDoorn](https://github.com/IvDoorn))
 - fix: cis-dil-benchmark-2.2.1.3 read /etc/chrony.d [\#154](https://github.com/dev-sec/cis-dil-benchmark/pull/154) ([IvDoorn](https://github.com/IvDoorn))
 - add spellchecking with codespell [\#151](https://github.com/dev-sec/cis-dil-benchmark/pull/151) ([schurzi](https://github.com/schurzi))
 - Configure Renovate [\#150](https://github.com/dev-sec/cis-dil-benchmark/pull/150) ([renovate[bot]](https://github.com/apps/renovate))
