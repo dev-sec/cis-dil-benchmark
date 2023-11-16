@@ -230,7 +230,13 @@ control 'cis-dil-benchmark-3.5.3' do
   tag cis: 'distribution-independent-linux:3.5.3'
   tag level: 1
 
-  describe package('iptables') do
-    it { should be_installed }
+  describe.one do
+    describe package('iptables') do
+      it { should be_installed }
+    end
+
+    describe package('iptables-nft') do
+      it { should be_installed }
+    end
   end
 end
