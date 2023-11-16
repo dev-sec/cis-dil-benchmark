@@ -20,7 +20,7 @@
 cis_level = input('cis_level')
 
 title '1.1 Filesystem Configuration'
-
+kernel_module
 control 'cis-dil-benchmark-1.1.1.1' do
   title 'Ensure mounting of cramfs filesystems is disabled'
   desc  "The cramfs filesystem type is a compressed read-only Linux filesystem embedded in small footprint systems. A cramfs image can be used without having to first decompress the image.\n\nRationale: Removing support for unneeded filesystem types reduces the local attack surface of the server. If this filesystem type is not needed, disable it."
@@ -29,9 +29,14 @@ control 'cis-dil-benchmark-1.1.1.1' do
   tag cis: 'distribution-independent-linux:1.1.1.1'
   tag level: 1
 
-  describe kernel_module('cramfs') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe file('/proc/modules') do
+      its('content') { should_not match(/^cramfs\s/) }
+    end
+    describe kernel_module('cramfs') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -43,9 +48,14 @@ control 'cis-dil-benchmark-1.1.1.2' do
   tag cis: 'distribution-independent-linux:1.1.1.2'
   tag level: 1
 
-  describe kernel_module('freevxfs') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe file('/proc/modules') do
+      its('content') { should_not match(/^freevxfs\s/) }
+    end
+    describe kernel_module('freevxfs') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -57,9 +67,14 @@ control 'cis-dil-benchmark-1.1.1.3' do
   tag cis: 'distribution-independent-linux:1.1.1.3'
   tag level: 1
 
-  describe kernel_module('jffs2') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe file('/proc/modules') do
+      its('content') { should_not match(/^jffs2\s/) }
+    end
+    describe kernel_module('jffs2') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -71,9 +86,14 @@ control 'cis-dil-benchmark-1.1.1.4' do
   tag cis: 'distribution-independent-linux:1.1.1.4'
   tag level: 1
 
-  describe kernel_module('hfs') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe file('/proc/modules') do
+      its('content') { should_not match(/^hfs\s/) }
+    end
+    describe kernel_module('hfs') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -85,9 +105,14 @@ control 'cis-dil-benchmark-1.1.1.5' do
   tag cis: 'distribution-independent-linux:1.1.1.5'
   tag level: 1
 
-  describe kernel_module('hfsplus') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe file('/proc/modules') do
+      its('content') { should_not match(/^hfsplus\s/) }
+    end
+    describe kernel_module('hfsplus') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -99,9 +124,14 @@ control 'cis-dil-benchmark-1.1.1.6' do
   tag cis: 'distribution-independent-linux:1.1.1.6'
   tag level: 1
 
-  describe kernel_module('squashfs') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe file('/proc/modules') do
+      its('content') { should_not match(/^squashfs\s/) }
+    end
+    describe kernel_module('squashfs') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -113,9 +143,14 @@ control 'cis-dil-benchmark-1.1.1.7' do
   tag cis: 'distribution-independent-linux:1.1.1.7'
   tag level: 1
 
-  describe kernel_module('udf') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe file('/proc/modules') do
+      its('content') { should_not match(/^udf\s/) }
+    end
+    describe kernel_module('udf') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -127,9 +162,14 @@ control 'cis-dil-benchmark-1.1.1.8' do
   tag cis: 'distribution-independent-linux:1.1.1.8'
   tag level: 2
 
-  describe kernel_module('vfat') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe file('/proc/modules') do
+      its('content') { should_not match(/^vfat\s/) }
+    end
+    describe kernel_module('vfat') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 
   only_if { cis_level == 2 }
@@ -465,8 +505,13 @@ control 'cis-dil-benchmark-1.1.23' do
 
   # kernel modules need to use underscores
   # ref: https://github.com/inspec/inspec/issues/5190
-  describe kernel_module('usb_storage') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe file('/proc/modules') do
+      its('content') { should_not match(/^usb_storage\s/) }
+    end
+    describe kernel_module('usb_storage') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
