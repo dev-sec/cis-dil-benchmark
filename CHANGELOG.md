@@ -26,6 +26,7 @@
 **Merged pull requests:**
 
 - Extend checks for the filesystem configuration [\#158](https://github.com/dev-sec/cis-dil-benchmark/pull/158) ([IvDoorn](https://github.com/IvDoorn))
+- Ignore unknown syscalls on aarch64 [\#157](https://github.com/dev-sec/cis-dil-benchmark/pull/157) ([IvDoorn](https://github.com/IvDoorn))
 - fix: cis-dil-benchmark-2.2.1.3 read /etc/chrony.d [\#154](https://github.com/dev-sec/cis-dil-benchmark/pull/154) ([IvDoorn](https://github.com/IvDoorn))
 - add spellchecking with codespell [\#151](https://github.com/dev-sec/cis-dil-benchmark/pull/151) ([schurzi](https://github.com/schurzi))
 - Configure Renovate [\#150](https://github.com/dev-sec/cis-dil-benchmark/pull/150) ([renovate[bot]](https://github.com/apps/renovate))
