@@ -278,9 +278,25 @@ control 'cis-dil-benchmark-4.1.11' do
 
   uname = command('uname -m').stdout.strip
   if uname == 'x86_64' || uname == 'aarch64'
+    describe.one do
+      describe file('/etc/audit/audit.rules') do
+        its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=#{uid_min} -F auid!=4294967295 -k perm_mod$/) }
+      end
+      describe file('/etc/audit/audit.rules') do
+        its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S fchmod -S fchmodat -F auid>=#{uid_min} -F auid!=4294967295 -k perm_mod$/) }
+      end
+    end
+
+    describe.one do
+      describe file('/etc/audit/audit.rules') do
+        its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=#{uid_min} -F auid!=4294967295 -k perm_mod$/) }
+      end
+      describe file('/etc/audit/audit.rules') do
+        its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S fchown -S fchownat -F auid>=#{uid_min} -F auid!=4294967295 -k perm_mod$/) }
+      end
+    end
+
     describe file('/etc/audit/audit.rules') do
-      its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=#{uid_min} -F auid!=4294967295 -k perm_mod$/) }
-      its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=#{uid_min} -F auid!=4294967295 -k perm_mod$/) }
       its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=#{uid_min} -F auid!=4294967295 -k perm_mod$/) }
     end
   end
@@ -303,9 +319,22 @@ control 'cis-dil-benchmark-4.1.12' do
 
   uname = command('uname -m').stdout.strip
   if uname == 'x86_64' || uname == 'aarch64'
-    describe file('/etc/audit/audit.rules') do
-      its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=#{uid_min} -F auid!=4294967295 -k access$/) }
-      its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=#{uid_min} -F auid!=4294967295 -k access$/) }
+    describe.one do
+      describe file('/etc/audit/audit.rules') do
+        its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=#{uid_min} -F auid!=4294967295 -k access$/) }
+      end
+      describe file('/etc/audit/audit.rules') do
+        its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=#{uid_min} -F auid!=4294967295 -k access$/) }
+      end
+    end
+
+    describe.one do
+      describe file('/etc/audit/audit.rules') do
+        its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=#{uid_min} -F auid!=4294967295 -k access$/) }
+      end
+      describe file('/etc/audit/audit.rules') do
+        its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=#{uid_min} -F auid!=4294967295 -k access$/) }
+      end
     end
   end
 end
@@ -365,8 +394,13 @@ control 'cis-dil-benchmark-4.1.15' do
 
   uname = command('uname -m').stdout.strip
   if uname == 'x86_64' || uname == 'aarch64'
-    describe file('/etc/audit/audit.rules') do
-      its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=#{uid_min} -F auid!=4294967295 -k delete$/) }
+    describe.one do
+      describe file('/etc/audit/audit.rules') do
+        its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=#{uid_min} -F auid!=4294967295 -k delete$/) }
+      end
+      describe file('/etc/audit/audit.rules') do
+        its('content') { should match(/^-a (always,exit|exit,always) -F arch=b64 -S unlinkat -S renameat -F auid>=#{uid_min} -F auid!=4294967295 -k delete$/) }
+      end
     end
   end
 end
