@@ -29,9 +29,15 @@ control 'cis-dil-benchmark-1.1.1.1' do
   tag cis: 'distribution-independent-linux:1.1.1.1'
   tag level: 1
 
-  describe kernel_module('cramfs') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe etc_fstab.where { file_system_type == 'cramfs' } do
+      it { should be_configured }
+    end
+
+    describe kernel_module('cramfs') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -43,9 +49,15 @@ control 'cis-dil-benchmark-1.1.1.2' do
   tag cis: 'distribution-independent-linux:1.1.1.2'
   tag level: 1
 
-  describe kernel_module('freevxfs') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe etc_fstab.where { file_system_type == 'freevxfs' } do
+      it { should be_configured }
+    end
+
+    describe kernel_module('freevxfs') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -57,9 +69,15 @@ control 'cis-dil-benchmark-1.1.1.3' do
   tag cis: 'distribution-independent-linux:1.1.1.3'
   tag level: 1
 
-  describe kernel_module('jffs2') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe etc_fstab.where { file_system_type == 'jffs2' } do
+      it { should be_configured }
+    end
+
+    describe kernel_module('jffs2') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -71,9 +89,15 @@ control 'cis-dil-benchmark-1.1.1.4' do
   tag cis: 'distribution-independent-linux:1.1.1.4'
   tag level: 1
 
-  describe kernel_module('hfs') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe etc_fstab.where { file_system_type == 'hfs' } do
+      it { should be_configured }
+    end
+
+    describe kernel_module('hfs') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -85,9 +109,15 @@ control 'cis-dil-benchmark-1.1.1.5' do
   tag cis: 'distribution-independent-linux:1.1.1.5'
   tag level: 1
 
-  describe kernel_module('hfsplus') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe etc_fstab.where { file_system_type == 'hfsplus' } do
+      it { should be_configured }
+    end
+
+    describe kernel_module('hfsplus') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -99,9 +129,15 @@ control 'cis-dil-benchmark-1.1.1.6' do
   tag cis: 'distribution-independent-linux:1.1.1.6'
   tag level: 1
 
-  describe kernel_module('squashfs') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe etc_fstab.where { file_system_type == 'squashfs' } do
+      it { should be_configured }
+    end
+
+    describe kernel_module('squashfs') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -113,9 +149,15 @@ control 'cis-dil-benchmark-1.1.1.7' do
   tag cis: 'distribution-independent-linux:1.1.1.7'
   tag level: 1
 
-  describe kernel_module('udf') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe etc_fstab.where { file_system_type == 'udf' } do
+      it { should be_configured }
+    end
+
+    describe kernel_module('udf') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 end
 
@@ -127,9 +169,15 @@ control 'cis-dil-benchmark-1.1.1.8' do
   tag cis: 'distribution-independent-linux:1.1.1.8'
   tag level: 2
 
-  describe kernel_module('vfat') do
-    it { should_not be_loaded }
-    it { should be_disabled }
+  describe.one do
+    describe etc_fstab.where { file_system_type == 'vfat' } do
+      it { should be_configured }
+    end
+
+    describe kernel_module('vfat') do
+      it { should_not be_loaded }
+      it { should be_disabled }
+    end
   end
 
   only_if { cis_level == 2 }
