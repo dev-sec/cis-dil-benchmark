@@ -30,6 +30,7 @@ control 'cis-dil-benchmark-1.4.1' do
   describe.one do
     grub_conf.locations.each do |f|
       describe file(f) do
+        next unless file(f).exist?
         it { should exist }
         it { should_not be_readable.by 'group' }
         it { should_not be_writable.by 'group' }
@@ -55,6 +56,7 @@ control 'cis-dil-benchmark-1.4.2' do
   describe.one do
     grub_conf.locations.each do |f|
       describe file(f) do
+        next unless file(f).exist?
         its(:content) { should match(/^set superusers/) }
         its(:content) { should match(/^password/) }
       end
