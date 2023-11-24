@@ -1,11 +1,12 @@
 # Changelog
 
-## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2023-11-16)
+## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2023-11-24)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.12...0.4.13)
 
 **Implemented enhancements:**
 
+- Convert uname variable to global variable [\#159](https://github.com/dev-sec/cis-dil-benchmark/pull/159) ([IvDoorn](https://github.com/IvDoorn))
 - Add alternative package name for iptables [\#156](https://github.com/dev-sec/cis-dil-benchmark/pull/156) ([IvDoorn](https://github.com/IvDoorn))
 - Make all kernel parameter checks related to net.ipv6 conditional [\#155](https://github.com/dev-sec/cis-dil-benchmark/pull/155) ([IvDoorn](https://github.com/IvDoorn))
 - fix: handle chrony configuration sourced via amazon-chrony-config [\#153](https://github.com/dev-sec/cis-dil-benchmark/pull/153) ([nejch](https://github.com/nejch))
