@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2023-11-24)
+## [0.4.13](https://github.com/dev-sec/cis-dil-benchmark/tree/0.4.13) (2023-11-25)
 
 [Full Changelog](https://github.com/dev-sec/cis-dil-benchmark/compare/0.4.12...0.4.13)
 
@@ -15,6 +15,7 @@
 
 **Fixed bugs:**
 
+- Restrict NX/XD check to the x86 architectures [\#160](https://github.com/dev-sec/cis-dil-benchmark/pull/160) ([IvDoorn](https://github.com/IvDoorn))
 - Local loopback is 127.0.0.0/8, not just 127.0.0.1 [\#147](https://github.com/dev-sec/cis-dil-benchmark/pull/147) ([bendres97](https://github.com/bendres97))
 
 **Closed issues:**
