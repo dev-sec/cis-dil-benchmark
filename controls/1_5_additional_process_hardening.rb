@@ -19,6 +19,8 @@
 
 title '1.5 Additional Process Hardening'
 
+uname_machine = command('uname -m').stdout.strip
+
 control 'cis-dil-benchmark-1.5.1' do
   title 'Ensure core dumps are restricted'
   desc  "A core dump is the memory of an executable program. It is generally used to determine why a program aborted. It can also be used to glean confidential information from a core file. The system provides the ability to set a soft limit for core dumps, but this can be overridden by the user.\n\nRationale: Setting a hard limit on core dumps prevents users from overriding the soft variable. If core dumps are required, consider setting limits for user groups (see limits.conf(5)). In addition, setting the fs.suid_dumpable variable to 0 will prevent setuid programs from dumping core."
@@ -52,8 +54,14 @@ control 'cis-dil-benchmark-1.5.2' do
   tag cis: 'distribution-independent-linux:1.5.2'
   tag level: 1
 
-  describe command('dmesg | grep NX') do
-    its(:stdout) { should match(/NX \(Execute Disable\) protection: active/) }
+  if uname_machine == 'i386' || uname_machine == 'i686' || uname_machine == 'x86_64'
+    describe command('dmesg | grep NX') do
+      its(:stdout) { should match(/NX \(Execute Disable\) protection: active/) }
+    end
+  else
+    describe 'cis-dil-benchmark-1.5.2' do
+      skip 'Not implemented'
+    end
   end
 end
 
