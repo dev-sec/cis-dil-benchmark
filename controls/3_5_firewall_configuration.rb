@@ -51,28 +51,11 @@ control 'cis-dil-benchmark-3.5.1.2' do
 
   rules = ip6tables.retrieve_rules
 
-  describe.one do
-    rules.each do |rule|
-      describe rule do
-        it { should match(/(?=.*-A INPUT)(?=.*-i lo)(?=.*-j ACCEPT)/) }
-      end
-    end
-  end
-
-  describe.one do
-    rules.each do |rule|
-      describe rule do
-        it { should match(/(?=.*-A OUTPUT)(?=.*-o lo)(?=.*-j ACCEPT)/) }
-      end
-    end
-  end
-
-  describe.one do
-    rules.each do |rule|
-      describe rule do
-        it { should match(/(?=.*-A INPUT)(?=.*-s ::1)(?=.*-j DROP)/) }
-      end
-    end
+  describe "Check for IPv6 local loopback rules" do
+    subject { rules.join("\n") }
+    it { should match(/(?=.*-A INPUT)(?=.*-i lo)(?=.*-j ACCEPT)/) }
+    it { should match(/(?=.*-A OUTPUT)(?=.*-o lo)(?=.*-j ACCEPT)/) }
+    it { should match(/(?=.*-A INPUT)(?=.*-s ::1)(?=.*-j DROP)/) }
   end
 
   only_if { ipv6.zero? }
@@ -89,20 +72,10 @@ control 'cis-dil-benchmark-3.5.1.3' do
   rules = ip6tables.retrieve_rules
 
   %w(tcp udp icmp).each do |proto|
-    describe.one do
-      rules.each do |rule|
-        describe rule do
-          it { should match(/(?=.*-A OUTPUT)(?=.*-p #{proto})(?=.*-m state --state NEW,ESTABLISHED)(?=.*-j ACCEPT)/) }
-        end
-      end
-    end
-
-    describe.one do
-      rules.each do |rule|
-        describe rule do
-          it { should match(/(?=.*-A INPUT)(?=.*-p #{proto})(?=.*-m state --state ESTABLISHED)(?=.*-j ACCEPT)/) }
-        end
-      end
+    describe "Check for IPv6 rules on established and new outbound connections" do
+      subject { rules.join("\n") }
+      it { should match(/(?=.*-A OUTPUT)(?=.*-p #{proto})(?=.*-m state --state NEW,ESTABLISHED)(?=.*-j ACCEPT)/) }
+      it { should match(/(?=.*-A INPUT)(?=.*-p #{proto})(?=.*-m state --state ESTABLISHED)(?=.*-j ACCEPT)/) }
     end
   end
 
@@ -152,28 +125,11 @@ control 'cis-dil-benchmark-3.5.2.2' do
 
   rules = iptables.retrieve_rules
 
-  describe.one do
-    rules.each do |rule|
-      describe rule do
-        it { should match /(?=.*-A INPUT)(?=.*-i lo)(?=.*-j ACCEPT)/ }
-      end
-    end
-  end
-
-  describe.one do
-    rules.each do |rule|
-      describe rule do
-        it { should match /(?=.*-A OUTPUT)(?=.*-o lo)(?=.*-j ACCEPT)/ }
-      end
-    end
-  end
-
-  describe.one do
-    rules.each do |rule|
-      describe rule do
-        it { should match %r{(?=.*-A INPUT)(?=.*-s 127\.0\.0\.0/8)(?=.*-j DROP)} }
-      end
-    end
+  describe "Check for local loopback rules" do
+    subject { rules.join("\n") }
+    it { should match /(?=.*-A INPUT)(?=.*-i lo)(?=.*-j ACCEPT)/ }
+    it { should match /(?=.*-A OUTPUT)(?=.*-o lo)(?=.*-j ACCEPT)/ }
+    it { should match %r{(?=.*-A INPUT)(?=.*-s 127\.0\.0\.0/8)(?=.*-j DROP)} }
   end
 end
 
@@ -188,20 +144,10 @@ control 'cis-dil-benchmark-3.5.2.3' do
   rules = iptables.retrieve_rules
 
   %w(tcp udp icmp).each do |proto|
-    describe.one do
-      rules.each do |rule|
-        describe rule do
-          it { should match /(?=.*-A OUTPUT)(?=.*-p #{proto})(?=.*-m state --state NEW,ESTABLISHED)(?=.*-j ACCEPT)/ }
-        end
-      end
-    end
-
-    describe.one do
-      rules.each do |rule|
-        describe rule do
-          it { should match /(?=.*-A INPUT)(?=.*-p #{proto})(?=.*-m state --state ESTABLISHED)(?=.*-j ACCEPT)/ }
-        end
-      end
+    describe "Check for rules on established and new outbound connections" do
+      subject { rules.join("\n") }
+      it { should match /(?=.*-A OUTPUT)(?=.*-p #{proto})(?=.*-m state --state NEW,ESTABLISHED)(?=.*-j ACCEPT)/ }
+      it { should match /(?=.*-A INPUT)(?=.*-p #{proto})(?=.*-m state --state ESTABLISHED)(?=.*-j ACCEPT)/ }
     end
   end
 end
