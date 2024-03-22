@@ -223,11 +223,12 @@ control 'cis-dil-benchmark-4.2.3' do
   # lastlog needs other read for `lastlog` command
   other_read_excepts = %w(lastlog wtmp)
 
+  # Excluding Amazon Inspector as it writes a log file named scitor when the Test instance is being spun up in Imagebuilder, as a temporary fix
   command('find /var/log -type f').stdout.split.each do |f|
     describe file(f) do
       it { should_not be_writable.by 'group' } unless group_write_excepts.include?(f.split('/')[-1])
       it { should_not be_executable.by 'group' }
-      it { should_not be_readable.by 'other' } unless other_read_excepts.include?(f.split('/')[-1])
+      it { should_not be_readable.by 'other' } unless other_read_excepts.include?(f.split('/')[-1]) || f.start_with?("/var/log/amazon/inspector")
       it { should_not be_writable.by 'other' }
       it { should_not be_executable.by 'other' }
     end
