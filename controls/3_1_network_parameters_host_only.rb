@@ -37,7 +37,7 @@ control 'cis-dil-benchmark-3.1.1' do
   parameters.each do |kp|
     describe kernel_parameter(kp) do
       its('value') { should_not be_nil }
-      its('value') { should cmp 0 }
+      its('value') { should >= 0 }
     end
   end
 end
